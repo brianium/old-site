@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>30 Days of ASP.NET:Server Controls</title>
+	<meta name="description" content="I enjoy programming stuff - up to and including things!">
+	<meta name="author" content="Brian Scaturro">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link href='http://fonts.googleapis.com/css?family=Anton' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="/css/base.css">
+	<link rel="stylesheet" href="/css/skeleton.css">
+	<link rel="stylesheet" href="/css/layout.css">
+	<link rel="stylesheet" href="/css/pygments.css">
+	<link rel="shortcut icon" href="/images/favicon.ico">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>	
+<body>
+	<div class="container">
+		<header id="branding" class="sixteen columns">
+			<a href="/">
+				<div class="site-heading">Brian Scaturro</div>
+				<div class="site-subheading">Fancy a dance?</div>
+			</a>
+		</header>
+		<div id="main" role="main" class="sixteen columns">
+			<article class="eleven columns alpha">
+				<h1>30 Days of ASP.NET:Server Controls<span class="post-date">08 Jan 2012</span></h1>
+				Server controls are at the heart of ASP.NET web form applications. Server controls build up the user interface and enable you to gather user input, update certain parts of your application in response to that input, and keep state between web requests. You can also bind data sources to them in order to interact with something like a SQL database.
+
+<h3>An Introduction</h3>
+<img src="http://www.brianscaturro.com/wp-content/uploads/2012/01/server-controls.png" alt="list of asp.net server controls" title="server-controls" width="158" height="600" class="alignleft size-full wp-image-1341" />
+As you can see there are quite a few server controls to choose from. I am not going to go in to detail about all of these, but they all have some common ground. I am going to focus mainly on the standard controls at this point in the game, and we will use some of the standard controls in today's example.
+
+<h4>Common Control Properties</h4>
+<h5>runat</h5>
+This is always set to the value of <code>server</code>. This property makes your control and all of it's properties available to your code-behind and indicates the control should be processed by the server.
+<pre class="prettyprint">
+&lt;asp:TextBox ID="txtName" runat="server" /&gt;
+</pre>
+
+<h5>ID</h5>
+This property uniquely identifies the control and is used to access the control from the code-behind. If we use the same <code>TextBox</code> control used above, we would access it's Text property from our C# file like so:
+<pre class="prettyprint">
+txtName.Text
+</pre>
+
+<h5>Visible</h5>
+This property is handy for controls that need to be revealed in response to something. This property is not like <code>display:none</code> in CSS. If the <code>Visible</code> property is set to <code>true</code>, the control will never be sent to the browser in the first place. The following panel control will never be sent to the browser unless told to do so in a code-behind:
+<pre class="prettyprint">
+&lt;asp:Panel ID="pnlMessage" runat="server" Visible="false"&gt;
+&lt;/asp:Panel>
+</pre>
+
+<h5>ViewStateMode</h5>
+This property is a handy property that enables you to control the view state on a control by control basis. The "View State Engine" is something that controls the state of controls (what text/option/value is selected in a control) across requests (think sticky forms on steroids). The <code>ViewStateMode</code> property is something that allows you to fine tune this behavior for the sake of performance. For more information on view state in ASP.NET check out this <a href="http://msdn.microsoft.com/en-us/library/ms972976.aspx#viewstate_topic9" title="View State in ASP.NET" target="_blank">page</a> on MSDN.
+
+<h5>AutoPostBack</h5>
+This property makes sense on the controls that actually collect user input. This uses a little client side magic to ensure that when this control has finished gathering input, it is time to submit the form. Completing the input will automatically cause a post back to the server.
+
+<h5>Standard Properties</h5>
+In addition to the <code>runat</code> and <code>ID</code> attributes there are several attributes that map to standard HTML attributes. <code>ToolTip</code> essentially works as an HTML <code>title</code> attribute, <code>CssClass</code> maps to the HTML <code>class</code> attribute, and there are a bunch of inline style properties like <code>BackColor</code> and <code>ForeColor</code>. I would rather see <code>CssClass</code> and a style sheet used to handle styles rather than the built in style properties.
+
+There are more properties available and your best bet to seeing them all in action is to fire up Visual Web Developer and explore what is available.
+
+<h3>Server Controls In Action</h3>
+Let's make a simple application using some server controls and a little C# in our code-behind. We are going to modify our previous example from the last two entries in this series to see what kind of pizza the user prefers.
+
+<h4>Collecting Input With the TextBox Control</h4>
+The first thing we are going to do is add a list to our wrapper to hold our form controls and then add our inputs:
+<pre class="prettyprint">
+&lt;form id="form1" runat="server"&gt;
+&lt;div id="wrapper"&gt;
+    &lt;h1&gt;Web Forms Are Gnarly&lt;/h1&gt;
+    &lt;dl&gt;
+    &lt;/dl&gt;
+&lt;/div&gt;
+&lt;/form&gt;
+</pre>
+
+Now that we have our list setup, we can start adding controls to it. We need to add inputs and label elements for each one. Let's start with a way to collect text input:
+<pre class="prettyprint">
+&lt;dl&gt;
+    &lt;dt&gt;&lt;asp:Label ID="lblName" runat="server" Text="What's your name?" AssociatedControlID="txtName" /&gt;&lt;/dt&gt;
+    &lt;dd&gt;&lt;asp:TextBox ID="txtName" runat="server" /&gt;&lt;/dd&gt;
+&lt;/dl&gt;
+</pre>
+You'll notice a couple of things. First each of our controls contain the <code>runat</code> property. This is mandatory for controls. The <code>Text</code> property on our label specifies what will be read within the label. Each control has an <code>ID</code> property so they can be identified in the C# file. Take note of the <code>AssociatedControlID</code> property that exists on the <code>Label</code> control. This essentially functions like the HTML <code>for</code> attribute that exists on HTML <code>label</code> elements. Notice the value of this property is the <code>ID</code> property of the associated control, in this case <code>txtName</code>.
+
+<h5>A Note On Naming Conventions</h5>
+Everyone has their own way of ID'ing controls, but a popular convention is to shorthand the type of control and then follow it with your name for it. Our <code>TextBox</code> control is used to collect a name, so we ID it as <code>txtName</code>
+
+<h4>Selecting From a List With List Controls</h4>
+The next control to add to our list is the drop down list. This is your typical <code>select</code> element. All list controls follow a similar pattern of:
+<pre class="prettyprint">
+&lt;asp:ListType ID="listID" runat="server"&gt;
+    &lt;asp:ListItem Value="1"&gt;Label1&lt;/asp:ListItem&gt;
+    &lt;asp:ListItem Value="2"&gt;Label2&lt;/asp:ListItem&gt;
+&lt;/asp:ListType&gt;
+</pre>
+Every list type control takes a set of the common <code>ListItem</code> controls. Let's add several different list types to our form list with their respective labels:
+<pre class="prettyprint">
+&lt;dt&gt;&lt;asp:Label ID="lblSnack" runat="server" Text="Favorite pizza:" AssociatedControlID="ddlSnack" /&gt;&lt;/dt&gt;
+&lt;dd&gt;
+    &lt;asp:DropDownList ID="ddlSnack" runat="server"&gt;
+        &lt;asp:ListItem&gt;Pepperoni pizza&lt;/asp:ListItem&gt;
+        &lt;asp:ListItem&gt;Cheese pizza&lt;/asp:ListItem&gt;
+        &lt;asp:ListItem&gt;Meat lovers pizza&lt;/asp:ListItem&gt;
+    &lt;/asp:DropDownList&gt;
+&lt;/dd&gt;
+&lt;dt&gt;&lt;asp:Label ID="lblToppings" runat="server" Text="Favorite pizza toppings:" AssociatedControlID="lbToppings" /&gt;&lt;/dt&gt;
+&lt;dd&gt;
+    &lt;asp:ListBox SelectionMode="Multiple" ID="lbToppings" runat="server"&gt;
+        &lt;asp:ListItem&gt;Pineapple&lt;/asp:ListItem&gt;
+        &lt;asp:ListItem&gt;Bacon&lt;/asp:ListItem&gt;
+        &lt;asp:ListItem&gt;Ham&lt;/asp:ListItem&gt;
+        &lt;asp:ListItem&gt;Pepperoni&lt;/asp:ListItem&gt;
+    &lt;/asp:ListBox&gt;
+&lt;/dd&gt;
+&lt;dt&gt;&lt;asp:Label ID="lblSeasoning" runat="server" Text="Favorite crust seasonings:" AssociatedControlID="cblSeasoning" /&gt;&lt;/dt&gt;
+&lt;dd&gt;
+    &lt;asp:CheckBoxList ID="cblSeasoning" runat="server"&gt;
+        &lt;asp:ListItem&gt;Garlic&lt;/asp:ListItem&gt;
+        &lt;asp:ListItem&gt;Butter crust&lt;/asp:ListItem&gt;
+        &lt;asp:ListItem&gt;Parmesan&lt;/asp:ListItem&gt;
+        &lt;asp:ListItem&gt;Crushed pepper&lt;/asp:ListItem&gt;
+    &lt;/asp:CheckBoxList&gt;
+&lt;/dd&gt;
+&lt;dt&gt;&lt;asp:Label ID="lblPisan" runat="server" Text="Who is your favorite pisan?" AssociatedControlID="rblPisan" /&gt;&lt;/dt&gt;
+&lt;dd&gt;
+    &lt;asp:RadioButtonList ID="rblPisan" runat="server"&gt;
+        &lt;asp:ListItem Selected="True"&gt;Jets&lt;/asp:ListItem&gt;
+        &lt;asp:ListItem&gt;Mancinos&lt;/asp:ListItem&gt;
+        &lt;asp:ListItem&gt;Pizza Hut&lt;/asp:ListItem&gt;
+    &lt;/asp:RadioButtonList&gt;
+&lt;/dd&gt;
+</pre>
+We use three different list type controls in our form. First we use a <code>DropDownList</code> control which is like a typical <code>select</code> element. Second we use a <code>ListBox</code> control, which by default shows multiple options. We set the <code>SelectionMode</code> property to "Multiple" to mimic an HTML <code>select</code> element with its "multiple" attribute set. Following our <code>ListBox</code> element we have a group of check box inputs created with the <code>CheckBoxList</code> control. To wrap up our set of list elements, we have a <code>RadioButtonList</code> control. This acts as a group of radio inputs. You should notice the <code>Selected</code> property that is set on one of the <code>ListItem</code> controls in the <code>RadioBoxList</code>. This just facilitates making that option the default item (in this case Jets Pizza).
+
+<h4>Wrapping Up With Button Controls</h4>
+Our button controls act as our means of submission. We will close our form list, and add a paragraph with our submission button immediately after:
+<pre class="prettyprint">
+&lt;p class="submit"&gt;
+    &lt;asp:Button ID="btnSubmit" Text="submit" runat="server" OnClick="btnSubmit_Click" /&gt;
+&lt;/p&gt;
+</pre>
+The important thing to take note of here is the <code>OnClick</code> property. This is an ASP.NET event and it refers to a method in our code-behind file. The <code>OnClick</code> event refers to a form submission caused by clicking this button. This is where we will process all of our form data.
+
+<h4>Grouping Related Items With Container Controls</h4>
+It is nice to have a way of grouping related items. There are several containing controls in ASP.NET, but the most common one you will encounter is the <code>Panel</code> control. We will use one <code>Panel</code> control to group our form controls, and another to contain a message that will appear after the form has been submitted. First wrap all of our form controls in a <code>Panel</code> control:
+<pre class="prettyprint">
+&lt;asp:Panel ID="pnlForm" runat="server" CssClass="text-left"&gt;
+    &lt;dl&gt;
+        &lt;dt&gt;&lt;asp:Label ID="lblName" runat="server" Text="What's your name?" AssociatedControlID="txtName" /&gt;&lt;/dt&gt;
+        &lt;dd&gt;&lt;asp:TextBox ID="txtName" runat="server" /&gt;&lt;/dd&gt;
+        //......rest of form elements
+</pre>
+Immediately following the panel containing our form controls we create a panel to contain our submission message:
+<pre class="prettyprint">
+&lt;asp:Panel ID="pnlMessage" runat="server" Visible="false" CssClass="text-left"&gt;
+    &lt;p&gt;Hello &lt;asp:Literal runat="server" ID="litName" /&gt;,&lt;/p&gt;
+    &lt;p&gt;I too enjoy a good &lt;asp:Literal ID="litSnack" runat="server" /&gt;.&lt;/p&gt;
+    &lt;p&gt;
+        I absolutely can't enjoy one without the following toppings: &lt;asp:Literal ID="litToppings" runat="server" /&gt;
+    &lt;/p&gt;
+    &lt;p&gt;
+        The crust is best covered in: &lt;asp:Literal ID="litSeasoning" runat="server" /&gt;
+    &lt;/p&gt;
+    &lt;p&gt;
+        It is best if you get it from &lt;asp:Literal ID="litPisan" runat="server" /&gt;.
+    &lt;/p&gt;
+&lt;/asp:Panel&gt;
+</pre>
+After looking at our panels, there should be a couple of things that stick out. First notice the addition of the <code>CssClass</code> property. We use this to add a class attribute to the panel. <code>Panel</code> controls render as HTML <code>div</code> elements. With the addition of our <code>CssClass</code> property, we essentially end up with the following rendered HTML:
+<pre class="prettyprint">
+&lt;div class="text-left" id="pnlMessage"&gt;
+</pre>
+Also notice on our second panel we set the <code>Visible</code> property to <code>false</code>. Remember, this is not like <code>display:none</code> in a style sheet. This prevents the control from ever being sent to the browser until <code>Visible</code> is set to <code>true</code>.
+
+After our panels are added, the form is complete. Here is the completed source of our web form:
+<pre class="prettyprint">
+&lt;form id="form1" runat="server"&gt;
+&lt;div id="wrapper"&gt;
+    &lt;h1&gt;Web Forms Are Gnarly!&lt;/h1&gt;
+    &lt;asp:Panel ID="pnlForm" runat="server" CssClass="text-left"&gt;
+        &lt;dl&gt;
+            &lt;dt&gt;&lt;asp:Label ID="lblName" runat="server" Text="What's your name?" AssociatedControlID="txtName" /&gt;&lt;/dt&gt;
+            &lt;dd&gt;&lt;asp:TextBox ID="txtName" runat="server" /&gt;&lt;/dd&gt;
+            &lt;dt&gt;&lt;asp:Label ID="lblSnack" runat="server" Text="Favorite pizza:" AssociatedControlID="ddlSnack" /&gt;&lt;/dt&gt;
+            &lt;dd&gt;
+                &lt;asp:DropDownList ID="ddlSnack" runat="server"&gt;
+                    &lt;asp:ListItem&gt;Pepperoni pizza&lt;/asp:ListItem&gt;
+                    &lt;asp:ListItem&gt;Cheese pizza&lt;/asp:ListItem&gt;
+                    &lt;asp:ListItem&gt;Meat lovers pizza&lt;/asp:ListItem&gt;
+                &lt;/asp:DropDownList&gt;
+            &lt;/dd&gt;
+            &lt;dt&gt;&lt;asp:Label ID="lblToppings" runat="server" Text="Favorite pizza toppings:" AssociatedControlID="lbToppings" /&gt;&lt;/dt&gt;
+            &lt;dd&gt;
+                &lt;asp:ListBox SelectionMode="Multiple" ID="lbToppings" runat="server"&gt;
+                    &lt;asp:ListItem&gt;Pineapple&lt;/asp:ListItem&gt;
+                    &lt;asp:ListItem&gt;Bacon&lt;/asp:ListItem&gt;
+                    &lt;asp:ListItem&gt;Ham&lt;/asp:ListItem&gt;
+                    &lt;asp:ListItem&gt;Pepperoni&lt;/asp:ListItem&gt;
+                &lt;/asp:ListBox&gt;
+            &lt;/dd&gt;
+            &lt;dt&gt;&lt;asp:Label ID="lblSeasoning" runat="server" Text="Favorite crust seasonings:" AssociatedControlID="cblSeasoning" /&gt;&lt;/dt&gt;
+            &lt;dd&gt;
+                &lt;asp:CheckBoxList ID="cblSeasoning" runat="server"&gt;
+                    &lt;asp:ListItem&gt;Garlic&lt;/asp:ListItem&gt;
+                    &lt;asp:ListItem&gt;Butter crust&lt;/asp:ListItem&gt;
+                    &lt;asp:ListItem&gt;Parmesan&lt;/asp:ListItem&gt;
+                    &lt;asp:ListItem&gt;Crushed pepper&lt;/asp:ListItem&gt;
+                &lt;/asp:CheckBoxList&gt;
+            &lt;/dd&gt;
+            &lt;dt&gt;&lt;asp:Label ID="lblPisan" runat="server" Text="Who is your favorite pisan?" AssociatedControlID="rblPisan" /&gt;&lt;/dt&gt;
+            &lt;dd&gt;
+                &lt;asp:RadioButtonList ID="rblPisan" runat="server"&gt;
+                    &lt;asp:ListItem Selected="True"&gt;Jets&lt;/asp:ListItem&gt;
+                    &lt;asp:ListItem&gt;Mancinos&lt;/asp:ListItem&gt;
+                    &lt;asp:ListItem&gt;Pizza Hut&lt;/asp:ListItem&gt;
+                &lt;/asp:RadioButtonList&gt;
+            &lt;/dd&gt;
+        &lt;/dl&gt;
+        &lt;p class="submit"&gt;
+            &lt;asp:Button ID="btnSubmit" Text="submit" runat="server" OnClick="btnSubmit_Click" /&gt;
+        &lt;/p&gt;
+    &lt;/asp:Panel&gt;
+    &lt;asp:Panel ID="pnlMessage" runat="server" Visible="false" CssClass="text-left"&gt;
+        &lt;p&gt;Hello &lt;asp:Literal runat="server" ID="litName" /&gt;,&lt;/p&gt;
+        &lt;p&gt;I too enjoy a good &lt;asp:Literal ID="litSnack" runat="server" /&gt;.&lt;/p&gt;
+        &lt;p&gt;
+            I absolutely can't enjoy one without the following toppings: &lt;asp:Literal ID="litToppings" runat="server" /&gt;
+        &lt;/p&gt;
+        &lt;p&gt;
+            The crust is best covered in: &lt;asp:Literal ID="litSeasoning" runat="server" /&gt;
+        &lt;/p&gt;
+        &lt;p&gt;
+            It is best if you get it from &lt;asp:Literal ID="litPisan" runat="server" /&gt;.
+        &lt;/p&gt;
+    &lt;/asp:Panel&gt;
+&lt;/div&gt;
+&lt;/form&gt;
+</pre>
+And our interface is complete!
+<img src="http://www.brianscaturro.com/wp-content/uploads/2012/01/Screenshot_71.png" alt="Completed interface" title="Completed interface" width="581" height="583" class="alignleft size-full wp-image-1381" />
+
+<h3>Using C# To Process The Postback</h3>
+This article is already pushing "tldnr" status, so I am going to post some C# that is used to process the form. The particulars of C# and ASP.NET will be discussed in a later post, but for now see if you can study the code and figure out what is going on (with the exception of the Linq stuff, it shouldn't be to difficult to figure out).
+
+<h4>The C# Code File</h4>
+<pre class="prettyprint">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public partial class _Default : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        
+    }
+
+    protected void btnSubmit_Click(object sender, EventArgs e)
+    {
+        pnlForm.Visible = false;
+        litName.Text = txtName.Text;
+        litSnack.Text = ddlSnack.SelectedItem.Value;
+        List&lt;String&gt; toppings = lbToppings.Items.Cast&lt;ListItem&gt;().Where(s =&gt; s.Selected).Select(s =&gt; s.Value).ToList();
+        litToppings.Text = string.Join(", ", toppings.ToArray());
+        if (toppings.Count.Equals(0))
+        {
+            litToppings.Text = "Plain is fine for me";
+        }
+        List&lt;String&gt; seasonings = cblSeasoning.Items.Cast&lt;ListItem&gt;().Where(c =&gt; c.Selected).Select(c =&gt; c.Value).ToList();
+        litSeasoning.Text = string.Join(", ", seasonings.ToArray());
+        if (seasonings.Count.Equals(0))
+        {
+            litSeasoning.Text = "nothing";
+        }
+        litPisan.Text = rblPisan.SelectedValue;
+        pnlMessage.Visible = true;
+    }
+}
+</pre>
+See if you can pick out how each control is being accessed in the code above. Pay attention to the use of the <code>Visible</code> property on both <code>pnlForm</code> and <code>pnlMessage</code>. We are essentially hiding one and showing the other on submission.
+
+After filling out the form and submitting it, we get a nicely formatted response back.
+<img src="http://www.brianscaturro.com/wp-content/uploads/2012/01/Screenshot_81.png" alt="Submitted form" title="Submitted form" width="595" height="274" class="alignleft size-full wp-image-1384" />
+<p style="clear:both;">
+Not so rough right? I'll look forward to diving a bit further into C# and it's use with ASP.NET web forms.
+</p>
+
+			</article>
+			<aside class="five columns omega">
+				<img class="aligncenter add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
+				<h2 class="sub-heading">Recent Posts</h2>
+				<ul class='posts'>
+					
+					<li><h3><a href="/2012/05/21/domain-driven-php.html">Domain Driven PHP</a></h3></li>
+					
+					<li><h3><a href="/2012/04/27/is-agile-dead.html">Is Agile Dead?</a></h3></li>
+					
+					<li><h3><a href="/2012/03/27/tdd-with-mock-objects-and-phpunit.html">TDD With Mock Objects And PHPUnit</a></h3></li>
+					
+					<li><h3><a href="/2012/03/10/javascript-masterclass-review.html">JavaScript Masterclass With Thomas Fuchs and Amy Hoy: A Review</a></h3></li>
+					
+					<li><h3><a href="/">The rest....</a></h3></li>
+				</ul>
+			</aside>
+		</div>
+	</div>
+</body>
+</html>

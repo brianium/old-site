@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>JavaScript Masterclass With Thomas Fuchs and Amy Hoy: A Review</title>
+	<meta name="description" content="I enjoy programming stuff - up to and including things!">
+	<meta name="author" content="Brian Scaturro">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link href='http://fonts.googleapis.com/css?family=Anton' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="/css/base.css">
+	<link rel="stylesheet" href="/css/skeleton.css">
+	<link rel="stylesheet" href="/css/layout.css">
+	<link rel="stylesheet" href="/css/pygments.css">
+	<link rel="shortcut icon" href="/images/favicon.ico">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>	
+<body>
+	<div class="container">
+		<header id="branding" class="sixteen columns">
+			<a href="/">
+				<div class="site-heading">Brian Scaturro</div>
+				<div class="site-subheading">Fancy a dance?</div>
+			</a>
+		</header>
+		<div id="main" role="main" class="sixteen columns">
+			<article class="eleven columns alpha">
+				<h1>JavaScript Masterclass With Thomas Fuchs and Amy Hoy: A Review<span class="post-date">10 Mar 2012</span></h1>
+				Recently I had the pleasure of taking the <a href="http://javascriptmasterclass.com/" target="_blank">JavaScript Masterclass</a> with noted JavaScript guru Thomas Fuchs and his brilliant accomplice Amy Hoy. The class was taught over 2 days, each day consisting of a four hour session. Eight hours might not sound like a lot, but there was a wealth of information included.
+
+<h3>What they covered</h3>
+For someone who has been doing JavaScript development for a while, this class had quite a bit of refresh material. Don't let that put you off. Amy and Thomas do a great job of shedding new light on the core of JavaScript, and it doesn't hurt to have an expert or two answering questions via video.
+
+<h4>The JavaScript language</h4>
+Thomas and Amy do a good job of explaining JavaScript's "everything is an object" nature, it's object model, and it's nearly functional design.
+
+It wasn't anything terribly new for me, but I did get rocked on a couple things, and it was really great to have an expert walk you through and confirm your assumptions. A classic example of augmenting JavaScript was taught in the class, and it exhibited much of what makes JavaScript so awesome:
+
+<pre class="prettyprint">
+//a real exercise solution I had to cook up to a class assignment:
+Function.prototype.cached = function() {
+  var self = this, cache = {};
+  return function(args) {
+    if(args in cache) return cache[args];
+    return cache[args] = self(args);
+  };
+};
+
+Math.sin = Math.sin.cached();
+</pre>
+
+This tiny example exhibits a lot of what is taught: JavaScript and the prototype, closures, and the functional powers of JavaScript.
+
+In addition to the core features of the language, Thomas and Amy will drive meta programming into your face - and hard at that. You will learn how to use curry powers and call functions dynamically and use the powers of JavaScript reflection.
+
+<pre class="prettyprint">
+for(name in people.Names)
+   people['hello' + name] = function(name, msg) {
+       return msg + ' ' + name;
+   }.curry(name);
+
+//now use the dynamic meta power!
+people.helloBrian('You are cool'); // You are cool Brian;
+</pre>
+
+<h4>JavaScript Infrastructure</h4>
+So many of us (myself included) have had a tendency to look at JavaScript as an exception to "real programming". This part of the course is definitely what I needed to hear and see in action. Scripts and their structure tend to be jumbled into disparate massive minified scripts, or no separation at all exists, and you end up with the same massive file for development and production.
+
+Thomas and Amy show you how to drop this nasty habit and organize your scripts into a helpful folder structure like you would with any other program. The focus of the class was on <a href="http://getsprockets.org" target="_blank">Sprockets</a>, a nice little tool in ruby with a command line script that can be used.
+
+Given this structure:<br><img src="http://www.brianscaturro.com/wp-content/uploads/2012/03/Screenshot_7.png" alt="" title="Screenshot_7" width="120" height="69" class=" size-full wp-image-1540" /><br> You can have a script set up like so:
+
+<pre class="prettyprint">
+(function(){
+//= require "models/mymodel"
+//= require "models/mymodel2"
+})();
+</pre>
+
+You can then run the <code>sprocketize</code> command like so:
+<pre class="prettyprint">
+sprocketize -I . main.js > main.prod.js
+</pre>
+
+Voila - your scripts are included into the closure above. No more hassle of dealing with one jumbo script. Thomas and Amy show how this is an invaluable tool, and your JavaScript can and should be treated like any other application code.
+
+One thing to note: The class seems to assume use of Sprockets version 1. Sprockets 1 is a bit outdated at this point, but it gives the desired functionality above. For some reason, Sprockets 2 dropped the ability to have require directives inside of a closure - you are now forced to include directives at the top of a script. This makes it less useful in my opinion, and after wrestling with Sprockets 2 for a hot second, I decided to drop it for Sprockets 1. So when you install that bad brotha, make sure you save yourself a headache:
+<pre class="prettyprint">
+gem install --remote sprockets -v 1.0.2
+</pre>
+
+<h4>Unit testing</h4>
+I'm no stranger to unit testing, but I'll confess it is absent from my JavaScript more often than it should be. Thomas gives a real solid introduction to unit testing in JavaScript, and you will see things you <strong>should</strong> be used to in your day to day code adventures:
+
+<pre class="prettyprint">
+//a style you might pick up from the class
+testSomeUnnamedFactoryFunction:function() {
+    this.assertUndefined($());
+
+    this.assertNull(document.getElementById('doesNotExist'));
+
+    //more asserts....
+}
+</pre>
+
+<h3>How they covered it</h3>
+The class was very interactive. I was able to see Amy or Thomas via video, and they were constantly reading chat and answering questions. They even gave some homework and super fun assignments to tackle - all with feedback. They offered up expert advice, and if you are a beginner you won't be after this class, and if you are in the advanced camp it will definitely confirm your assumptions and even drop a few new goodies your way. It can't hurt to have on your resume that you studied at the feet of the masters either.
+
+Plus, you get the tasty ebook <a href="http://javascriptrocks.com/performance/" target="_blank">JavaScript Performance Rocks</a> by these two wizards.
+
+The class was also a ton of fun:<br>
+<img src="http://www.brianscaturro.com/wp-content/uploads/2012/03/Screenshot_8.png" alt="" title="Screenshot_8" width="355" height="104" class="size-full wp-image-1547" /><br>
+
+<strong>I give this course an 11 out of 3!</strong>
+
+			</article>
+			<aside class="five columns omega">
+				<img class="aligncenter add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
+				<h2 class="sub-heading">Recent Posts</h2>
+				<ul class='posts'>
+					
+					<li><h3><a href="/2012/05/21/domain-driven-php.html">Domain Driven PHP</a></h3></li>
+					
+					<li><h3><a href="/2012/04/27/is-agile-dead.html">Is Agile Dead?</a></h3></li>
+					
+					<li><h3><a href="/2012/03/27/tdd-with-mock-objects-and-phpunit.html">TDD With Mock Objects And PHPUnit</a></h3></li>
+					
+					<li><h3><a href="/2012/03/10/javascript-masterclass-review.html">JavaScript Masterclass With Thomas Fuchs and Amy Hoy: A Review</a></h3></li>
+					
+					<li><h3><a href="/">The rest....</a></h3></li>
+				</ul>
+			</aside>
+		</div>
+	</div>
+</body>
+</html>

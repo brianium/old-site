@@ -1,0 +1,206 @@
+---
+layout: post
+title: CakePHP - Unit Testing Models
+tags:
+- CakePHP
+- PHP
+- Testing
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '1'
+  _yoast_wpseo_focuskw: ''
+  _yoast_wpseo_title: ''
+  _yoast_wpseo_metadesc: ''
+  _yoast_wpseo_meta-robots-noindex: '0'
+  _yoast_wpseo_meta-robots-nofollow: '0'
+  _yoast_wpseo_meta-robots-adv: none
+  _yoast_wpseo_sitemap-include: ! '-'
+  _yoast_wpseo_sitemap-prio: ! '-'
+  _yoast_wpseo_canonical: ''
+  _yoast_wpseo_redirect: ''
+  _thumbnail_id: '1146'
+---
+Testing is critical to any application development process. Seeing that green bar instills confidence to move forward, and gives you a handy tool to ensure any future changes won't break your carefully crafted application. CakePHP is one of the big kids on the block for rapid development in the PHP community, and it comes with some nice tools for testing your MVC applications. We are going to take a look at testing the M in that acronym. Let's cover setting up fixtures and test cases to automate this process.
+
+<h3>Setup CakePHP for testing</h3>
+CakePHP uses the popular PHP testing framework <a target="_blank" href="http://www.simpletest.org/">SimpleTest</a>. CakePHP is compatible with the 1.0.x branch of SimpleTest, and making CakePHP ready for testing is as easy as dropping the simpletest folder into the app/vendor directory. From here out we will be working in the app/tests directories of our CakePHP installation.
+
+<h3>Creating test fixtures</h3>
+Fixtures are a way to get temporary test data into your test cases. Fixtures are always a good idea because they isolate your test data from your live data. CakePHP uses fixtures to create test tables, populate those tables, then delete those tables all in the course of running a test. Fixtures are also handy because they spare you the task of creating and deleting data manually. We are going to be testing a typical user class in CakePHP and we will begin by creating a fixture for the User model. Create our fixture file in app/tests/fixtures and name it user_fixture.php. Creating a fixture is easy:
+<pre class="prettyprint">
+&lt;?php
+class UserFixture extends CakeTestFixture {
+    var $name = 'User';
+}
+?&gt;
+</pre>
+
+Notice the $name property. This should be the same thing you would use for the $name property in the User model we are testing. The next thing we need to do is setup the $fields property. This property is used to mirror the schema for the model.
+
+<pre class="prettyprint">
+&lt;?php
+class UserFixture extends CakeTestFixture {
+    var $name = 'User';
+
+    var $fields = array(
+        'id' => array('type' => 'integer','key' => 'primary'),
+	'username' => array('type' => 'string','length' => 100, 'null' => false),
+	'password' => array('type' => 'string','length' => 40, 'null' => false),
+	'email' => array('type' => 'string','length' => 255, 'null' => false),
+	'cdate' => array('type' => 'timestamp','null' => true,'default' => null)
+    );
+}
+?&gt;
+</pre>
+
+Each key of the $fields property represents a property of the model (or column in the database ). For each property you pass an array with information about the property. The keys available to that array are the following:
+
+<p>
+<strong style="display:block;">type</strong>An internal CakePHP data type. The following map to the equivalent SQL types: string (VARCHAR), text (TEXT), integer (INT), float (FLOAT), datetime (DATETIME), timestamp (TIMESTAMP), time (TIME), date (DATE), binary (BLOB)
+</p>
+
+<p>
+<strong style="display:block;">key</strong>Identifies the field as the primary key and sets it to auto increment.
+</p>
+
+<p>
+<strong style="display:block;">length</strong>The length the field should take.
+</p>
+
+<p>
+<strong style="display:block;">null</strong>True to allow nulls, false to disallow nulls.
+</p>
+
+<p>
+<strong style="display:block;">default</strong>The default value for the field.
+</p>
+
+Our $fields property above uses these fields to mirror the schema that is in our database for the User model. The final step is to populate our fixtures with some data, and this is done with the $records property. Place it right below the $fields property:
+<pre class="prettyprint">
+    var $records = array(
+        array('id' => 1,'username' => 'bscaturro','email' => 'scaturrob@gmail.com','password' => 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3','cdate' => '2011-11-16 06:59:22')
+    );
+</pre>
+
+Alternatively you can use the $import property to import live data from the model:
+<pre class="prettyprint">
+    $import = 'User';
+</pre>
+
+<h3>Using CakePHP test fixtures</h3>
+Since we are testing our User model, we will create our test in app/tests/cases/models. Call the file user.test.php and set it up like so:
+<pre class="prettyprint">
+&lt;?php
+App::import('Model','User');
+class UserTestCase extends CakeTestCase {
+	
+	var $fixtures = array('app.user');
+
+	function startCase() {
+		$this->User = ClassRegistry::init('User');
+	}
+
+	function endCase() {
+		ClassRegistry::flush();
+	}
+}
+?&gt;
+</pre>
+
+Note that we are using <code>App::import</code> at the top to include our model. The $fixtures property is how we utilize the fixture we created above. The $fixtures property takes an array of fixture names, each one prefixed with one of three values. These three values can be app, plugin, or core. You can probably take a stab at what these mean, but I will clarify just in case. The app prefix means our fixture represents an application model, something from our own application like our User model. The plugin prefix allows you to specify that it is a fixture for a plugin model and it uses a dot syntax to specify the plugin, something like plugin.myplugin.pizza. The core prefix signals it is a fixture for the core files that come with CakePHP.
+
+Our <code>startCase</code> method fires when the test case starts and within it we use the <code>ClassRegistry</code> class to initialize a User model as a property of the test case. The <code>endCase</code> method is used to flush the ClassRegistry of our initialized class at the very end of the test case. 
+
+Something to note, if your User model has relationships, like hasMany, you will need to include fixtures for those as well, even if you are not using them. So if a User model is using the $hasMany property to include Publication models, then you would need to create a <code>PublicationFixture</code> in app/tests/fixtures and the $fixtures property of <code>UserTestCase</code> would have to be updated to look like the following:
+<pre class="prettyprint">
+    var $fixtures = array('app.user','app.publication');
+</pre>
+
+<h3>Writing test methods to test the User model</h3>
+Our <code>UserTestCase</code> class is the spot to place our test methods. We will focus on testing weather or not our model validations are working. So let's look at our class definition for the User model to see what exactly we are testing:
+
+<pre class="prettyprint">
+class User extends AppModel {
+	var $name = 'User';
+
+	var $validate = array(
+		'username' => array(
+			'rule' => 'notEmpty',
+			'message' => 'Username must not be empty',
+			'required' => true
+		),
+		'password' => array(
+			'rule' => 'matchesConf',
+			'message' => "Passwords don't match",
+			'required' => true
+		),
+		'email' => array(
+			'unique' => array(
+				'rule' => 'isUnique',
+				'message' => 'Email is already taken',
+				'required' => true
+			),
+			'email' => array(
+				'rule' => 'email',
+				'message' => 'Not a valid email address'
+			)
+		)
+	);
+
+	var $hasMany = array(
+		'Publication' => array(
+			'foreignKey' => 'user_id',
+			'dependent' => true
+		)
+	);
+
+	function matchesConf($check) {
+		if (! empty($this->data['User']['passConf']) ) {
+			return $check['password'] == $this->data['User']['passConf'];
+		}
+		return false;
+	}
+}
+</pre>
+
+As you can see we have a <code>unique</code> validation rule on the email field in our User model validations. Seeing how Cake does a database look up of this field to see if it is unique or not, we better have some test data to use in the database. Fixtures to the rescue! The data we created in the $records property of our fixture will be used as our source of data to test against! So we can write our test to see if this validation is truly working. We simply write a test that attempts to create a user with the same email as the user we created in the $records property of <code>UserFixture</code>. We want to verify that validation fails:
+
+<pre class="prettyprint">
+function testUserEmailMustBeUnique() {
+	$this->User->create(array(
+		'username' => 'bscaturro',
+		'email' => 'scaturrob@gmail.com',
+		'password' => 'pass',
+		'passConf' => 'pass',
+		'cdate' => null
+	));
+        //make sure it doesn't pass validation!
+	$this->assertFalse($this->User->validates());
+}
+</pre>
+
+The above method of <code>UserTestCase</code> gives a couple of hints about testing conventions. The first thing you should note is that all test methods must begin with the word test. This is how the test runner knows to run the method as a test. The last thing we do in a test method is run an assertion. Here we assert that the validation is false. For a complete list of assertions available, check out the <a href="http://www.simpletest.org/en/first_test_tutorial.html" target="_blank">SimpleTest</a> site. Keep writing those test methods until you are certain all of your validations and model methods are passing. If you really want to go nuts, try writing your tests before you write your actual model code. There is no need to do any cleanup (deleting test records) when you are done. Our fixtures will take care of their own cleanup.
+
+<h3>Running our tests</h3>
+All tests are run from the test.php file that exists in the web root. If my application is installed at dev.myapp.com then the test runner is located at dev.myapp.com/test.php. Visit this URL and you are given a list of possible tests to run. We will be running the "Test Cases" from the App heading:
+<img src="http://www.brianscaturro.com/wp-content/uploads/2011/11/Untitled-1.jpg" alt="App test cases" title="App test cases" width="292" height="99" class="aligncenter size-full wp-image-1133" />
+
+From there you will click the models/User link and see the following beacon of hope!
+<img src="http://www.brianscaturro.com/wp-content/uploads/2011/11/Untitled-2.jpg" alt="passing tests" title="passing tests" width="522" height="98" class="aligncenter size-full wp-image-1134" />
+
+<h3>Conclusion</h3>
+There are a couple of other useful methods like <code>startTest</code> and <code>endTest</code> that are run at the start and end of each test method. They are passed the method being run so you can utilize them like so:
+<pre class="prettyprint">
+function startTest($method) {
+    if ( $method == 'testUserEmailMustBeUnique' ) {
+        //do stuff for this specific test
+    }
+}
+</pre>
+Keep experimenting and perfecting your testing process! CakePHP provides some awesome tools for automating testing. Be sure to download the complete files used in this introduction to testing models in CakePHP.
+
+<div class="tags Yellow">
+<a class="add-bottom" href="http://www.brianscaturro.com/downloads/modeltesting.zip">Download Files</a>
+</div>

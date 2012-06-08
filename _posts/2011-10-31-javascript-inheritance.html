@@ -1,0 +1,169 @@
+---
+layout: post
+title: JavaScript Inheritance
+tags:
+- JavaScript
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '1'
+  _yoast_wpseo_focuskw: ''
+  _yoast_wpseo_title: ''
+  _yoast_wpseo_metadesc: ''
+  _yoast_wpseo_meta-robots-noindex: '0'
+  _yoast_wpseo_meta-robots-nofollow: '0'
+  _yoast_wpseo_meta-robots-adv: none
+  _yoast_wpseo_sitemap-include: ! '-'
+  _yoast_wpseo_sitemap-prio: ! '-'
+  _yoast_wpseo_canonical: ''
+  _yoast_wpseo_redirect: ''
+  _yoast_wpseo_opengraph-description: ''
+  _thumbnail_id: '896'
+---
+JavaScript inheritance is something that often confuses developers. It is especially confusing for people coming from a language that uses more traditional inheritance - that is something like Java, C#, etc..
+
+<h3>JavaScript Classes</h3>
+JavaScript uses something called the prototype chain to manage inheritance. An instance of a class inherits properties from the constructor function's prototype. Lets take a look at a typical example.
+
+<pre class="prettyprint lang-js">
+//setup our module
+(function(){
+
+//our constructor function
+var Bird = function(color) {
+    this.color = color;
+};
+
+//lets create the prototype that all Birds will inherit from
+Bird.prototype = {
+    fly:function() {
+        console.log('Flap flap');
+    },
+    makeNoise:function() {
+        console.log('Chirp chirp');
+    }
+};
+
+//lets create an instance of our Bird class
+var tweety = new Bird('yellow');
+console.log(tweety.color); //yellow
+tweety.makeNoise(); //Chirp chirp
+
+//lets create another instance of our Bird class
+var toucanSam = new Bird('blue');
+console.log(toucanSam.color); //blue
+toucanSam.makeNoise(); //Chirp chirp
+
+}).call(this);
+</pre>
+
+This has become idiomatic in JavaScript town. It works for creating classes and objects, and you can do tons of JavaScript coding with this pattern.
+
+<h3>Sub-classing</h3>
+Coders love reuse right? Sub-classing in JavaScript is just as important as it is in other languages. Most languages can get away with something like the following example from PHP:
+<pre class="prettyprint lang-php">
+&lt;?php
+class HamSandwich extends Sandwich {
+    //HamSandwich code goes here
+}
+?&gt;
+</pre>
+With this little gem we hope to get all the benefits of our Sandwich parent class. Things aren't so cut and dry in JavaScript. The key again is the prototype. If object A has a subclass B, then B.prototype = A.prototype and if you want to reuse the constructor of A, then B = A.prototype.constructor. Lets see an example of this that piggybacks off of our bird class above.
+<pre class="prettyprint lang-js">
+//create a subclass
+var Parrot = Bird.prototype.constructor;
+/**set the parrot prototype to an object that inherits from Bird.prototype.
+ * We can't set the prototype directly i.e Parrot.prototype = Bird.prototype
+ * because then any changes made to the subclass' prototype (which is a reference to Bird.prototype)
+ * will affect every object that uses Bird.prototype. We want our subclass to keep it's own prototype
+ */
+var ctor = function(){};
+ctor.prototype = Bird.prototype;
+Parrot.prototype = new ctor();
+//stores the parent as a static property in case it is needed
+Parrot.__super__ = Bird.prototype;
+
+//now we can overwrite methods
+Parrot.prototype.makeNoise = function() {
+    console.log("Squawk!");
+};
+//or add new ones
+//now creating new methods on the subclass can easily be accomplished by modifying its prototype
+Parrot.prototype.talk = function(phrase) {
+    //probably not the best illustration but here is how you can call the super method
+    //I mean...whoever heard of a chirping parrot?
+    Parrot.__super__.makeNoise.call(this);
+    console.log(phrase);
+};
+
+var macaw = new Parrot('red');
+macaw.makeNoise(); //Squawk!
+macaw.talk('Polly wants a cracker'); //Chirp chirp Polly wants a cracker - Chirp chirp comes from __super__
+</pre>
+
+The most confusing part of this ordeal is the business around ctor function. This follows the standard <a href="http://javascript.crockford.com/prototypal.html">inherit function</a> championed by Douglas Crockford (it is also the basis for the ECMAScript 5 Object.create method). The idea is to create an object that inherits from the prototype so the actual prototype of the parent class is never touched.
+
+<h3>Putting it all together</h3>
+Now that we understand how this all works (right?) we can make our lives a little easier by wrapping it all up into some handy functions and methods to make our lives a little easier. The following works well, and it is the same inheritance mechanism used by <a href="http://documentcloud.github.com/backbone/">Backbone.js</a>
+
+<pre class="prettyprint lang-js">
+//shared function used for setting up the prototype
+var ctor = function() {},
+    //simple function to map properties from one object to another
+    _extend = function(o,p) {
+        var k;
+	for ( k in p ) {
+	    o[k] = p[k];
+	}
+    },
+
+    inherits = function(parent,protoProps,staticProps) {
+	var child;
+        //if the passed in protoProps has a constructor property, use it as the child 
+	if ( protoProps && protoProps.hasOwnProperty('constructor') ) {
+		child = protoProps.constructor;
+	} else {
+        //if not, then create an anonymous function that calls the parent constructor function with the child as the "this" context
+		child = function() { parent.apply(this,arguments); }
+	}
+        //copy over parent static props to the child
+	_extend(child,parent);
+	//setup the prototype chain
+	ctor.prototype = parent.prototype;
+	child.prototype = new ctor();
+	
+	//extend the prototype with protoProps
+	if ( protoProps ) _extend(child.prototype,protoProps);
+	//add static properties
+	if ( staticProps ) _extend(child,staticProps);
+
+	//add the constructor backreference
+	child.prototype.constructor = child;
+
+	child.__super__ = parent.prototype;
+	return child;
+  },
+        
+  extend = function(protoProps,staticProps) {
+      var child = inherits(this,protoProps,staticProps);
+      child.extend = this.extend;
+      return child;
+  };
+
+//using our new functions its a snap to extend our Bird class
+Bird.extend = extend;
+var Parrot = Bird.extend({
+    talk:function(phrase) {
+        console.log(phrase);
+    }
+},{
+    staticPropOne:1
+});
+
+var macaw = new Parrot('red');
+macaw.talk('hello'); //hello
+        
+</pre>
+
+Inheritance and sub-classing are important tools for maintaining and reusing code. JavaScript may have its own way of doing things, but after playing with it for a while, you will come to love it for the extremely expressive and functional language that it is.

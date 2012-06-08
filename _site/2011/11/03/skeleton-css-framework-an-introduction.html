@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Skeleton CSS Framework: An Introduction</title>
+	<meta name="description" content="I enjoy programming stuff - up to and including things!">
+	<meta name="author" content="Brian Scaturro">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link href='http://fonts.googleapis.com/css?family=Anton' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="/css/base.css">
+	<link rel="stylesheet" href="/css/skeleton.css">
+	<link rel="stylesheet" href="/css/layout.css">
+	<link rel="stylesheet" href="/css/pygments.css">
+	<link rel="shortcut icon" href="/images/favicon.ico">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>	
+<body>
+	<div class="container">
+		<header id="branding" class="sixteen columns">
+			<a href="/">
+				<div class="site-heading">Brian Scaturro</div>
+				<div class="site-subheading">Fancy a dance?</div>
+			</a>
+		</header>
+		<div id="main" role="main" class="sixteen columns">
+			<article class="eleven columns alpha">
+				<h1>Skeleton CSS Framework: An Introduction<span class="post-date">03 Nov 2011</span></h1>
+				As I was writing my post on the <a href="http://www.brianscaturro.com/html5-and-the-document-outline" target="_blank">document outline</a>, I quickly coded up a demo site to show off some of those new HTML5 features that would aid the cause. I couldn't very well have a demo site that was completely ugly could I? I decided to do a quick test of the <a href="http://www.getskeleton.com" target="_blank">Skeleton</a> CSS framework. What I found was a wonderfully responsive framework that is wonderfully easy to use.
+<div class="tags Yellow">
+<a class="add-bottom" href="http://www.brianscaturro.com/demos/argyle/" target="_blank">Demo Site</a><a href="http://www.brianscaturro.com/demos/argyle/source.zip" class="add-bottom">Download Demo Source</a>
+</div>
+<hr />
+<h3>How to use it</h3>
+Head over to <a href="http://www.getskeleton.com" target="_blank">getskeleton.com</a> and download this bad mamma jamma. The bare minimum you need to get off the ground are two files: base.css and skeleton.css. The base.css file includes a lot of helper classes and resets, while the skeleton.css file contains the grid and column styles. The layout.css file is meant to contain your own custom styles, and it has a couple of useful media queries to boot. The <a href="http://www.brianscaturro.com/demos/argyle/" target="_blank">demo site</a> was built utilizing the base.css file and skeleton.css file. To get rockin just include these two files in your document head before your own stylesheet:
+<pre class="prettyprint">
+&lt;link href="/common/stylesheets/skeleton/base.css" rel="stylesheet" media="all" type="text/css" /&gt;
+&lt;link href="/common/stylesheets/skeleton/skeleton.css" rel="stylesheet" media="all" type="text/css" /&gt;
+&lt;link href="style.css" rel="stylesheet" media="all" type="text/css" /&gt;
+</pre>
+Easy weasy right?
+<h3>What it's made of</h3>
+Contrary to a lot of responsive approaches, Skeleton does not use a fluid base - that is it is not in percentages. It adapts the popular 960 grid system, and then focuses on min and max widths via media queries.
+<pre class="prettyprint">
+/* Smaller than standard 960 (devices and browsers) */
+@media only screen and (max-width: 959px) {}
+
+/* Tablet Portrait size to standard 960 (devices and browsers) */
+@media only screen and (min-width: 768px) and (max-width: 959px) {}
+
+/* All Mobile Sizes (devices and browser) */
+@media only screen and (max-width: 767px) {}
+
+/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+@media only screen and (min-width: 480px) and (max-width: 767px) {}
+
+/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+@media only screen and (max-width: 479px) {}
+</pre>
+
+At the core of Skeleton's grid is a sixteen column system. You start out with a class of "container" on your root element, and then make sure whatever columns and column offsets you are using add up to the total 16. At the core of the demo's layout is this:
+<pre class="prettyprint">
+&lt;div class="container clearfix" role="main"&gt;
+	&lt;div class="eleven columns alpha"&gt;
+
+	&lt;/div&gt;
+	&lt;aside class="five columns omega"&gt;
+
+	&lt;/aside&gt;
+&lt;/div&gt;
+</pre>
+Eleven plus five does in fact equal sixteen....simple right? Alternatively, if you wanted more padding on the left of the aside you could do the following:
+<pre class="prettyprint">
+&lt;div class="container clearfix" role="main"&gt;
+	&lt;div class="eleven columns alpha"&gt;
+
+	&lt;/div&gt;
+	&lt;aside class="four columns offset-by-one omega"&gt;
+
+	&lt;/aside&gt;
+&lt;/div&gt;
+</pre>
+Just make sure it all adds up. In case you are wondering, alpha and omega are pretty standard conventions that strip off margin from the first column and last column respectively.
+
+<h3>What makes it responsive?</h3>
+Well you already saw the media queries used. Remember the key to the grid is the column class. Lets look at a couple column rules within the media queries:
+<pre class="prettyprint">
+/* #Base 960 Grid
+================================================== */
+
+    .container                                  { position: relative; width: 960px; margin: 0 auto; padding: 0; }
+    .column, .columns                           { float: left; display: inline; margin-left: 10px; margin-right: 10px; }
+    .row                                        { margin-bottom: 20px; }
+
+    /* Nested Column Classes */
+    .column.alpha, .columns.alpha               { margin-left: 0; }
+    .column.omega, .columns.omega               { margin-right: 0; }
+
+    /* Base Grid */
+    .container .one.column                      { width: 40px;  }
+    .container .two.columns                     { width: 100px; }
+    .container .three.columns                   { width: 160px; }
+
+/* #Tablet (Portrait)
+================================================== */
+
+    /* Note: Design for a width of 768px */
+
+    @media only screen and (min-width: 768px) and (max-width: 959px) {
+        .container                                  { width: 768px; }
+        .container .column,
+        .container .columns                         { margin-left: 10px; margin-right: 10px;  }
+        .column.alpha, .columns.alpha               { margin-left: 0; margin-right: 10px; }
+        .column.omega, .columns.omega               { margin-right: 0; margin-left: 10px; }
+
+        .container .one.column                      { width: 28px; }
+        .container .two.columns                     { width: 76px; }
+        .container .three.columns                   { width: 124px; }
+</pre>
+And so on.... be sure to take a more in depth look at the source to see how it reacts at even smaller screen sizes.
+
+<h3>What you can do to spice things up a bit more</h3>
+As with any mobile optimized site, you should include the viewport meta in your document:
+<pre class="prettyprint">
+&lt;meta name="viewport" content="width=device-width,initial-scale=1"&gt;
+</pre>
+This of course lets you control the size of the viewport and the zoom properties as well.
+
+One cool feature that is not included in the framework is a smooth resizing ( go ahead and resize the window on the <a href="http://www.brianscaturro.com/demos/argyle/" target="_blank">demo site</a> to see what I mean ). Normally you just see blocks shift abruptly as the screen size adjusts. It is fairly easy to remedy this with CSS3 transitions:
+<pre class="prettyprint">
+.column, .columns {
+  	-moz-transition: all .2s ease-in-out;
+	-webkit-transition: all .2s ease-in-out;
+	-o-transition: all .2s ease-in-out;
+	transition: all .2s ease-in-out;
+}
+</pre>
+<h3>Last thoughts</h3>
+Skeleton provides a slew of other useful classes like <code>.button</code>, <code>.remove-bottom, .add-bottom</code> and <code>.tabs</code>. 
+Usual fare for responsive design is to use a polyfill like <a href="https://github.com/scottjehl/Respond" target="_blank">respond.js</a> to make your older browsers ( I'm lookin at you IE ) behave with media queries. I am not entirely convinced of the necessity of this, as Skeleton creator Dave Gamache puts it
+<blockquote class="superquote">
+<p>
+There is a small hiccup though - older non-CSS3 browsers aren't going to respond to the media-queries and thus will be served the standard 960 grid even if they are resized. In the spirit of graceful degradation though, I'm going to let this be instead of trying to implement a JS solution.
+</p>
+</blockquote>
+
+Other than that, you can test the demo site in IE7+ and all modern browsers, and you should see a pretty nice experience on all fronts.
+
+Don't forget (Make sure you stretch this bad brotha):
+<div class="tags Yellow">
+<a class="add-bottom" href="http://www.brianscaturro.com/demos/argyle/" target="_blank">View the Demo Site</a><a href="http://www.brianscaturro.com/demos/argyle/source.zip" class="add-bottom">Download Demo Source</a>
+</div>
+
+			</article>
+			<aside class="five columns omega">
+				<img class="aligncenter add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
+				<h2 class="sub-heading">Recent Posts</h2>
+				<ul class='posts'>
+					
+					<li><h3><a href="/2012/05/21/domain-driven-php.html">Domain Driven PHP</a></h3></li>
+					
+					<li><h3><a href="/2012/04/27/is-agile-dead.html">Is Agile Dead?</a></h3></li>
+					
+					<li><h3><a href="/2012/03/27/tdd-with-mock-objects-and-phpunit.html">TDD With Mock Objects And PHPUnit</a></h3></li>
+					
+					<li><h3><a href="/2012/03/10/javascript-masterclass-review.html">JavaScript Masterclass With Thomas Fuchs and Amy Hoy: A Review</a></h3></li>
+					
+					<li><h3><a href="/">The rest....</a></h3></li>
+				</ul>
+			</aside>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,51 @@
+---
+layout: post
+title: Normalize.css - My new reset
+tags:
+- CSS
+- css reset
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '1'
+  _thumbnail_id: '1196'
+  _yoast_wpseo_focuskw: ''
+  _yoast_wpseo_title: ''
+  _yoast_wpseo_metadesc: ''
+  _yoast_wpseo_meta-robots-noindex: '0'
+  _yoast_wpseo_meta-robots-nofollow: '0'
+  _yoast_wpseo_meta-robots-adv: none
+  _yoast_wpseo_sitemap-include: ! '-'
+  _yoast_wpseo_sitemap-prio: ! '-'
+  _yoast_wpseo_canonical: ''
+  _yoast_wpseo_redirect: ''
+---
+Just a short little tidbit on something I have been digging lately. Many of us who work with CSS on a daily basis have some kind of reset mechanism built in. There are a bunch of options out there these days, but for many the timeless classic is Eric Meyer's <a href="http://meyerweb.com/eric/tools/css/reset/" target="_blank">CSS reset</a>. Another popular offering in today's HTML5 wilds is the HTML5 doctor <a href="http://html5doctor.com/html-5-reset-stylesheet/" target="_blank">HTML5 CSS reset</a>.
+
+<h3>Is all that really necessary?</h3>
+We use these resets to bring every browser to a common ground. Wipe out padding, margin, font-size variations, and the like. We forget that browsers have some defaults that can be handy. Margin on block elements can be very helpful. Why change something you don't need to.  Another useful convention implemented by most browsers are greater size/weight given to header tags. This is usually desired.
+
+<h3>Enter normalize.css</h3>
+Why not get the best of both worlds? I have been using this bad motha in projects lately, and I am pleased with what I see. According to the <a href="http://necolas.github.com/normalize.css/" target="_blank">normalize.css site</a> normalize does the following:
+
+<ul>
+    <li><strong>Preserves useful defaults</strong>, unlike many CSS resets</li>
+    <li><strong>Normalizes styles</strong> for a wide range of elements</li>
+    <li><strong>Corrects bugs</strong> and common browser inconsistencies.</li>
+    <li><strong>Improves usability</strong> with subtle improvements</li>
+    <li><strong>Explains what code does</strong> using detailed comments.</li>
+</ul>
+
+You get a lot of bonuses you might otherwise take for granted. Things like audio elements without controls (which are useless) being hidden, maintaining consistent font size with ems, cake sure pre-formatted text is readable, consistent sup and sub elements, image quality when scaling in IE, and a tone more.
+
+Give it a look-see!
+
+<h3>One more thing....</h3>
+I am going to flip if I see this in one more production environment:
+<pre class="prettyprint">
+* {
+    margin:0;
+    padding:0;
+}
+</pre>

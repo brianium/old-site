@@ -1,0 +1,192 @@
+---
+layout: post
+title: 30 Days of ASP.NET:Processing Forms With C#
+tags:
+- .NET
+- ASP.NET
+- C#
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '1'
+  _yoast_wpseo_focuskw: ''
+  _yoast_wpseo_title: ''
+  _yoast_wpseo_metadesc: ''
+  _yoast_wpseo_meta-robots-noindex: '0'
+  _yoast_wpseo_meta-robots-nofollow: '0'
+  _yoast_wpseo_meta-robots-adv: none
+  _yoast_wpseo_sitemap-include: ! '-'
+  _yoast_wpseo_sitemap-prio: ! '-'
+  _yoast_wpseo_canonical: ''
+  _yoast_wpseo_redirect: ''
+  _thumbnail_id: '1421'
+  _post_series_id: '1228'
+  _post_series_order: '0'
+  _wp_old_slug: 30-days-of-asp-netprocessing-forms-with-c
+---
+My last entry in <a href="http://www.brianscaturro.com/series/30-days-of-asp-net/" title="30 Days Of ASP.NET" target="_blank">30 Days of ASP.NET</a> covered the basics of server controls. At the end of the post I showed a little C# snippet that processed the input then output a nice little message about the user's favorite pizza (delicious). In this next entry, I am going to break that code down and cover some of the basics of C# as the language pertains to ASP.NET web forms.
+
+<h3>An Introduction to C#</h3>
+I couldn't possibly hope to cover all that C# has to offer in one post. I am going to go over some of the things that are visible from the code behind pasted at the end of my last <a href="http://www.brianscaturro.com/30-days-of-aspnet-server-controls/" title="30 Days of ASP.NET:Server Controls" target="_blank">entry</a>.
+
+Lets take a look at the source code one more time:
+<pre class="prettyprint">
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public partial class _Default : System.Web.UI.Page
+{
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        
+    }
+
+    protected void btnSubmit_Click(object sender, EventArgs e)
+    {
+        pnlForm.Visible = false;
+        litName.Text = txtName.Text;
+        litSnack.Text = ddlSnack.SelectedItem.Value;
+        List&lt;String&gt; toppings = lbToppings.Items.Cast&lt;ListItem&gt;().Where(s =&gt; s.Selected).Select(s =&gt; s.Value).ToList();
+        litToppings.Text = string.Join(", ", toppings.ToArray());
+        if (toppings.Count.Equals(0))
+        {
+            litToppings.Text = "Plain is fine for me";
+        }
+        List&lt;String&gt; seasonings = cblSeasoning.Items.Cast&lt;ListItem&gt;().Where(c =&gt; c.Selected).Select(c =&gt; c.Value).ToList();
+        litSeasoning.Text = string.Join(", ", seasonings.ToArray());
+        if (seasonings.Count.Equals(0))
+        {
+            litSeasoning.Text = "nothing";
+        }
+        litPisan.Text = rblPisan.SelectedValue;
+        pnlMessage.Visible = true;
+    }
+}
+</pre>
+
+You may notice some things next to method parameters and in our List objects that you may not be accustomed to in a language like PHP:
+<pre class="prettyprint">
+protected void btnSubmit_Click(object sender, EventArgs e)
+{
+    //event handling code
+}
+
+//OR
+List&lt;string&gt; seasonings = "....";
+</pre>
+I am talking about words like <code>void</code>, <code>object</code>, <code>EventArgs</code>, and <code>string</code>. These are all types (and in the case of void, the lack of one), and they give an important clue to the nature of C#. C# is a strongly typed language. Variables must declare a type (if you are familiar with the <a href="http://msdn.microsoft.com/en-us/library/dd264736.aspx" title="type dynamic in C#" target="_blank">dynamic</a> run time available in C#, then get outta here), and methods must declare what type they return.
+
+<h4>C# Types</h4>
+Using types is pretty simple. Before declaring a variable or instantiating an object, you need to declare the type.
+<pre class="prettyprint">
+int count = 0;
+sbyte age = 25;
+string name = "Brian";
+List&lt;string&gt; names = new List&lt;string&gt;();
+</pre>
+When you create a method that returns a value, you need to specify what that value is:
+<pre class="prettyprint">
+protected double Add(double a, double b)
+{
+    return a + b;
+}
+</pre>
+For a full reference of the available types in C#, head on over to the <a href="http://msdn.microsoft.com/en-us/library/ya5y69ds.aspx" title="ASP.NET types" target="_blank">MSDN page</a> on the subject. 
+
+Most types can be used for arrays as well.
+<pre class="prettyprint">
+//notice the use of the brackets [] to denote an array
+string[] names = new string[4];
+int[] counts = new int[3];
+</pre>
+Languages like PHP don't use fixed length arrays, you can add and subtract as many elements as you want. If you try to add too many elements to a C# array you will get an <code>IndexOutOfRangeException</code> error thrown.
+
+To get past this limitation, C# offers the <code>ArrayList</code>. The <code>ArrayList</code> shrinks and stretches on demand. You can easily add objects via the <code>Add</code> method.
+<pre class="prettyprint">
+ArrayList al = new ArrayList();
+al.Add(0);
+al.Add(1);
+al.Add(2);
+</pre>
+The problem presented by the <code>ArrayList</code> is that it does not care what types you add to it. If you are expecting a collection of <code>int</code> objects and a <code>string</code> object gets added on accident, you could be in trouble. 
+
+<h4>Enter Generics</h4>
+To get past this, C# introduces something called generics. Generics are basically templates that can be used for a specific type. You saw one used above. The <code>List</code> object specifies that it is a collection of <code>string</code> objects, and it works just like the <code>ArrayList</code> in that it can grow and shrink on demand.
+<pre class="prettyprint">
+//list of strings
+List&lt;string&gt; strings = new List&lt;string&gt;();
+strings.Add("string1");
+strings.Add("string2");
+
+//list of ints
+List&lt;int&gt; ints = new List&lt;int&gt;();
+ints.Add(1);
+ints.Add(2);
+</pre>
+
+<h3>Using C# to Handle ASP.NET Events</h3>
+There are plenty of other things to cover when it comes to C#, things like classes, methods, and properties to name a few. There is just too much to cover in this short post, so I am going to stick to the plan of covering what is apparent in the code-behind for the "Pizza Greeter". Let's use what we have learned so far to understand the <code>btnSubmit_Click</code> event being used. The <code>btnSubmit_Click</code> event is executed as a method of the <code>_Default</code> class. We tell our web form to run this method when the button is clicked via the <code>OnClick</code> property of the <code>Button</code> control.
+<pre class="prettyprint">
+&lt;asp:Button ID="btnSubmit" Text="submit" runat="server" OnClick="btnSubmit_Click" /&gt;
+</pre>
+When the <code>Button</code> is clicked , our event handles the form submission.
+
+<pre class="prettyprint">
+protected void btnSubmit_Click(object sender, EventArgs e)
+{
+    //event code here
+}
+</pre>
+
+<h4>Accessing Controls</h4>
+Remember we ID controls in our web forms. We can access our controls by their IDs in C#. So the first thing we do is hide our form and set some values.
+<pre class="prettyprint">
+//hide the form panel
+pnlForm.Visible = false;
+//set the Name Literal's text to the value of the Name TextBox
+litName.Text = txtName.Text;
+//set the Snack Literal's text to the value of the Snack DropDownList's selected item
+litSnack.Text = ddlSnack.SelectedItem.Value;
+</pre>
+
+<h4>Using LINQ to Get Selected Items</h4>
+List type controls can have a <code>SelectionMode</code> property set to "Multiple" to allow multiple items to be selected. Normally you would have to loop through the control's <code>Items</code> property and see which items have a <code>Selected</code> property that is <code>true</code>. To save ourselves the hassle of looping, we will use LINQ to return a list of the items that are selected.
+<pre class="prettyprint">
+//cast the list items to a generic of type ListItem and then run some LINQ magic
+List&lt;string&gt; toppings = lbToppings.Items.Cast&lt;ListItem&gt;().Where(s =&gt; s.Selected).Select(s =&gt; s.Value).ToList();
+//join the returned list with commas
+litToppings.Text = string.Join(", ", toppings.ToArray());
+//if the linq expression returns an empty set, then no topping were selected
+if (toppings.Count.Equals(0))
+{
+    //set the text of the toppings Literal to a message indicating you don't need any toppings
+    litToppings.Text = "Plain is fine for me";
+}
+</pre>
+For more on Linq, check these <a href="http://code.msdn.microsoft.com/101-LINQ-Samples-3fb9811b" title="LINQ samples" target="_blank">samples</a> on the MSDN out.
+The rest of the event code is similar to the first part. We will set some more <code>Literal</code> controls and use a similar LINQ expression to get more selected items.
+<pre class="prettyprint">
+List&lt;String&gt; seasonings = cblSeasoning.Items.Cast&lt;ListItem&gt;().Where(c =&gt; c.Selected).Select(c =&gt; c.Value).ToList();
+litSeasoning.Text = string.Join(", ", seasonings.ToArray());
+if (seasonings.Count.Equals(0))
+{
+    litSeasoning.Text = "nothing";
+}
+//get the selected item from the RadioButtonList and set the Pisan Literal Text property to it's value
+litPisan.Text = rblPisan.SelectedValue;
+//finally show the message Panel - effectively swapping the form Panel with the message Panel
+pnlMessage.Visible = true;
+</pre>
+
+Before the form is submitted:
+<img src="http://www.brianscaturro.com/wp-content/uploads/2012/01/before.png" alt="before the form is submitted" title="before the form is submitted" width="397" height="611" class="alignnone size-full wp-image-1418" />
+
+After the form is submitted:
+<img src="http://www.brianscaturro.com/wp-content/uploads/2012/01/after.png" alt="after the form has been submitted" title="after the form has been submitted" width="584" height="248" class="alignnone size-full wp-image-1419" />
+
+C# is an incredibly powerful language, and as we proceed into more complex applications, there will only be more powerful features to explore.

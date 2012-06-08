@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>30 Days of ASP.NET: Your First Project</title>
+	<meta name="description" content="I enjoy programming stuff - up to and including things!">
+	<meta name="author" content="Brian Scaturro">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link href='http://fonts.googleapis.com/css?family=Anton' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="/css/base.css">
+	<link rel="stylesheet" href="/css/skeleton.css">
+	<link rel="stylesheet" href="/css/layout.css">
+	<link rel="stylesheet" href="/css/pygments.css">
+	<link rel="shortcut icon" href="/images/favicon.ico">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>	
+<body>
+	<div class="container">
+		<header id="branding" class="sixteen columns">
+			<a href="/">
+				<div class="site-heading">Brian Scaturro</div>
+				<div class="site-subheading">Fancy a dance?</div>
+			</a>
+		</header>
+		<div id="main" role="main" class="sixteen columns">
+			<article class="eleven columns alpha">
+				<h1>30 Days of ASP.NET: Your First Project<span class="post-date">05 Jan 2012</span></h1>
+				This second entry in "<a href="http://www.brianscaturro.com/series/30-days-of-asp-net/" title="30 Days Of ASP.NET" target="_blank">30 days of ASP.NET</a>" will cover getting a new project up and running. I will take a brief look at the different project types, and then create a web form or two in a project that we can run.
+
+<h3>Project Types</h3>
+VWD gives you two essential project types to choose from. There are pros and cons to each approach. Let's take a look at each.
+
+<h4>Web Site Project</h4>
+The web site project offers some flexibility because it is just a directory on the file system. There is no project file and nothing tracking dependencies. It can be created by going to <code>File > New Web Site</code> in VWD.
+
+The upside of this approach is you can easily copy sites from one location to another. You can easily drag files into the site through VWD as well as the file system directly. This approach looks a lot like the PHP development process; you create a file and put it in the right place, then upload and go.
+
+Web site projects also have an App_Code folder. This is where you should store your classes and site wide code. Web application projects differ in that you can create code files almost anywhere.
+
+There are cons to this approach as well. Because there is no containing file, the build process becomes cumbersome. ASP.NET is a compiled solution. Web site projects have to be recompiled at run time when a new file is added. This can be a lengthy process, and it might not be ideal for a production site. In contrast to the web application project, web site projects do not compile down into a single assembly or DLL. Due to the strict reliance on folder structure and lack of containing file, web site projects have a reputation as being difficult to maintain for teams (version control, compiling, etc...)
+
+<h4>Web Application Project</h4>
+A web application project offers more control for teams and the compilation process. There is a single project file that keeps track of content. You can create a new web application project by going to <code>File > New Project</code> in VWD.
+
+Web application projects are a lot easier for teams to manage. You can load the project file by going to <code>File > Open Project</code> and opening the solution file (an extension of .sln). This makes things a little easier to manage for a team. Unlike the web site project, the web application project has the added bonus of compiling down to a single assembly. This prevents compilation from happening at run time. Control over compilation makes a little more sense (at least to me) for a production environment. The web application project is my personal favorite, and the way I typically start a project.
+
+Web application projects are not without their hardships. The main issue is portability. They are less portable than a web site project. You can't just drag things, add files, and expect things to work. It is much more difficult to copy entire sites. This is due to the fact that a web application project needs to be compiled <em>before</em> being run. Adding files, copying to new locations, etc... all require the project to be recompiled. This can definitely be a snare to people coming from the web site project camp, or people who work with languages that are not compiled. You can't just upload a file and go.
+
+<h4>Project Templates</h4>
+It is worth mentioning that each of these projects come with a couple of predefined templates. These templates give a good starting point for a project. Each project type offers a template to start web sites with master pages, style sheets, and web forms ready to go. After selecting <code>File > New Web Site</code> or <code>File > New Project</code>, you can see the templates available.
+
+<h3>Creating A Project</h3>
+With everything said about my preference for web application projects, in an effort to stay consistent with the <a href="http://www.amazon.com/Beginning-ASP-NET-VB-Wrox-Programmer/dp/0470502215/ref=sr_1_1?ie=UTF8&qid=1325764017&sr=8-1" target="_blank">book</a> I am using for this first half of the game, I am going to demonstrate creating a <em>web site</em> project. You won't be missing out on too much about how the framework works on the web by choosing one or the other.
+
+To get started, we are going to head to <code>File > New Web Site</code> and use the ASP.NET Empty Web Site template.
+
+<h4>Adding a Web Form</h4>
+A web site is nothing without at least one web form. Web forms are the workhorse of any web forms project. They are ultimately what is processed and viewed by a client. Let's add a web form to our project by right clicking our project name in the solution explorer then clicking "Add New  Item"
+<img src="http://www.brianscaturro.com/wp-content/uploads/2012/01/newitem.jpg" alt="" title="adding a new item" width="467" height="131" class="alignnone size-full wp-image-1290" />
+From here we want to choose "Web Form":
+<img src="http://www.brianscaturro.com/wp-content/uploads/2012/01/Screenshot_7.png" alt="" title="new web form" width="450" height="137" class="alignnone size-full wp-image-1292" />
+Leave the name as Default.aspx and make sure the "Place code in separate file" checkbox in the lower right of the window is checked, then add the form.
+
+<h4>Anatomy of a Web Form</h4>
+Right after you add the web form, the document view (the main editor area) will be updated to contain your new web form. It will look like a typical web page with a couple of differences. Let's look at a couple of them.
+
+<h5>The Page Directive</h5>
+The page directive sets up the web form. The page directive looks like this:
+<pre class="prettyprint">
+&lt;%@ Page Language="C#" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %&gt;
+</pre>
+Here are the meanings of each attribute:
+<dl>
+<dt>Language</dt>
+<dd>This attribute dictates the language of the code being used by this web form. Typically Visual Basic or C#</dd>
+<dt>AutoEventWireup</dt>
+<dd>Weather or not event binding happend automatically</dd>
+<dt>CodeFile</dt>
+<dd>A path to the referenced code-behind file for the page. Used in conjunction with the Inherits attribute to specify a code source. CodeFile is used in web site projects, while CodeBehind is used in web application projects</dd>
+<dt>Inherits</dt>
+<dd>Defines a code-behind class derived from the Page class. </dd>
+</dl>
+
+<h5>The "runat" Attribute</h5>
+If you have any familiarity with HTML, you may notice that the runat attribute does not fit into the HTML standard. <code>runat="server"</code> essentially makes the item available to the code-behind file. This allows you to access certain elements in a programmatic fashion.
+
+<h5>The Form</h5>
+Web forms offer an interesting programming model. It is very event driven, and it is accomplished through the form element that wraps everything. This may look atypical to many web developers:
+<pre class="prettyprint">
+&lt;body&gt;
+    &lt;form id="form1" runat="server"&gt;
+    &lt;div&gt;
+    
+    &lt;/div&gt;
+    &lt;/form&gt;
+&lt;/body&gt;
+</pre>
+
+<h6>The aspx File</h6>
+Let's go ahead and add some content with a server control or two to the <code>div</code> element  inside of the form.
+<pre class="prettyprint">
+&lt;h1&gt;Web Forms Are Gnarly!&lt;/h1&gt;
+&lt;p&gt;
+    Hello &lt;asp:Label runat="server" ID="lblName" /&gt;
+&lt;/p&gt;
+&lt;p&gt;
+    The date is currently &lt;asp:Label runat="server" ID="lblDate" /&gt;
+&lt;/p&gt;
+</pre>
+
+<h6>The Code-Behind</h6>
+Since we added that runat attribute to our Label controls, they can now be easily accessed from our code-behind file. The Page_Load method inside Default.aspx.cs file should now look like this:
+<pre class="prettyprint">
+protected void Page_Load(object sender, EventArgs e)
+{
+    lblName.Text = "Brian";
+    lblDate.Text = DateTime.Now.ToString();
+}
+</pre>
+We access the Label controls via the IDs we set. It is a pretty well known convention to name your controls with an abbreviated version of the control, followed by what it represents - i.e. lblName, txtEmail, etc...
+
+<h4>Run Your Project</h4>
+Running the project is as simple as pressing <code>Ctrl + F5</code>. If your program is error free it will pop up in the browser and look like this:
+<img src="http://www.brianscaturro.com/wp-content/uploads/2012/01/Screenshot_8.png" alt="" title="running the web app" width="348" height="178" class="alignnone size-full wp-image-1298" />
+
+Try adding new items, moving them around in the solution explorer, and seeing how the web site project works. See the portability of a web site project in action by creating a new empty web site project and copying your existing website to it. It is pretty simple to get a project up and running with VWD.
+
+			</article>
+			<aside class="five columns omega">
+				<img class="aligncenter add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
+				<h2 class="sub-heading">Recent Posts</h2>
+				<ul class='posts'>
+					
+					<li><h3><a href="/2012/05/21/domain-driven-php.html">Domain Driven PHP</a></h3></li>
+					
+					<li><h3><a href="/2012/04/27/is-agile-dead.html">Is Agile Dead?</a></h3></li>
+					
+					<li><h3><a href="/2012/03/27/tdd-with-mock-objects-and-phpunit.html">TDD With Mock Objects And PHPUnit</a></h3></li>
+					
+					<li><h3><a href="/2012/03/10/javascript-masterclass-review.html">JavaScript Masterclass With Thomas Fuchs and Amy Hoy: A Review</a></h3></li>
+					
+					<li><h3><a href="/">The rest....</a></h3></li>
+				</ul>
+			</aside>
+		</div>
+	</div>
+</body>
+</html>

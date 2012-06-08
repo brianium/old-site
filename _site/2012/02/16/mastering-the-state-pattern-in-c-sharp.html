@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Mastering The State Pattern In C#</title>
+	<meta name="description" content="I enjoy programming stuff - up to and including things!">
+	<meta name="author" content="Brian Scaturro">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link href='http://fonts.googleapis.com/css?family=Anton' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="/css/base.css">
+	<link rel="stylesheet" href="/css/skeleton.css">
+	<link rel="stylesheet" href="/css/layout.css">
+	<link rel="stylesheet" href="/css/pygments.css">
+	<link rel="shortcut icon" href="/images/favicon.ico">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>	
+<body>
+	<div class="container">
+		<header id="branding" class="sixteen columns">
+			<a href="/">
+				<div class="site-heading">Brian Scaturro</div>
+				<div class="site-subheading">Fancy a dance?</div>
+			</a>
+		</header>
+		<div id="main" role="main" class="sixteen columns">
+			<article class="eleven columns alpha">
+				<h1>Mastering The State Pattern In C#<span class="post-date">16 Feb 2012</span></h1>
+				I have been spending a lot of time with my nose in the book <a href="http://www.amazon.com/Applying-Domain-Driven-Design-Patterns-Examples/dp/0321268202/ref=sr_1_1?ie=UTF8&qid=1329307174&sr=8-1" target="_blank">Applying Domain-Driven Design and Patterns With Examples in C# and .NET</a>. This is a book with a strong emphasis on design. Period. Design patterns are a big emphasis in this book. I like to think I have a solid grasp of design patterns, but we never know quite as much as we think right? I encountered the classic state pattern and decided to play around with it a bit - that is try it out in a real world situation I encountered recently.
+
+<h3>State Pattern Basics</h3>
+The state pattern exists to easily manage state. Think of state as the difference between on and off. When a light switch is flipped up, then it's state is currently "on". When the switch is flipped down, the state is currently "off". This is a simple case. You could easily have more than just two states. Think of a fancy dimmer! As you turn it, it is 30% brighter, 40% brighter, 60% brighter, etc. Enough metaphor! What does this mean in code town?
+
+The state pattern is composed of two base objects: a context and a state. All states are derived from the base state. The context is the main player - the object that users are really interested in. It is composed of a state object, and has a <code>Request</code> method. The <code>Request</code> method essentially hands off responsibility to the state's <code>Handle</code> method, and the state is responsible for performing the guts of the work and changing the state reference that belongs to the context. For you UML buffs out there, it might look something like this:
+[caption id="attachment_1492" align="alignnone" width="432" caption="State Pattern UML"]<a href="http://www.brianscaturro.com/wp-content/uploads/2012/02/statepatternuml.png"><img src="http://www.brianscaturro.com/wp-content/uploads/2012/02/statepatternuml.png" alt="the state pattern in uml" title="statepatternuml" width="432" height="330" class="size-full wp-image-1492" /></a>[/caption]
+
+Let's take a look at this in code.
+<h4>The State</h4>
+<pre class="prettyprint">
+namespace StatePattern
+{
+	public abstract class State
+	{
+		public abstract void Handle(Context context);
+	}
+
+	public class ConcreteStateA : State
+	{
+		public override void Handle(Context context)
+		{
+			Console.WriteLine("Hello from ConcreteStateA");
+			context.state = new ConcreteStateB();
+		}
+	}
+
+	public class ConcreteStateB : State
+	{
+		public override void Handle(Context context)
+		{
+			Console.WriteLine("Hello from ConcreteStateB");
+		}
+	}
+}
+</pre>
+Here we have our abstract <code>State</code> object that serves as the base for all other states, and a couple of concrete implementations of the base class. Take a look at <code>ConcreteStateA</code>. Notice that the <code>Handle</code> method accepts a reference to the <code>Context</code> object. Within the method, <code>ConcreteStateA</code> changes the state of the <code>Context</code> object to a different state. This is usually done in response to some condition - for example when an account balance drops below a certain amount. Let's see how the <code>Context</code> implements the <code>State</code> objects.
+
+<h4>The Context</h4>
+<pre class="prettyprint">
+namespace StatePattern
+	public class Context
+	{
+		public State state {get;set;}
+		
+		public Context()
+		{
+			//the default state
+			state = new ConcreteStateA();
+		}
+		
+		public void Request()
+		{
+			state.Handle(this);
+		}
+	}
+}
+</pre>
+Here you can see how the <code>Context</code> holds on to a <code>State</code> object. We create a <code>state</code> property and set the default state in the constructor to an instance of <code>ConcreateStateA</code>. Notice that when the <code>Request</code> method is called, the <code>Context</code> passes a reference of itself to the <code>Handle</code> method of the <code>State</code> object. Run this bad boy and you will notice how the <code>State</code> objects take over managing the active state:
+<pre class="prettyprint">
+void Main()
+{
+	var ctxt = new Context();
+	ctxt.Request(); //Hello from ConcreteStateA
+	ctxt.Request(); //Hello from ConcreteStateB
+}
+</pre>
+
+<h3>A Real World Example</h3>
+Given a basic understanding of what the state pattern is, it is easy to see how it can be applied to a ton of different scenarios. A little while ago I was charged with managing reward point levels for a customer rewards program. When a customer reaches <em>x</em> amount of total points, they get <em>y</em> level. This problem is just begging to use the state pattern. Let's translate what we learned above into some real world code.
+
+<h4>The State</h4>
+Our state objects will be represented as <code>RewardLevel</code> objects. As a customer accumulates points, they earn new levels or "states" representing their reward levels. So let's translate our state over to a reward level object:
+<pre class="prettyprint">
+namespace RewardLevels
+{
+    //the interface of our "state" objects
+    public interface IRewardLevel
+    {
+        //Participant is the Context
+        Participant Participant { get; set; }
+
+        void AddPoints(int points);
+        void SetPoints(int points);
+    }
+
+    public abstract class RewardLevel : IRewardLevel
+    {
+        public Participant Participant { get; set; }
+
+        protected int minimumPoints;
+        protected int maximumPoints;
+
+        public void AddPoints(int points)
+        {
+            Participant.Points += points;
+            CheckState();
+        }
+
+        public void SetPoints(int points)
+        {
+            Participant.Points = points;
+            CheckState();
+        }
+
+        protected void CheckState()
+        {
+            var p = Participant.Points;
+            if (p >= 0 && p < 26)
+                Participant.RewardLevel = new BronzeLevel(Participant);
+            else if (p > 25 && p < 51)
+                Participant.RewardLevel = new SilverLevel(Participant);
+            else if (p > 50 && p < 101)
+                Participant.RewardLevel = new GoldLevel(Participant);
+            else if (p > 100)
+                Participant.RewardLevel = new PlatinumLevel(Participant);
+        }
+    }
+}
+</pre>
+Notice the <code>RewardLevel</code> class creates the basic operations of our custom state. Pay special attention to the <code>CheckState</code> method. This method is fired after any method that changes the state (i.e. changing the number of points). This guy is one stop shopping for updating the <code>RewardLevel</code> state that belongs to the <code>Participant</code> context. Let's look at the following concrete implementations of the <code>RewardLevel</code> class.
+<pre class="prettyprint">
+namespace RewardLevels
+{
+    public class BronzeLevel : RewardLevel
+    {
+        public BronzeLevel(Participant p)
+        {
+            Participant = p;
+        }
+    }
+
+    public class SilverLevel : RewardLevel
+    {
+        public SilverLevel(Participant p)
+        {
+            Participant = p;
+        }
+    }
+
+    public class GoldLevel : RewardLevel
+    {
+        public GoldLevel(Participant p)
+        {
+            Participant = p;
+        }
+    }
+
+    public class PlatinumLevel : RewardLevel
+    {
+        public PlatinumLevel(Participant p)
+        {
+            Participant = p;
+        }
+    }
+}
+</pre>
+The really beauty of the pattern shines when you implement behavior that is different on a reward level by reward level basis. Maybe you have a method like <code>GetDiscountAmount</code> that returns a higher percent as you get higher in the reward level chain.
+
+<h4>The Context</h4>
+Remember the context is the main object that people are interested in. In this case it is the participant in the rewards program. We are only concerned with what level the participant is, and we only want to interact with that participant.
+<pre class="prettyprint">
+namespace RewardLevels
+{
+    public class Participant
+    {
+        public string Name { get; set; }
+
+        public int Points { get; set; }
+
+        public RewardLevel RewardLevel { get; set; }
+
+        public Participant(string name, int points)
+        {
+            Name = name;
+            Points = points;
+            RewardLevel = new BronzeLevel(this);
+            RewardLevel.SetPoints(points);
+        }
+
+        public void AddPoints(int points)
+        {
+            RewardLevel.AddPoints(points);
+        }
+
+        public void SetPoints(int points)
+        {
+            RewardLevel.SetPoints(points);
+        }
+    }
+}
+</pre>
+Notice how we default our <code>Participant</code> to <code>BronzeLevel</code> in the constructor. We call <code>RewardLevel.SetPoints(points)</code> to update the level to the appropriate level should it be higher than bronze (maybe the points passed in the constructor are coming from a database or being persisted elsewhere). Notice how our <code>AddPoints</code> and <code>SetPoints</code> methods are calling the same methods on the <code>RewardLevel</code> object. Remember that <code>GetDiscount</code> method we mentioned above? Seeing how we only want to interact with our <code>Participant</code> object, we could easily modify our <code>Participant</code> object to include the following method:
+<pre class="prettyprint">
+public double GetDiscount(int points)
+{
+    return RewardLevel.GetDiscount();
+}
+</pre>
+
+<h3>Wrapping It All Up</h3>
+This example could easily be enhanced to provide more real world functionality. I'll attach the code I used to drive this example (complete with tests!). Download it, play with it, criticize it, and have fun!
+
+<div class="tags Yellow">
+<a class="add-bottom" href="http://www.brianscaturro.com/downloads/RewardLevelsTests.zip">Download Demo Source</a>
+</div>
+
+			</article>
+			<aside class="five columns omega">
+				<img class="aligncenter add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
+				<h2 class="sub-heading">Recent Posts</h2>
+				<ul class='posts'>
+					
+					<li><h3><a href="/2012/05/21/domain-driven-php.html">Domain Driven PHP</a></h3></li>
+					
+					<li><h3><a href="/2012/04/27/is-agile-dead.html">Is Agile Dead?</a></h3></li>
+					
+					<li><h3><a href="/2012/03/27/tdd-with-mock-objects-and-phpunit.html">TDD With Mock Objects And PHPUnit</a></h3></li>
+					
+					<li><h3><a href="/2012/03/10/javascript-masterclass-review.html">JavaScript Masterclass With Thomas Fuchs and Amy Hoy: A Review</a></h3></li>
+					
+					<li><h3><a href="/">The rest....</a></h3></li>
+				</ul>
+			</aside>
+		</div>
+	</div>
+</body>
+</html>

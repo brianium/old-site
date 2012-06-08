@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Validate.js - A tiny JavaScript validation library</title>
+	<meta name="description" content="I enjoy programming stuff - up to and including things!">
+	<meta name="author" content="Brian Scaturro">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link href='http://fonts.googleapis.com/css?family=Anton' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="/css/base.css">
+	<link rel="stylesheet" href="/css/skeleton.css">
+	<link rel="stylesheet" href="/css/layout.css">
+	<link rel="stylesheet" href="/css/pygments.css">
+	<link rel="shortcut icon" href="/images/favicon.ico">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>	
+<body>
+	<div class="container">
+		<header id="branding" class="sixteen columns">
+			<a href="/">
+				<div class="site-heading">Brian Scaturro</div>
+				<div class="site-subheading">Fancy a dance?</div>
+			</a>
+		</header>
+		<div id="main" role="main" class="sixteen columns">
+			<article class="eleven columns alpha">
+				<h1>Validate.js - A tiny JavaScript validation library<span class="post-date">11 Nov 2011</span></h1>
+				I recently had a chance to try out the JavaScript validation library known as Validate.js. It boasts a tiny size (about 1kb gzipped), no dependencies, and a style that will be familiar to CodeIgniter fans. What this tiny tool boasts is definitely a strong point, but it has a few things that irk me. Lets take a look and see whats going on with this little fella.
+
+<div class="tags Yellow">
+<a target="_blank" class="add-bottom" href="http://www.brianscaturro.com/demos/validate">Demo</a>
+</div>
+<hr />
+
+<h3>Adding validation rules</h3>
+Adding validation rules is a snap. Validate.js uses the document.forms element from DOM Spec 2 to work its magic. So you will need to use the name attribute on your form (something I myself have not done regularly in a good while). Set your form up like so:
+<pre class="prettyprint">
+&lt;form name="test" method="get"&gt;
+
+&lt;/form&gt;
+</pre>
+
+And from there you can create your new form object. The FormValidator object that Validate.js provides takes the name of the form as an argument, an array of object literals that specify the elements to validate, and a validation callback. It is done like so:
+
+<pre class="prettyprint">
+var validator = new FormValidator('test',[
+	{
+		name:'required',
+		display:'Required',
+		rules:'required'
+	},
+	{
+		name:'email',
+		display:'Email',
+		rules:'required|valid_email'
+	},
+	{
+		name:'pass',
+		display:'Password',
+		rules:'required|matches[passConf]'
+	}
+    ],
+    function(errors,event) {
+        if ( errors.length > 0 ) {
+            //handle errors
+        }
+    });
+      
+</pre>
+
+Not too difficult to see what is going on here. The <code>name</code> property of the rule object refers to the name field of the form element. The <code>display</code> property is an optional property available if you want to change the label that is included in the message property; it defaults to the <code>name</code> property. The last property is <code>rules</code>, and it is a pipe delimited string of validation rules. The full list of these rules is availabe at the <a href="http://rickharrison.github.com/validate.js/" target="_blank">Validate.js page</a>
+
+Adding a custom validation is pretty simple as well, and this is one of the more useful features in my opinion. To add your own validation, you make use of the only two methods available to the public interface of this library, registerCallback, and setMessage. Just use them like so on the object you created above:
+
+<pre class="prettyprint">
+validator.registerCallback('ham_sandwich',function(value){
+	if ( /ham/g.exec(value) ) {
+		return true;
+	}
+	return false;
+}).setMessage('ham_sandwich','Ham sandwich must always have the word ham in it');
+</pre>
+
+It can then be used in your rule array like so:
+<pre class="prettyprint">
+{
+    name:'ham',
+    display:'Ham sandwich',
+    rules:'required|callback_ham_sandwich'
+}
+</pre>
+
+Just note that custom rules need to be prefixed with <code>callback_</code> when used in the <code>rules</code> property.
+
+<h3>The Pros</h3>
+
+What I liked about this tool is its compact size and ease of use. At just over 1KB, it is barely a blip on the radar. This library makes it really easy to quickly setup form validation on the client side. It is ideal for small forms that don't make use of a full framework like jQuery, because it has no dependencies. I am definitely a fan of how easy it is to add custom validations.
+
+<h3>The Cons</h3>
+
+While the pros are nice, the cons are pretty significant. There is actually only one con that I can't get over. Validate.js does nothing to flag your input fields as invalid. No classes and nothing in the returned errors object of the callback. The callback that is fired on submit, gets access to an array of error messages, and this pretty much gives you one way to display them (See the <a href="http://www.brianscaturro.com/demos/validate" target="_blank">demo</a>). 
+
+This limitation is enough for me to limit my use of it for anything significant. Hopefully this is addressed in a future version.
+
+<h3>Conclusion</h3>
+This tool is pretty powerful for the size, but I am not so sure I would use it for any big projects. It is perfect for tiny forms (maybe a landing page), and it makes a lot of sense if you aren't relying on larger more robust solutions.
+
+
+			</article>
+			<aside class="five columns omega">
+				<img class="aligncenter add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
+				<h2 class="sub-heading">Recent Posts</h2>
+				<ul class='posts'>
+					
+					<li><h3><a href="/2012/05/21/domain-driven-php.html">Domain Driven PHP</a></h3></li>
+					
+					<li><h3><a href="/2012/04/27/is-agile-dead.html">Is Agile Dead?</a></h3></li>
+					
+					<li><h3><a href="/2012/03/27/tdd-with-mock-objects-and-phpunit.html">TDD With Mock Objects And PHPUnit</a></h3></li>
+					
+					<li><h3><a href="/2012/03/10/javascript-masterclass-review.html">JavaScript Masterclass With Thomas Fuchs and Amy Hoy: A Review</a></h3></li>
+					
+					<li><h3><a href="/">The rest....</a></h3></li>
+				</ul>
+			</aside>
+		</div>
+	</div>
+</body>
+</html>

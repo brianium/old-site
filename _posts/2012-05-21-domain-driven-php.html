@@ -1,0 +1,137 @@
+---
+layout: post
+title: Domain Driven PHP
+tags:
+- Domain Driven Design
+- PHP
+- tdd
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '1'
+  _yoast_wpseo_focuskw: ''
+  _yoast_wpseo_title: ''
+  _yoast_wpseo_metadesc: ''
+  _yoast_wpseo_meta-robots-noindex: '0'
+  _yoast_wpseo_meta-robots-nofollow: '0'
+  _yoast_wpseo_meta-robots-adv: none
+  _yoast_wpseo_sitemap-include: ! '-'
+  _yoast_wpseo_sitemap-prio: ! '-'
+  _yoast_wpseo_canonical: ''
+  _yoast_wpseo_redirect: ''
+  _thumbnail_id: '1612'
+---
+<!-- Title: Domain Driven PHP -->
+<h2>Domain Driven Design</h2>
+<p>
+	Domain Driven Design (DDD) is a software philosophy popularized by Eric Evans and his <a href="http://www.amazon.com/Domain-Driven-Design-Tackling-Complexity-Software/dp/0321125215" target="_blank">book</a> on the subject. It's a pretty sweet way to approach software and it has gained popularity throughout the software community, but I don't see it in the PHP community as much I would like to. I recently undertook a simple PHP application that could effectively demonstrate the concepts, as well as show how to test drive such an application.
+</p>
+<p>
+	The fishing application I developed was inspired by the principles of DDD and <a href="http://jeffreypalermo.com/blog/the-onion-architecture-part-1/" target="blank">Onion Architecture</a>.
+</p>
+<div class="tags Yellow">
+	<a class="add-bottom" href="https://github.com/brianium/tdd-ddd-php" target="_blank">View It On Github</a>
+</div>
+<hr />
+<h2>The Application</h2>
+<p>
+	The focus of this project was not to make a cutting edge console application that forces people to weep tears of joy. The purpose of making this application was to test drive a simple application that has a domain and infrastructure layers. You can follow the directions on the <a href="https://github.com/brianium/tdd-ddd-php" target="_blank">github page</a> to get the tests running and test the actual app out.
+</p>
+<p>
+	The actual application file was pretty easy to make after all the code was tested. At such a high level, it made me pretty giddy to see all my well tested components being glued together to form an application. Let's take a quick look at the pieces that make up this machine.
+</p>
+<blockquote class="superquote">
+	<p>
+		The purpose of making this application was to test drive a simple application that has domain and infrastructure layers.
+	</p>
+</blockquote>
+<hr>
+<h2>Domain</h2>
+<p>
+	The domain of the application is what houses the <em>what</em> of my fishing app. The domain is where the objects that make up the universe of our application live - that is "what is this application about." The main logic of the application lives here. Let's look at the different pieces of the domain layer.
+</p>
+<h3>Entities</h3>
+<p>
+	Entities are the models of our application, and they are concerned with identity. These are the guys that are persisted in a database, and they are concerned with things like primary keys and ids. Take a look at the fish entity used throughout the application:
+</p>
+{% highlight php linenos %}
+<?php
+class Fish
+{
+    protected $id;
+
+    public function getId()
+    {
+        return $this->id;
+    }
+}
+{% endhighlight %}
+<p>
+	The fish entity is our only persisted model. It is the focus of the application. Without a fish, how can we go fishing!?!?
+</p>
+<h3>Repositories</h3>
+<p>
+	Repositories that interact with the database actually belong in the infrastructure layer, but the interfaces for such objects belong in the domain. They are the objects we interact with to query and persist our entities. Let me show you what I mean by showing an example:
+</p>
+{% highlight php linenos %}
+<?php
+interface IFishRepository {
+    function all();
+
+    function fetch($fishId);
+
+    function store(Fish $fish);
+
+    function delete($fishId);
+}
+{% endhighlight %}
+<p>
+	These abstract interfaces are crucial for unit testing behaviors with stubs and mocks.
+</p>
+<h3>Services</h3>
+<p>
+	Services coordinate various domain objects. The example application has a <code>PondStocker</code> service that is in charge of stocking the <code>Pond</code> object with a given number of fish. The <code>Pond</code> and <code>Fisherman</code> objects are services as well. They coordinate functionality between other domain objects.
+</p>
+<blockquote class="superquote">
+	<p>
+		The domain layer is composed of entities, repositories, services, and value objects.
+	</p>
+</blockquote>
+<hr>
+<h2>Infrastructure</h2>
+<p>
+	Infrastructure is what makes the application tick. This is where configuration, database objects, and third party libraries live.
+</p>
+<h3>Persistence</h3>
+<p>
+	This namespace is where the implementations of the repositories from the domain live. The fishing application has only one repository implementation, and it is derived from the interface in the domain layer:
+</p>
+<pre class="prettyprint">
+class FishRepository implements IFishRepository
+{
+	//.....
+}
+</pre>
+<h3>Services</h3>
+<p>
+	Infrastructure services coordinate lower level pieces of the application. For this application, this includes the autoloader and console helpers.
+</p>
+<h3>Vendors</h3>
+<p>
+	The <code>Vendors</code> directory is where third party libraries are stored. The fishing application relies on Doctrine2 for data persistence.
+</p>
+<hr>
+<h2>Tests</h2>
+<p>
+	PHPUnit was used to test drive this app. It makes use of assertions and mocks/stubs to separate unit and integration tests. I would definitely recommend checking out the tests in the repo to get a feel for how its done.
+</p>
+<hr>
+<h2>Check It Out!</h2>
+<p>
+	Go ahead and check out the <a href="https://github.com/brianium/tdd-ddd-php" target="_blank">repository</a> on Github. There are many ways to persue DDD, and it can be a useful design tool in PHP too. 
+<a href="http://www.brianscaturro.com/wp-content/uploads/2012/05/console.png"><img src="http://www.brianscaturro.com/wp-content/uploads/2012/05/console.png" alt="the fishing app in action" title="console" width="504" height="236" class="alignleft size-full wp-image-1607" /></a>
+</p>
+<div class="tags Yellow" style="clear:both;">
+	<a class="add-bottom" href="https://github.com/brianium/tdd-ddd-php" target="_blank">View It On Github</a>
+</div>

@@ -1,0 +1,163 @@
+---
+layout: post
+title: HTML5 And The Document Outline
+tags:
+- HTML
+- HTML5
+status: publish
+type: post
+published: true
+meta:
+  _thumbnail_id: '903'
+  _edit_last: '1'
+  _yoast_wpseo_focuskw: ''
+  _yoast_wpseo_title: ''
+  _yoast_wpseo_metadesc: ''
+  _yoast_wpseo_meta-robots-noindex: '0'
+  _yoast_wpseo_meta-robots-nofollow: '0'
+  _yoast_wpseo_meta-robots-adv: none
+  _yoast_wpseo_sitemap-include: ! '-'
+  _yoast_wpseo_sitemap-prio: ! '-'
+  _yoast_wpseo_canonical: ''
+  _yoast_wpseo_redirect: ''
+---
+I am sure many of us so called web developers have at least caught a glimpse of Mark Pilgrim's ultra handy resource <a href="http://www.diveintohtml5.info">Dive Into HTML5</a>. There are plenty of cool snippets and explanations, and ways to utilize the latest features and APIs. As I was reading through chapter 4: <a href="http://diveintohtml5.info/semantics.html">What Does It All Mean?</a>, I was intrigued by the material on the document outline - something that is often overlooked. To get started, take a peak:
+<div class="tags Yellow">
+<a target="_blank" class="add-bottom" href="http://www.brianscaturro.com/demos/argyle">Demo Site</a><a target="_blank" class="add-bottom" title="Document Outline of Demo Site" href="http://gsnedders.html5.org/outliner/process.py?url=http%3A%2F%2Fwww.brianscaturro.com%2Fdemos%2Fargyle">Demo Site Outline</a>
+</div>
+<hr />
+<h3>What is the document outline?</h3>
+The document outline is the structure of your HTML document. It is a means to visualize and navigate the hierarchy of its contents, and this is exactly what screen readers use to help the visually impaired, and a well structured document doesn't hurt the search engines either. In the good 'ol rough and tumble days prior to HTML5, this hierarchy was established with our good friends in the h crew: h1 - h6. A typical outline might work out to something like this:
+<ol>
+<li>H1 - Site title
+    <ol>
+       <li>H2 - Article Title
+           <ol>
+               <li>H3 - Article Sub Heading</li>
+           </ol>
+       </li>
+       <li>H2 - Another Article Title</li>
+    </ol>
+</li>
+</ol>
+
+<h3>Why does it matter?</h3>
+Since the outline is used to visualize the structure of the document, it comes in handy for those who can't see. Having a well structured document outline has huge benefits for people using screen readers, and it makes your content easier to navigate for search engines (which happen to be indexing HTML5 content as we speak). If you can make your site more accessible, why not do it?
+
+<h3>The document outline headache</h3>
+That was it. You were stuck with h1 - h6 for the entire outline of the page. What is so bad about this? The big problem with this approach is it can become exceedingly difficult to manage the outline of your document when you have varying content coming from varying sources. My favorite widget or plugin for WordPress might use h4 tags or h3 tags depending on the author's intended use or arbitrary use of whatever h tag seems clever at the moment (Come on, we have all been guilty of this at some point). 
+
+Lets take two widgets that are on the same level in our layout, both placed neatly in our sidebar, one uses an h3, and the other uses and h4. This is how the outline will look:
+
+<ol>
+<li>H1 - Site title
+    <ol>
+       <li>H2 - Article Title
+           <ol>
+               <li>H3 - Widget One Title
+                   <ol>
+                       <li>H4 - Widget Two Title</li>
+                   </ol>
+               </li>
+           </ol>
+       </li>
+       <li>H2 - Another Article Title</li>
+    </ol>
+</li>
+</ol>
+
+That hardly seems clever....
+
+Lets look at another common problem. It is a pretty common practice to use an h2 as a sub-heading or a tagline. You might have something like this in your markup:
+
+<pre class="prettyprint">
+&lt;div id="header"&gt;
+    &lt;h1&gt;Invalid Username&lt;/h1&gt;
+    &lt;h2&gt;It's a website on the internet&lt;/h2&gt;
+&lt;/div&gt;
+</pre>
+
+This h2 you were using for a sub-heading/tagline is now taking up space in your outline! Any h3 below it will look like it belongs to your meaningless tagline!
+
+<ol>
+<li>H1 - Invalid Username
+    <ol>
+       <li>H2 - It's a website on the internet
+           <ol>
+               <li>H3 - Article title</li>
+           </ol>
+       </li>
+    </ol>
+</li>
+</ol>
+
+Your document just got harder to make sense of!
+
+<h3>The cure for the headache</h3>
+
+The wonder child of the internet known as HTML5 comes to the rescue with it's sparkling new set of <a target="_blank" href="http://www.whatwg.org/specs/web-apps/current-work/multipage/elements.html#sectioning-content">sectioning content elements</a> and our new friend hgroup. How do these fellas help?
+
+<h4>Sectioning content</h4>
+HTML5 defines four new elements that define the scope of headings and footers. These elements are:
+<ul>
+<li><a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/sections.html#the-article-element" target="_blank">aside</a></li>
+<li><a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/sections.html#the-aside-element" target="_blank">article</a></li>
+<li><a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/sections.html#the-nav-element" target="_blank">nav</a></li>
+<li><a href="http://www.whatwg.org/specs/web-apps/current-work/multipage/sections.html#the-section-element">section</a></li>
+</ul>
+
+These elements define a whole new scope for heading elements. This totally eradicates the problem of varying content from disparate sources! Check this little bit out from the <a href="http://www.brianscaturro.com/demos/argyle" target="_blank">demo page</a>:
+
+<pre class="prettyprint">
+&lt;article&gt;
+	&lt;h1 class="remove-bottom"&gt;&lt;a href="#"&gt;What argyle style is right for you?&lt;/a&gt;&lt;/h1&gt;
+	&lt;time datetime="2011-11-01" pubdate&gt;published November 01, 2011&lt;/time&gt;
+	&lt;p&gt;
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+	&lt;/p&gt;
+&lt;/article&gt;
+&lt;article&gt;
+	&lt;h1 class="remove-bottom"&gt;&lt;a href="#"&gt;Argyle dos and dont's&lt;/a&gt;&lt;/h1&gt;
+	&lt;time datetime="2011-11-01" pubdate&gt;published November 01, 2011&lt;/time&gt;
+	&lt;p&gt;
+	Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+	&lt;/p&gt;
+&lt;/article&gt;
+</pre>
+
+Holy crumb cakes! Two H1 tags? Surely this is internet blasphemy! Take a look at the <a target="_blank" href="http://gsnedders.html5.org/outliner/process.py?url=http%3A%2F%2Fwww.brianscaturro.com%2Fdemos%2Fargyle">document outline</a> and see just how wrong you are. Our new scope defining elements keep our outline intact! Modular content from a plugin or some theme function can generate it's content in its own sectioning element without worry.
+
+The answer to our sub-heading/tagline dilemma is simple. The hgroup tag:
+<pre class="prettyprint">
+&lt;hgroup&gt;
+	&lt;h1 class="remove-bottom"&gt;Argyle Sweaters&lt;/h1&gt;
+	&lt;h2&gt;Classic Cool Since 1929&lt;/h2&gt;
+&lt;/hgroup&gt;
+</pre>
+
+Taking a peak at our <a href="http://gsnedders.html5.org/outliner/process.py?url=http%3A%2F%2Fwww.brianscaturro.com%2Fdemos%2Fargyle" target="_blank">outline</a>, you can see that hgroup prevents our h2 tagline from ever entering the picture.
+
+<h3>Some final thoughts</h3>
+This new found freedom with your headings and the new possibilities bring up a couple of considerations.
+
+<h4>The nav element</h4>
+Many of us have been accustomed to something like ul id="nav" or div id="menu" in the past. The nav element is a new element that defines significant blocks of navigation on your site. You will notice it is a sectioning element. Rather than have an untitled section, it might make sense to take control of this scope defining element so your navigation shows up in your outline:
+<pre class="prettyprint">
+&lt;nav class="clearfix"&gt;
+	&lt;h1&gt;Navigation&lt;/h1&gt;
+	&lt;ul&gt;
+		&lt;li&gt;&lt;a href="#"&gt;Home&lt;/a&gt;
+		&lt;li&gt;&lt;a href="#"&gt;Blog&lt;/a&gt;
+		&lt;li&gt;&lt;a href="#"&gt;About&lt;/a&gt;
+	&lt;/ul&gt;
+&lt;/nav&gt;
+</pre>
+
+<h4>Object Oriented CSS</h4>
+Those of you who try to stick to the principles of OOCSS will likely try to follow the rule of <a href="https://github.com/stubbornella/csslint/wiki/Disallow-qualified-headings" target="_blank">no qualified headings</a>. Defining top level styles for h1 - h6 might not be as possible with this new way of doing things. The h1 is no longer defined in the same context every time, and aesthetically you might not want the h1 to appear the same way in every scenario.
+
+The document outline is something worth checking out regularly as you develop. Make sure your outlines make sense, it will have huge benefits in the long run for people using screen readers, and the big search engines are already indexing HTML5 content. Thanks to <a href="http://gsnedders.html5.org/outliner/">gsnedders.html5.org/outliner/</a> for the excellent tool for testing the document outline.
+
+<div class="tags Yellow">
+<a class="add-bottom" target="_blank" href="http://www.brianscaturro.com/demos/argyle">Check Out the Demo Site</a><a class="add-bottom" href="http://www.brianscaturro.com/demos/argyle/source.zip">Download Demo Source</a>
+</div>

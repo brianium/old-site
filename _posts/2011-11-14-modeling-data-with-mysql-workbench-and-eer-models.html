@@ -1,0 +1,84 @@
+---
+layout: post
+title: Modeling Data With MySQL Workbench and EER Models
+tags:
+- Data
+- Data Modeling
+- MySQL
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '1'
+  _yoast_wpseo_focuskw: ''
+  _yoast_wpseo_title: ''
+  _yoast_wpseo_metadesc: ''
+  _yoast_wpseo_meta-robots-noindex: '0'
+  _yoast_wpseo_meta-robots-nofollow: '0'
+  _yoast_wpseo_meta-robots-adv: none
+  _yoast_wpseo_sitemap-include: ! '-'
+  _yoast_wpseo_sitemap-prio: ! '-'
+  _yoast_wpseo_canonical: ''
+  _yoast_wpseo_redirect: ''
+  _thumbnail_id: '1079'
+---
+A good first step to application development is laying out your schema. Planning your schema ahead of time enables you to envision what models you will be working with, and what the makeup of those models is. This gives you a chance to envision how those models interact, and gives you a good chance to think about the functionality of your non-existent application. We live in a world where SQL databases are still king ( if we are looking at numbers ), and MySQL still has a place in the kingdom. I am going to walk through modeling an application with the super handy <a href="http://www.mysql.com/products/workbench/" target="_blank">MySQL Workbench</a>
+
+<h3>Creating a new EER model</h3>
+First off, let me clarify something that took me too long to find out. EER stands for Enhanced Entity Relationship. That's what we are doing here. We are creating entities and defining their relationships. So lets load up Workbench and take a look see:
+
+<img src="http://www.brianscaturro.com/wp-content/uploads/2011/11/workbench2.jpg" alt="workbench home screen" title="workbench" width="620" height="217" class="aligncenter size-full wp-image-1045" />
+
+We are going to be focusing on the Data Modeling section. Go ahead and click the "Create New EER Model" under the Data Modeling column.
+
+From here we will be greeted by some more options, but we are going to go strait to "Add Diagram" in the Model Overview section:
+<img src="http://www.brianscaturro.com/wp-content/uploads/2011/11/adddiagram.jpg" alt="add diagram option in MySQL Workbench" title="add diagram" width="188" height="219" class="aligncenter size-full wp-image-1052" />
+
+Almost there. We have one more step to take to make sure we can use the handy "Forward Engineer" feature of Workbench. Name your schema something that is a little more application appropriate:
+[caption id="attachment_1055" align="aligncenter" width="268" caption="Right click the default &#039;mydb&#039;"]<img src="http://www.brianscaturro.com/wp-content/uploads/2011/11/schema.jpg" alt="altering default schema" title="schema" width="268" height="161" class="size-full wp-image-1055" />[/caption]
+
+My handy application will be called "recap" for reasons that will become apparent later ;)
+
+<h3>Adding models and relationships</h3>
+
+Now that we have made our new EER diagram, we can start adding models. I say models because these will directly translate to models in my application, but as far as the EER diagram is concerned, they are just tables. To add a new table click the new table icon or simply press the shortcut key "T".
+<img src="http://www.brianscaturro.com/wp-content/uploads/2011/11/newtable.jpg" alt="workbench new table button" title="newtable" width="124" height="49" class="aligncenter size-full wp-image-1059" />
+
+Once this is done you will be greeted with a handy little cursor to place your new entity. Place it anywhere you like on the grid. You should see something like this:
+<img src="http://www.brianscaturro.com/wp-content/uploads/2011/11/table.jpg" alt="newly placed table" title="table" width="176" height="98" class="aligncenter size-full wp-image-1062" />
+To edit the properties of your entity, double click your newly placed object and start editing the details.
+
+<h4>The Table tab</h4>
+The first thing you will see is the Table tab. This enables you to specify the table name, select the collation, and select the database engine.
+<img src="http://www.brianscaturro.com/wp-content/uploads/2011/11/tableinfo.jpg" alt="table info" title="tableinfo" width="394" height="301" class="aligncenter size-full wp-image-1065" />
+For our application the first thing we are going to create is our users table. Let's move on to specifying the properties of our users.
+
+<h4>The Columns tab</h4>
+The columns tab allows us to specify the properties of our table. We can specify whether fields should be null, auto increment, the data type, whatever.
+<img src="http://www.brianscaturro.com/wp-content/uploads/2011/11/columninfo.jpg" alt="column info" title="columninfo" width="569" height="300" class="aligncenter size-full wp-image-1066" />
+After this is all filled out we have a handy little object on our grid:
+<img src="http://www.brianscaturro.com/wp-content/uploads/2011/11/userobject.jpg" alt="user object" title="userobject" width="141" height="166" class="aligncenter size-full wp-image-1069" />
+
+<h4>The Foreign Keys tab</h4>
+Applications rarely have just one table. This tab allows us to illustrate relationships. Let's create a publications table that will illustrate publications that belong to users. We will use the methods outlined so far to do this:
+<img src="http://www.brianscaturro.com/wp-content/uploads/2011/11/publication.jpg" alt="publication object" title="publication" width="133" height="158" class="aligncenter size-full wp-image-1072" /> As you can see, we have a fairly standard foreign key reference (user_id) in our publications table. Lets connect our tables via the Foreign Keys tab.
+<img src="http://www.brianscaturro.com/wp-content/uploads/2011/11/fk.jpg" alt="foreign keys" title="fk" width="630" height="221" class="aligncenter size-full wp-image-1075" />
+Here we name our foreign key (fk_user in my case), and then make the appropriate table and column selections. After we have drawn the connections, Workbench will connect our models together in the diagram.
+<img src="http://www.brianscaturro.com/wp-content/uploads/2011/11/connected.jpg" alt="connected models" title="connected" width="140" height="405" class="aligncenter size-full wp-image-1076" />
+
+So using what we know now, we can add our remaining tables and their relationships, and we end up with the following diagram that nicely illustrates how our models work together:
+<img src="http://www.brianscaturro.com/wp-content/uploads/2011/11/diagram.jpg" alt="" title="diagram" width="513" height="515" class="aligncenter size-full wp-image-1079" />
+
+<h3>Creating actual tables with the Forward Engineering feature</h3>
+Once we have diagrammed our models and their relationships, we can have Workbench actually create our tables. This is a pretty cool feature. We get to visually assemble the business logic of our application and then have our diagram spit out valid SQL to actually create our tables. How? It's easy. From the toolbar,go to Database > Forward Engineer (Ctrl + G if you are on Windows). From here you have all kinds of options. Here are the steps I took:
+[caption id="attachment_1081" align="aligncenter" width="327" caption="Leave the first screen options unchecked"]<img src="http://www.brianscaturro.com/wp-content/uploads/2011/11/step1.jpg" alt="" title="step1" width="327" height="371" class="size-full wp-image-1081" />[/caption]
+
+[caption id="attachment_1082" align="aligncenter" width="566" caption="Leave export tables checked"]<img src="http://www.brianscaturro.com/wp-content/uploads/2011/11/step2.jpg" alt="" title="step2" width="566" height="566" class="size-full wp-image-1082" />[/caption]
+
+After these first two steps, you can choose to save the generated SQL file, and the final step is to provide connection details so Workbench can create the tables for you. Handy right?
+
+<h3>Conclusion</h3>
+This tool is very handy for the first steps of application development. Modeling data and planning what models/tables you will need and how they will interact with each other is a good way to shape your application from the onset.
+
+<a href="http://www.brianscaturro.com/downloads/recap.mwb" class="button yellow">Download EER File</a>
+ 
