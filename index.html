@@ -33,18 +33,18 @@ title: Brian Scaturro
 	<div class="pagination">
 	  {% if paginator.previous_page %}
 	  	{% if paginator.previous_page == 1 %}
-	  	<a href="/" class="previous">Previous</a>
+	  	<a href="/" class="button previous">Previous</a>
 	  	{% else %}
-	    <a href="/page{{paginator.previous_page}}" class="previous">Previous</a>
+	    <a href="/page{{paginator.previous_page}}" class="previous button">Previous</a>
 	    {% endif %}
 	  {% else %}
-	    <span class="previous">Previous</span>
+	    <span class="previous button" disabled>Previous</span>
 	  {% endif %}
 	  <span class="page_number ">Page: {{paginator.page}} of {{paginator.total_pages}}</span>
 	  {% if paginator.next_page %}
-	    <a href="/page{{paginator.next_page}}" class="next ">Next</a>
+	    <a href="/page{{paginator.next_page}}" class="next button">Next</a>
 	  {% else %}
-	    <span class="next ">Next</span>
+	    <span class="button next" disabled>Next</span>
 	  {% endif %}
 	</div>
 </div>
