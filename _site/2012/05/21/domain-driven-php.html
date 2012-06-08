@@ -35,9 +35,7 @@
 <p>
 	The fishing application I developed was inspired by the principles of DDD and <a href="http://jeffreypalermo.com/blog/the-onion-architecture-part-1/" target="blank">Onion Architecture</a>.
 </p>
-<div class="tags Yellow">
-	<a class="add-bottom" href="https://github.com/brianium/tdd-ddd-php" target="_blank">View It On Github</a>
-</div>
+	<a class="button" href="https://github.com/brianium/tdd-ddd-php" target="_blank">View It On Github</a>
 <hr />
 <h2>The Application</h2>
 <p>
@@ -114,11 +112,14 @@
 <p>
 	This namespace is where the implementations of the repositories from the domain live. The fishing application has only one repository implementation, and it is derived from the interface in the domain layer:
 </p>
-<pre class="prettyprint">
-class FishRepository implements IFishRepository
-{
-	//.....
-}
+<div class="highlight"><pre><code class="php"><span class="lineno">1</span> <span class="cp">&lt;?php</span>
+<span class="lineno">2</span> <span class="k">class</span> <span class="nc">FishRepository</span> <span class="k">implements</span> <span class="nx">IFishRepository</span>
+<span class="lineno">3</span> <span class="p">{</span>
+<span class="lineno">4</span> 	<span class="c1">//.....</span>
+<span class="lineno">5</span> <span class="p">}</span>
+</code></pre>
+</div>
+
 </pre>
 <h3>Services</h3>
 <p>
@@ -137,11 +138,11 @@ class FishRepository implements IFishRepository
 <h2>Check It Out!</h2>
 <p>
 	Go ahead and check out the <a href="https://github.com/brianium/tdd-ddd-php" target="_blank">repository</a> on Github. There are many ways to persue DDD, and it can be a useful design tool in PHP too. 
+</p>
+<p>
 <a href="http://www.brianscaturro.com/wp-content/uploads/2012/05/console.png"><img src="http://www.brianscaturro.com/wp-content/uploads/2012/05/console.png" alt="the fishing app in action" title="console" width="504" height="236" class="alignleft size-full wp-image-1607" /></a>
 </p>
-<div class="tags Yellow" style="clear:both;">
-	<a class="add-bottom" href="https://github.com/brianium/tdd-ddd-php" target="_blank">View It On Github</a>
-</div>
+<a class="button" href="https://github.com/brianium/tdd-ddd-php" target="_blank">View It On Github</a>
 
 			</article>
 			<aside class="five columns omega">

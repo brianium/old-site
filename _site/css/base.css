@@ -129,6 +129,8 @@
 ================================================== */
 
 	.button,
+	a.button,
+	a.button:visited,
 	button,
 	input[type="submit"],
 	input[type="reset"],

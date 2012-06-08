@@ -35,6 +35,12 @@ h2 {
 	text-shadow:1px 1px #9d190f, 2px 2px #9d190f;
 }
 
+h3 {
+	font-size:1.75em;
+	line-height:1.2em;
+	text-decoration:underline;
+}
+
 body {
 	background:#efefef url(images/arches.png) repeat left top;
 	color:#444;
