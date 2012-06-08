@@ -2,16 +2,13 @@
 	margin-bottom:20px;
 }
 
-	.highlight code {
-		font-family:'Monaco', 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace !important;
-	}
-
 	.highlight pre {
 		background:#444;
 		padding:5px;
 		-moz-border-radius:3px;
 		-webkit-border-radius:3px;
 		border-radius:3px;
+		overflow:auto;
 	}
 
 .lineno {color:#999;}

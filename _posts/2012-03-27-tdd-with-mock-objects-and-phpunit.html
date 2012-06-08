@@ -23,17 +23,25 @@ meta:
   _thumbnail_id: '1567'
 ---
 <h2>The problem</h2>
+<p>
 Test driven development ,or TDD, should be no stranger to many folks out in the code wilds. Writing tests first aids in design as well as quality control. I am always amazed at how my own testing practices evolve. It wasn't until recently that I discovered the beauty (and common sense) of separating integration tests from unit tests. Yes yes, integration tests often test units too, but the main focus of these tests is to test how your units (you guessed it) integrate with other components (the server, database, services, etc...).
-
+</p>
+<p>
 It can be tricky to isolate unit tests away from integration tests when your units are composed of something that is fundamentally useless without one of those components. Imagine a DB object, or a REST client, or a socket. Your unit tests need to test the units at their core, and not how they integrate with other resources. How do you test a unit that has a dependency on a socket object, without having to worry about opening and closing a socket connection every test?
+</p>
 
 <h2>Mock objects as the solution</h2>
+<p>
 These bad boys need to be part of every testers toolkit. We are going to use the socket scenario (and yes this is because it has been my most recent use case) to demonstrate how mock objects can be used to make more pure unit tests. Remember the goal is to separate your tests into unit tests and integration tests.
+</p>
 
 <h3>The unit to test</h3>
+<p>
 The unit in question is an object that encapsulates executing a socket command. Think command pattern. The language in question today is PHP, but the principle is the same in other environments. In fact it is a principle I use in the .NET realm with C# and <a href="http://code.google.com/p/moq/" title="Moq" target="_blank">Moq</a>.
+</p>
 
-<pre class="prettyprint">
+{% highlight php linenos %}
+<?php
 class SocketCommand
 {
     public function __construct(BinarySocket $socket)
@@ -46,11 +54,14 @@ class SocketCommand
         $this->socket->write($data);
     }
 }
-</pre>
+{% endhighlight %}
 
-Take note that our <code>SocketCommand</code> object forms a dependency with the a <code>BinarySocket</code> object. Let's take a look at the <code>BinarySocket</code> class.
+<p>
+Take note that our <code>SocketCommand</code> object forms a dependency with the <code>BinarySocket</code> object. Let's take a look at the <code>BinarySocket</code> class.
+</p>
 
-<pre class="prettyprint">
+{% highlight php linenos %}
+<?php
 class BinarySocket
 {
     protected $socket;
@@ -71,16 +82,23 @@ class BinarySocket
         socket_write($this->socket,$binary,$length);
     }
 }
-</pre>
+{% endhighlight %}
 
+<p>
 As you can see, when a <code>BinarySocket</code> is instantiated, a connection is opened on the given ip and port. This could really slow down our tests if these connections are being opened all over the place.
+</p>
 
 <h3>Using mock objects to test behavior</h3>
+<p>
 Rather than creating these socket objects and having connections opened, we will mock the <code>BinarySocket</code> object in order to test its role in the <code>SocketCommand</code> object. As you can see from the <code>SocketCommand</code> code above, the <code>BinarySocket</code> is used within the <code>execute</code> method of the <code>SocketCommand</code>. We need to test this behavior without being concerned with whether the <code>BinarySocket</code> is making a connection or not.
+</p>
 
+<p>
 Here is how we are going to set up the <code>SocketCommand</code> test case using PHPUnit:
+</p>
 
-<pre class="prettyprint">
+{% highlight php linenos %}
+<?php
 class SocketCommandTest extends PHPUnit_Framework_TestCase
 {
     protected $cmd;
@@ -95,19 +113,26 @@ class SocketCommandTest extends PHPUnit_Framework_TestCase
         $this->cmd = new SocketCommand($this->mockSocket);
     }
 }
-</pre>
+{% endhighlight %}
 
+<p>
 Using PHPUnit's mock library, it is easy to setup an object that will meet the requirements of the <code>SocketCommand</code> constructor. In a library like <a href="http://code.google.com/p/moq/" title="Moq" target="_blank">Moq</a> in .NET town, you would be more likely to test an interface instead of a concrete implementation, but PHP offers a little more "flexibility" here.
+</p>
 
-The mock object has already allowed us to meet the requirements of the <code>SocketCommand</code> constructor. Our mock object is effectively the required <code>BinarySocket</code>; It meets the required <code>BinarySocket</code> interface, and it does not have the added baggage of actually opening a socket connection.
+<p>
+The mock object has already allowed us to meet the requirements of the <code>SocketCommand</code> constructor. Our mock object is effectively the required <code>BinarySocket</code>; It meets the required <code>BinarySocket</code> interface, and it does not have the added baggage of actually opening a socket connection.</p>
 
-Remember the <code>SocketCommand</code> makes use of the <code>BinarySocket</code> in it's <code>execute</code> method. We want to make sure this is happening, and this is what we are going to test.
+<p>
+<p>
+Remember the <code>SocketCommand</code> makes use of the <code>BinarySocket</code> in it's <code>execute</code> method. We want to make sure this is happening, and this is what we are going to test.</p>
 
-<h4>Great expectations</h4>
+<h3>Setting expectations</h3>
 
-We need to tell our testing framework, that we <em>expect</em> the <code>execute</code> method of our tested unit to call our mock object's <code>write</code> method. Done!
+<p>
+We need to tell our testing framework, that we <em>expect</em> the <code>execute</code> method of our tested unit to call our mock object's <code>write</code> method. Done!</p>
 
-<pre class="prettyprint">
+{% highlight php linenos %}
+<?php
 public function testExecute()
 {
     $this->mockSocket->expects($this->once())
@@ -118,19 +143,26 @@ public function testExecute()
 
     $this->cmd->execute();
 }
-</pre>
+{% endhighlight %}
 
+<p>
 Lets break this down.
-
+</p>
+<p>
 <strong><code>expects($this->once())</code></strong>: This line tells the test runner to expect that the method we are testing will be called at least once. If it isn't, then an exception is thrown and the test fails.
-
+</p>
+<p>
 <strong><code>method('write')</code></strong>: This is the method of the interface our object is mocking that will be called. In this case we are saying the <code>write</code> method of <code>BinarySocket</code> will be called.
-
+</p>
+<p>
 <strong><code>with(...)</code></strong>: The <code>with</code> method of our mock object allows us to specify what arguments the chosen method will be called with.
-
+</p>
+<p>
 Finally, after we set our expectations, we run the method on our unit to test. If that method does not call the mock object's <code>write</code> method in exactly the way we described it, then an exception will be thrown and the test will fail. Here is the complete test case.
+</p>
 
-<pre class="prettyprint">
+{% highlight php linenos %}
+<?php
 class SocketCommandTest extends PHPUnit_Framework_TestCase
 {
     protected $cmd;
@@ -157,8 +189,11 @@ class SocketCommandTest extends PHPUnit_Framework_TestCase
     }
 
 }
-</pre>
+{% endhighlight %}
 
+<p>
 Remember the beauty of this is being able to separate unit tests from integration tests. We have made our <code>SocketCommand</code> testable without worrying about socket connections opening. This has the benefit of making our unit tests faster, but also more concerned with the actual business at hand.
-
+</p>
+<p>
 Whatever the language, whatever the environment, mock objects are an indispensable tool, if you want to do effective test driven development that won't slow you or your tests down.
+</p>

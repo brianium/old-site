@@ -62,6 +62,12 @@ blockquote p {
 	line-height:1.2em;
 }
 
+code {
+	font-family:'Monaco', 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace !important;
+	font-size:0.9em;
+	overflow-x:scroll;
+}
+
 .button[disabled] {
 	background: #eee; /* Old browsers */
 	background: #eee -moz-linear-gradient(top, rgba(255,255,255,.2) 0%, rgba(0,0,0,.2) 100%); /* FF3.6+ */
@@ -167,6 +173,7 @@ article h1 {
 		line-height:1.2em;
 		margin-bottom:10px;
 		text-transform:none;
+		text-decoration:none;
 	}
 
 	.posts a {
