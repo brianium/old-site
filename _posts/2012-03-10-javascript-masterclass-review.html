@@ -22,17 +22,23 @@ meta:
   _thumbnail_id: '1548'
   _wp_old_slug: javascript-masterclass-with-thomas-fuchs-and-amy-hoy-a-review
 ---
+<p>
 Recently I had the pleasure of taking the <a href="http://javascriptmasterclass.com/" target="_blank">JavaScript Masterclass</a> with noted JavaScript guru Thomas Fuchs and his brilliant accomplice Amy Hoy. The class was taught over 2 days, each day consisting of a four hour session. Eight hours might not sound like a lot, but there was a wealth of information included.
+</p>
 
-<h3>What they covered</h3>
+<h2>What they covered</h2>
+<p>
 For someone who has been doing JavaScript development for a while, this class had quite a bit of refresh material. Don't let that put you off. Amy and Thomas do a great job of shedding new light on the core of JavaScript, and it doesn't hurt to have an expert or two answering questions via video.
+</p>
 
-<h4>The JavaScript language</h4>
+<h3>The JavaScript language</h3>
+<p>
 Thomas and Amy do a good job of explaining JavaScript's "everything is an object" nature, it's object model, and it's nearly functional design.
-
+</p>
+<p>
 It wasn't anything terribly new for me, but I did get rocked on a couple things, and it was really great to have an expert walk you through and confirm your assumptions. A classic example of augmenting JavaScript was taught in the class, and it exhibited much of what makes JavaScript so awesome:
-
-<pre class="prettyprint">
+</p>
+{% highlight js linenos %}
 //a real exercise solution I had to cook up to a class assignment:
 Function.prototype.cached = function() {
   var self = this, cache = {};
@@ -43,13 +49,17 @@ Function.prototype.cached = function() {
 };
 
 Math.sin = Math.sin.cached();
-</pre>
+{% endhighlight %}
 
+<p>
 This tiny example exhibits a lot of what is taught: JavaScript and the prototype, closures, and the functional powers of JavaScript.
+</p>
 
+<p>
 In addition to the core features of the language, Thomas and Amy will drive meta programming into your face - and hard at that. You will learn how to use curry powers and call functions dynamically and use the powers of JavaScript reflection.
+</p>
 
-<pre class="prettyprint">
+{% highlight js linenos %}
 for(name in people.Names)
    people['hello' + name] = function(name, msg) {
        return msg + ' ' + name;
@@ -57,21 +67,26 @@ for(name in people.Names)
 
 //now use the dynamic meta power!
 people.helloBrian('You are cool'); // You are cool Brian;
-</pre>
+{% endhighlight %}
 
-<h4>JavaScript Infrastructure</h4>
-So many of us (myself included) have had a tendency to look at JavaScript as an exception to "real programming". This part of the course is definitely what I needed to hear and see in action. Scripts and their structure tend to be jumbled into disparate massive minified scripts, or no separation at all exists, and you end up with the same massive file for development and production.
+<h3>JavaScript Infrastructure</h3>
+<p>
+So many of us (myself included) have had a tendency to look at JavaScript as an exception to "real programming". This part of the course is definitely what I needed to hear and see in action. Scripts and their structure tend to be jumbled into disparate massive minified scripts, or no separation at all exists, and you end up with the same massive file for development and production.</p>
 
+<p>
 Thomas and Amy show you how to drop this nasty habit and organize your scripts into a helpful folder structure like you would with any other program. The focus of the class was on <a href="http://getsprockets.org" target="_blank">Sprockets</a>, a nice little tool in ruby with a command line script that can be used.
+</p>
 
-Given this structure:<br><img src="http://www.brianscaturro.com/wp-content/uploads/2012/03/Screenshot_7.png" alt="" title="Screenshot_7" width="120" height="69" class=" size-full wp-image-1540" /><br> You can have a script set up like so:
+<p>
+Given this structure:<br><img src="/images/sprockets-structure.png" title="sprockets directory structure" width="120" height="69" /><br> You can have a script set up like so:
+</p>
 
-<pre class="prettyprint">
+{% highlight js linenos %}
 (function(){
 //= require "models/mymodel"
 //= require "models/mymodel2"
 })();
-</pre>
+{% endhighlight %}
 
 You can then run the <code>sprocketize</code> command like so:
 <pre class="prettyprint">
