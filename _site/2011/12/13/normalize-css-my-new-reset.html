@@ -18,16 +18,17 @@
 </head>	
 <body>
 	<div class="container">
-		<header id="branding" class="sixteen columns">
-			<a href="/">
-				<div class="site-heading">Brian Scaturro</div>
-				<div class="site-subheading">Fancy a dance?</div>
-			</a>
-		</header>
-		<div id="main" role="main" class="sixteen columns">
-			<article class="eleven columns alpha">
-				<h1>Normalize.css - My new reset<span class="post-date">13 Dec 2011</span></h1>
-				Just a short little tidbit on something I have been digging lately. Many of us who work with CSS on a daily basis have some kind of reset mechanism built in. There are a bunch of options out there these days, but for many the timeless classic is Eric Meyer's <a href="http://meyerweb.com/eric/tools/css/reset/" target="_blank">CSS reset</a>. Another popular offering in today's HTML5 wilds is the HTML5 doctor <a href="http://html5doctor.com/html-5-reset-stylesheet/" target="_blank">HTML5 CSS reset</a>.
+		<div class="eleven columns alpha">
+			<header id="branding">
+				<a href="/">
+					<div class="site-heading">Brian Scaturro</div>
+					<div class="site-subheading">Fancy a dance?</div>
+				</a>
+			</header>
+			<div id="main" role="main">
+				<article class="eleven columns alpha">
+					<h1>Normalize.css - My new reset<span class="post-date">13 Dec 2011</span></h1>
+					Just a short little tidbit on something I have been digging lately. Many of us who work with CSS on a daily basis have some kind of reset mechanism built in. There are a bunch of options out there these days, but for many the timeless classic is Eric Meyer's <a href="http://meyerweb.com/eric/tools/css/reset/" target="_blank">CSS reset</a>. Another popular offering in today's HTML5 wilds is the HTML5 doctor <a href="http://html5doctor.com/html-5-reset-stylesheet/" target="_blank">HTML5 CSS reset</a>.
 
 <h3>Is all that really necessary?</h3>
 We use these resets to bring every browser to a common ground. Wipe out padding, margin, font-size variations, and the like. We forget that browsers have some defaults that can be handy. Margin on block elements can be very helpful. Why change something you don't need to.  Another useful convention implemented by most browsers are greater size/weight given to header tags. This is usually desired.
@@ -56,24 +57,25 @@ I am going to flip if I see this in one more production environment:
 }
 </pre>
 
-			</article>
-			<aside class="five columns omega">
-				<img class="aligncenter add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
-				<h2 class="sub-heading">Recent Posts</h2>
-				<ul class='posts'>
-					
-					<li><h3><a href="/2012/05/21/domain-driven-php.html">Domain Driven PHP</a></h3></li>
-					
-					<li><h3><a href="/2012/04/27/is-agile-dead.html">Is Agile Dead?</a></h3></li>
-					
-					<li><h3><a href="/2012/03/27/tdd-with-mock-objects-and-phpunit.html">TDD With Mock Objects And PHPUnit</a></h3></li>
-					
-					<li><h3><a href="/2012/03/10/javascript-masterclass-review.html">JavaScript Masterclass With Thomas Fuchs and Amy Hoy: A Review</a></h3></li>
-					
-					<li><h3><a href="/">The rest....</a></h3></li>
-				</ul>
-			</aside>
+				</article>
+			</div>
 		</div>
+		<aside class="four columns omega offset-by-one" id="sidebar">
+			<img class="aligncenter add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
+			<h2 class="sub-heading">Recent Posts</h2>
+			<ul class='posts'>
+				
+				<li><h3><a href="/2012/05/21/domain-driven-php.html">Domain Driven PHP</a></h3></li>
+				
+				<li><h3><a href="/2012/04/27/is-agile-dead.html">Is Agile Dead?</a></h3></li>
+				
+				<li><h3><a href="/2012/03/27/tdd-with-mock-objects-and-phpunit.html">TDD With Mock Objects And PHPUnit</a></h3></li>
+				
+				<li><h3><a href="/2012/03/10/javascript-masterclass-review.html">JavaScript Masterclass With Thomas Fuchs and Amy Hoy: A Review</a></h3></li>
+				
+				<li><h3><a href="/">The rest....</a></h3></li>
+			</ul>
+		</aside>
 	</div>
 </body>
 </html>

@@ -18,16 +18,17 @@
 </head>	
 <body>
 	<div class="container">
-		<header id="branding" class="sixteen columns">
-			<a href="/">
-				<div class="site-heading">Brian Scaturro</div>
-				<div class="site-subheading">Fancy a dance?</div>
-			</a>
-		</header>
-		<div id="main" role="main" class="sixteen columns">
-			<article class="eleven columns alpha">
-				<h1>C#: What the dag is boxing?<span class="post-date">28 Dec 2011</span></h1>
-				I was recently asked to explain what boxing in C# is. Well I couldn't give an answer on the spot so here I am reporting my findings. It is a pretty simple concept, and one that is probably used a lot without realizing it. According to <a href="http://msdn.microsoft.com/en-us/library/yz2be5wk.aspx" target="_blank">MSDN</a>: "The concept of boxing and unboxing underlies the C# unified view of the type system, in which a value of any type can be treated as an object."
+		<div class="eleven columns alpha">
+			<header id="branding">
+				<a href="/">
+					<div class="site-heading">Brian Scaturro</div>
+					<div class="site-subheading">Fancy a dance?</div>
+				</a>
+			</header>
+			<div id="main" role="main">
+				<article class="eleven columns alpha">
+					<h1>C#: What the dag is boxing?<span class="post-date">28 Dec 2011</span></h1>
+					I was recently asked to explain what boxing in C# is. Well I couldn't give an answer on the spot so here I am reporting my findings. It is a pretty simple concept, and one that is probably used a lot without realizing it. According to <a href="http://msdn.microsoft.com/en-us/library/yz2be5wk.aspx" target="_blank">MSDN</a>: "The concept of boxing and unboxing underlies the C# unified view of the type system, in which a value of any type can be treated as an object."
 
 <h4>Boxing is implicit</h4>
 This really looks like assigning a value object to a System.Object. This shows <code>int i</code> being boxed and assigned to an object:
@@ -75,24 +76,25 @@ In relation to simple assignments, boxing and unboxing are computationally expen
 
 Now move forward confidently, knowing you can answer the question: "What is boxing?".
 
-			</article>
-			<aside class="five columns omega">
-				<img class="aligncenter add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
-				<h2 class="sub-heading">Recent Posts</h2>
-				<ul class='posts'>
-					
-					<li><h3><a href="/2012/05/21/domain-driven-php.html">Domain Driven PHP</a></h3></li>
-					
-					<li><h3><a href="/2012/04/27/is-agile-dead.html">Is Agile Dead?</a></h3></li>
-					
-					<li><h3><a href="/2012/03/27/tdd-with-mock-objects-and-phpunit.html">TDD With Mock Objects And PHPUnit</a></h3></li>
-					
-					<li><h3><a href="/2012/03/10/javascript-masterclass-review.html">JavaScript Masterclass With Thomas Fuchs and Amy Hoy: A Review</a></h3></li>
-					
-					<li><h3><a href="/">The rest....</a></h3></li>
-				</ul>
-			</aside>
+				</article>
+			</div>
 		</div>
+		<aside class="four columns omega offset-by-one" id="sidebar">
+			<img class="aligncenter add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
+			<h2 class="sub-heading">Recent Posts</h2>
+			<ul class='posts'>
+				
+				<li><h3><a href="/2012/05/21/domain-driven-php.html">Domain Driven PHP</a></h3></li>
+				
+				<li><h3><a href="/2012/04/27/is-agile-dead.html">Is Agile Dead?</a></h3></li>
+				
+				<li><h3><a href="/2012/03/27/tdd-with-mock-objects-and-phpunit.html">TDD With Mock Objects And PHPUnit</a></h3></li>
+				
+				<li><h3><a href="/2012/03/10/javascript-masterclass-review.html">JavaScript Masterclass With Thomas Fuchs and Amy Hoy: A Review</a></h3></li>
+				
+				<li><h3><a href="/">The rest....</a></h3></li>
+			</ul>
+		</aside>
 	</div>
 </body>
 </html>

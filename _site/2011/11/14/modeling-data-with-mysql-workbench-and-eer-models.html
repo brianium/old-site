@@ -18,16 +18,17 @@
 </head>	
 <body>
 	<div class="container">
-		<header id="branding" class="sixteen columns">
-			<a href="/">
-				<div class="site-heading">Brian Scaturro</div>
-				<div class="site-subheading">Fancy a dance?</div>
-			</a>
-		</header>
-		<div id="main" role="main" class="sixteen columns">
-			<article class="eleven columns alpha">
-				<h1>Modeling Data With MySQL Workbench and EER Models<span class="post-date">14 Nov 2011</span></h1>
-				A good first step to application development is laying out your schema. Planning your schema ahead of time enables you to envision what models you will be working with, and what the makeup of those models is. This gives you a chance to envision how those models interact, and gives you a good chance to think about the functionality of your non-existent application. We live in a world where SQL databases are still king ( if we are looking at numbers ), and MySQL still has a place in the kingdom. I am going to walk through modeling an application with the super handy <a href="http://www.mysql.com/products/workbench/" target="_blank">MySQL Workbench</a>
+		<div class="eleven columns alpha">
+			<header id="branding">
+				<a href="/">
+					<div class="site-heading">Brian Scaturro</div>
+					<div class="site-subheading">Fancy a dance?</div>
+				</a>
+			</header>
+			<div id="main" role="main">
+				<article class="eleven columns alpha">
+					<h1>Modeling Data With MySQL Workbench and EER Models<span class="post-date">14 Nov 2011</span></h1>
+					A good first step to application development is laying out your schema. Planning your schema ahead of time enables you to envision what models you will be working with, and what the makeup of those models is. This gives you a chance to envision how those models interact, and gives you a good chance to think about the functionality of your non-existent application. We live in a world where SQL databases are still king ( if we are looking at numbers ), and MySQL still has a place in the kingdom. I am going to walk through modeling an application with the super handy <a href="http://www.mysql.com/products/workbench/" target="_blank">MySQL Workbench</a>
 
 <h3>Creating a new EER model</h3>
 First off, let me clarify something that took me too long to find out. EER stands for Enhanced Entity Relationship. That's what we are doing here. We are creating entities and defining their relationships. So lets load up Workbench and take a look see:
@@ -88,24 +89,25 @@ This tool is very handy for the first steps of application development. Modeling
 <a href="http://www.brianscaturro.com/downloads/recap.mwb" class="button yellow">Download EER File</a>
  
 
-			</article>
-			<aside class="five columns omega">
-				<img class="aligncenter add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
-				<h2 class="sub-heading">Recent Posts</h2>
-				<ul class='posts'>
-					
-					<li><h3><a href="/2012/05/21/domain-driven-php.html">Domain Driven PHP</a></h3></li>
-					
-					<li><h3><a href="/2012/04/27/is-agile-dead.html">Is Agile Dead?</a></h3></li>
-					
-					<li><h3><a href="/2012/03/27/tdd-with-mock-objects-and-phpunit.html">TDD With Mock Objects And PHPUnit</a></h3></li>
-					
-					<li><h3><a href="/2012/03/10/javascript-masterclass-review.html">JavaScript Masterclass With Thomas Fuchs and Amy Hoy: A Review</a></h3></li>
-					
-					<li><h3><a href="/">The rest....</a></h3></li>
-				</ul>
-			</aside>
+				</article>
+			</div>
 		</div>
+		<aside class="four columns omega offset-by-one" id="sidebar">
+			<img class="aligncenter add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
+			<h2 class="sub-heading">Recent Posts</h2>
+			<ul class='posts'>
+				
+				<li><h3><a href="/2012/05/21/domain-driven-php.html">Domain Driven PHP</a></h3></li>
+				
+				<li><h3><a href="/2012/04/27/is-agile-dead.html">Is Agile Dead?</a></h3></li>
+				
+				<li><h3><a href="/2012/03/27/tdd-with-mock-objects-and-phpunit.html">TDD With Mock Objects And PHPUnit</a></h3></li>
+				
+				<li><h3><a href="/2012/03/10/javascript-masterclass-review.html">JavaScript Masterclass With Thomas Fuchs and Amy Hoy: A Review</a></h3></li>
+				
+				<li><h3><a href="/">The rest....</a></h3></li>
+			</ul>
+		</aside>
 	</div>
 </body>
 </html>

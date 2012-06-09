@@ -18,16 +18,17 @@
 </head>	
 <body>
 	<div class="container">
-		<header id="branding" class="sixteen columns">
-			<a href="/">
-				<div class="site-heading">Brian Scaturro</div>
-				<div class="site-subheading">Fancy a dance?</div>
-			</a>
-		</header>
-		<div id="main" role="main" class="sixteen columns">
-			<article class="eleven columns alpha">
-				<h1>Scaling HTML5 Video<span class="post-date">08 Nov 2011</span></h1>
-				While working on a project, I had a need ( probably more of a desire ) to scale the HTML5 video I was working with. How this is done is not so apparent, at least it wasn't for me. Sizing the video via its width and height attributes can prove difficult, because that sucker will want to keep its aspect ratio. It is so easy to forget that the video element is just that - that is an element in the DOM. It has a style property like any other element, and that style property can be manipulated. Via the power of CSS3 transforms, you can scale your HTML5 video up and down to your hearts desire. Be sure to check out the demo ( HTML5 video and CSS3 transform support required ).
+		<div class="eleven columns alpha">
+			<header id="branding">
+				<a href="/">
+					<div class="site-heading">Brian Scaturro</div>
+					<div class="site-subheading">Fancy a dance?</div>
+				</a>
+			</header>
+			<div id="main" role="main">
+				<article class="eleven columns alpha">
+					<h1>Scaling HTML5 Video<span class="post-date">08 Nov 2011</span></h1>
+					While working on a project, I had a need ( probably more of a desire ) to scale the HTML5 video I was working with. How this is done is not so apparent, at least it wasn't for me. Sizing the video via its width and height attributes can prove difficult, because that sucker will want to keep its aspect ratio. It is so easy to forget that the video element is just that - that is an element in the DOM. It has a style property like any other element, and that style property can be manipulated. Via the power of CSS3 transforms, you can scale your HTML5 video up and down to your hearts desire. Be sure to check out the demo ( HTML5 video and CSS3 transform support required ).
 <div class="tags Yellow">
 <a target="_blank" class="add-bottom" href="http://www.brianscaturro.com/demos/video-scale/" title="HTML5 video scaling test">View Demo</a>
 </div>
@@ -96,24 +97,25 @@ video.addEventListener('loadedmetadata',function(){
 
 This is a slightly shaky subject, and I would love to find out more from others who have encountered this problem and solved it.
 
-			</article>
-			<aside class="five columns omega">
-				<img class="aligncenter add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
-				<h2 class="sub-heading">Recent Posts</h2>
-				<ul class='posts'>
-					
-					<li><h3><a href="/2012/05/21/domain-driven-php.html">Domain Driven PHP</a></h3></li>
-					
-					<li><h3><a href="/2012/04/27/is-agile-dead.html">Is Agile Dead?</a></h3></li>
-					
-					<li><h3><a href="/2012/03/27/tdd-with-mock-objects-and-phpunit.html">TDD With Mock Objects And PHPUnit</a></h3></li>
-					
-					<li><h3><a href="/2012/03/10/javascript-masterclass-review.html">JavaScript Masterclass With Thomas Fuchs and Amy Hoy: A Review</a></h3></li>
-					
-					<li><h3><a href="/">The rest....</a></h3></li>
-				</ul>
-			</aside>
+				</article>
+			</div>
 		</div>
+		<aside class="four columns omega offset-by-one" id="sidebar">
+			<img class="aligncenter add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
+			<h2 class="sub-heading">Recent Posts</h2>
+			<ul class='posts'>
+				
+				<li><h3><a href="/2012/05/21/domain-driven-php.html">Domain Driven PHP</a></h3></li>
+				
+				<li><h3><a href="/2012/04/27/is-agile-dead.html">Is Agile Dead?</a></h3></li>
+				
+				<li><h3><a href="/2012/03/27/tdd-with-mock-objects-and-phpunit.html">TDD With Mock Objects And PHPUnit</a></h3></li>
+				
+				<li><h3><a href="/2012/03/10/javascript-masterclass-review.html">JavaScript Masterclass With Thomas Fuchs and Amy Hoy: A Review</a></h3></li>
+				
+				<li><h3><a href="/">The rest....</a></h3></li>
+			</ul>
+		</aside>
 	</div>
 </body>
 </html>

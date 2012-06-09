@@ -18,16 +18,17 @@
 </head>	
 <body>
 	<div class="container">
-		<header id="branding" class="sixteen columns">
-			<a href="/">
-				<div class="site-heading">Brian Scaturro</div>
-				<div class="site-subheading">Fancy a dance?</div>
-			</a>
-		</header>
-		<div id="main" role="main" class="sixteen columns">
-			<article class="eleven columns alpha">
-				<h1>One thing I like about C#<span class="post-date">27 Dec 2011</span></h1>
-				I was recently asked the question: What are some things you like about C#? Well there are some obvious answers like generics, a comprehensive framework class library, delegates, dynamic typing, so on and so on. One answer I gave as I thought about it is something day to day C# coders love but seldom give a second thought to: Object initialization. The means for doing this in C# is pretty cool, and me being someone who has his foot in a lot of different environments and languages - I can really appreciate how cool this convention is.
+		<div class="eleven columns alpha">
+			<header id="branding">
+				<a href="/">
+					<div class="site-heading">Brian Scaturro</div>
+					<div class="site-subheading">Fancy a dance?</div>
+				</a>
+			</header>
+			<div id="main" role="main">
+				<article class="eleven columns alpha">
+					<h1>One thing I like about C#<span class="post-date">27 Dec 2011</span></h1>
+					I was recently asked the question: What are some things you like about C#? Well there are some obvious answers like generics, a comprehensive framework class library, delegates, dynamic typing, so on and so on. One answer I gave as I thought about it is something day to day C# coders love but seldom give a second thought to: Object initialization. The means for doing this in C# is pretty cool, and me being someone who has his foot in a lot of different environments and languages - I can really appreciate how cool this convention is.
 
 The C# object initializer syntax is most useful when you have a need to create an object and alter it's state after instantiation, usually to affect the outcome of some behavior. The alternative is creating an object that creates it's state based on what is passed to the constructor. Let's take a look at a common task, let's say sending email via SMTP, in PHP and then C# using the object initializer syntax.
 
@@ -91,24 +92,25 @@ Very cool stuff.
 
 .NET is an awesome framework, that has a lot of great tools to simplify the work at hand. Object initializers are probably so widely used that the C# community might take them for granted, but when you stack them against some of the alternative ways other languages do things - you can really appreciate this useful convention.
 
-			</article>
-			<aside class="five columns omega">
-				<img class="aligncenter add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
-				<h2 class="sub-heading">Recent Posts</h2>
-				<ul class='posts'>
-					
-					<li><h3><a href="/2012/05/21/domain-driven-php.html">Domain Driven PHP</a></h3></li>
-					
-					<li><h3><a href="/2012/04/27/is-agile-dead.html">Is Agile Dead?</a></h3></li>
-					
-					<li><h3><a href="/2012/03/27/tdd-with-mock-objects-and-phpunit.html">TDD With Mock Objects And PHPUnit</a></h3></li>
-					
-					<li><h3><a href="/2012/03/10/javascript-masterclass-review.html">JavaScript Masterclass With Thomas Fuchs and Amy Hoy: A Review</a></h3></li>
-					
-					<li><h3><a href="/">The rest....</a></h3></li>
-				</ul>
-			</aside>
+				</article>
+			</div>
 		</div>
+		<aside class="four columns omega offset-by-one" id="sidebar">
+			<img class="aligncenter add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
+			<h2 class="sub-heading">Recent Posts</h2>
+			<ul class='posts'>
+				
+				<li><h3><a href="/2012/05/21/domain-driven-php.html">Domain Driven PHP</a></h3></li>
+				
+				<li><h3><a href="/2012/04/27/is-agile-dead.html">Is Agile Dead?</a></h3></li>
+				
+				<li><h3><a href="/2012/03/27/tdd-with-mock-objects-and-phpunit.html">TDD With Mock Objects And PHPUnit</a></h3></li>
+				
+				<li><h3><a href="/2012/03/10/javascript-masterclass-review.html">JavaScript Masterclass With Thomas Fuchs and Amy Hoy: A Review</a></h3></li>
+				
+				<li><h3><a href="/">The rest....</a></h3></li>
+			</ul>
+		</aside>
 	</div>
 </body>
 </html>

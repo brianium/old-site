@@ -24,7 +24,10 @@ meta:
 ---
 <h2>The problem</h2>
 <p>
-Test driven development ,or TDD, should be no stranger to many folks out in the code wilds. Writing tests first aids in design as well as quality control. I am always amazed at how my own testing practices evolve. It wasn't until recently that I discovered the beauty (and common sense) of separating integration tests from unit tests. Yes yes, integration tests often test units too, but the main focus of these tests is to test how your units (you guessed it) integrate with other components (the server, database, services, etc...).
+Test driven development ,or TDD, should be no stranger to many folks out in the code wilds. Writing tests first aids in design as well as quality control. I am always amazed at how my own testing practices evolve. 
+</p>
+<p>
+It wasn't until recently that I discovered the beauty (and common sense) of separating integration tests from unit tests. Yes yes, integration tests often test units too, but the main focus of these tests is to test how your units (you guessed it) integrate with other components (the server, database, services, etc...).
 </p>
 <p>
 It can be tricky to isolate unit tests away from integration tests when your units are composed of something that is fundamentally useless without one of those components. Imagine a DB object, or a REST client, or a socket. Your unit tests need to test the units at their core, and not how they integrate with other resources. How do you test a unit that has a dependency on a socket object, without having to worry about opening and closing a socket connection every test?

@@ -18,16 +18,17 @@
 </head>	
 <body>
 	<div class="container">
-		<header id="branding" class="sixteen columns">
-			<a href="/">
-				<div class="site-heading">Brian Scaturro</div>
-				<div class="site-subheading">Fancy a dance?</div>
-			</a>
-		</header>
-		<div id="main" role="main" class="sixteen columns">
-			<article class="eleven columns alpha">
-				<h1>30 Days of ASP.NET:Adding Style<span class="post-date">06 Jan 2012</span></h1>
-				I realize there are people who would disagree, but I largely discourage heavy use of the Visual Web Developer 2010 Express CSS tools. They are largely cumbersome, and becoming fluent in CSS and understanding how to include style sheets in your ASP documents will not only suffice, it will give you greater speed and control.
+		<div class="eleven columns alpha">
+			<header id="branding">
+				<a href="/">
+					<div class="site-heading">Brian Scaturro</div>
+					<div class="site-subheading">Fancy a dance?</div>
+				</a>
+			</header>
+			<div id="main" role="main">
+				<article class="eleven columns alpha">
+					<h1>30 Days of ASP.NET:Adding Style<span class="post-date">06 Jan 2012</span></h1>
+					I realize there are people who would disagree, but I largely discourage heavy use of the Visual Web Developer 2010 Express CSS tools. They are largely cumbersome, and becoming fluent in CSS and understanding how to include style sheets in your ASP documents will not only suffice, it will give you greater speed and control.
 
 That being said, I am going to look at adding some basic styles to the simple page created in the last series entry.
 
@@ -142,24 +143,25 @@ And voila!
 <h3>Conclusion</h3>
 Adding styles can be very easy in ASP.NET. In my opinion it can also be unnecessarily cumbersome. I didn't cover "Build Styles" or "Add New Rule". These can be accessed along the tool bar in VWD, but in my opinion they are just a long route to the destination. The built in WYSIWYG functionality leaves a lot to be desired for a seasoned CSS veteran.  Use the tools available to get a good overview of whats going on in the style landscape, but I wouldn't necessarily rely on them exclusively.
 
-			</article>
-			<aside class="five columns omega">
-				<img class="aligncenter add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
-				<h2 class="sub-heading">Recent Posts</h2>
-				<ul class='posts'>
-					
-					<li><h3><a href="/2012/05/21/domain-driven-php.html">Domain Driven PHP</a></h3></li>
-					
-					<li><h3><a href="/2012/04/27/is-agile-dead.html">Is Agile Dead?</a></h3></li>
-					
-					<li><h3><a href="/2012/03/27/tdd-with-mock-objects-and-phpunit.html">TDD With Mock Objects And PHPUnit</a></h3></li>
-					
-					<li><h3><a href="/2012/03/10/javascript-masterclass-review.html">JavaScript Masterclass With Thomas Fuchs and Amy Hoy: A Review</a></h3></li>
-					
-					<li><h3><a href="/">The rest....</a></h3></li>
-				</ul>
-			</aside>
+				</article>
+			</div>
 		</div>
+		<aside class="four columns omega offset-by-one" id="sidebar">
+			<img class="aligncenter add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
+			<h2 class="sub-heading">Recent Posts</h2>
+			<ul class='posts'>
+				
+				<li><h3><a href="/2012/05/21/domain-driven-php.html">Domain Driven PHP</a></h3></li>
+				
+				<li><h3><a href="/2012/04/27/is-agile-dead.html">Is Agile Dead?</a></h3></li>
+				
+				<li><h3><a href="/2012/03/27/tdd-with-mock-objects-and-phpunit.html">TDD With Mock Objects And PHPUnit</a></h3></li>
+				
+				<li><h3><a href="/2012/03/10/javascript-masterclass-review.html">JavaScript Masterclass With Thomas Fuchs and Amy Hoy: A Review</a></h3></li>
+				
+				<li><h3><a href="/">The rest....</a></h3></li>
+			</ul>
+		</aside>
 	</div>
 </body>
 </html>

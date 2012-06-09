@@ -18,16 +18,17 @@
 </head>	
 <body>
 	<div class="container">
-		<header id="branding" class="sixteen columns">
-			<a href="/">
-				<div class="site-heading">Brian Scaturro</div>
-				<div class="site-subheading">Fancy a dance?</div>
-			</a>
-		</header>
-		<div id="main" role="main" class="sixteen columns">
-			<article class="eleven columns alpha">
-				<h1>Base Pages, Master Pages, and Themes<span class="post-date">13 Jan 2012</span></h1>
-				I have kind of grown tired of prefixing all these posts with "30 Days of ASP.NET". The bright blue bar should be more than enough to show this fella belongs to a post series. In the last entry, I went over some basics of form processing with C# and ASP.NET web forms. One very cool aspect of ASP.NET is the concept of master pages and themes. These are two tools that are indispensable when it comes to creating a consistent look and feel for your web application. The concept of a base page will illustrate creating a consistent <code>Page</code> class for all of your web forms to inherit from. Let's do this!
+		<div class="eleven columns alpha">
+			<header id="branding">
+				<a href="/">
+					<div class="site-heading">Brian Scaturro</div>
+					<div class="site-subheading">Fancy a dance?</div>
+				</a>
+			</header>
+			<div id="main" role="main">
+				<article class="eleven columns alpha">
+					<h1>Base Pages, Master Pages, and Themes<span class="post-date">13 Jan 2012</span></h1>
+					I have kind of grown tired of prefixing all these posts with "30 Days of ASP.NET". The bright blue bar should be more than enough to show this fella belongs to a post series. In the last entry, I went over some basics of form processing with C# and ASP.NET web forms. One very cool aspect of ASP.NET is the concept of master pages and themes. These are two tools that are indispensable when it comes to creating a consistent look and feel for your web application. The concept of a base page will illustrate creating a consistent <code>Page</code> class for all of your web forms to inherit from. Let's do this!
 
 Please feel free to download the source to get a more in depth look at the code and styles used.
 <div class="tags Yellow">
@@ -311,24 +312,25 @@ Don't forget to download the source!
 <a class="add-bottom" href="/downloads/pizzagreeta.zip" title="download source">Download Source</a>
 </div>
 
-			</article>
-			<aside class="five columns omega">
-				<img class="aligncenter add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
-				<h2 class="sub-heading">Recent Posts</h2>
-				<ul class='posts'>
-					
-					<li><h3><a href="/2012/05/21/domain-driven-php.html">Domain Driven PHP</a></h3></li>
-					
-					<li><h3><a href="/2012/04/27/is-agile-dead.html">Is Agile Dead?</a></h3></li>
-					
-					<li><h3><a href="/2012/03/27/tdd-with-mock-objects-and-phpunit.html">TDD With Mock Objects And PHPUnit</a></h3></li>
-					
-					<li><h3><a href="/2012/03/10/javascript-masterclass-review.html">JavaScript Masterclass With Thomas Fuchs and Amy Hoy: A Review</a></h3></li>
-					
-					<li><h3><a href="/">The rest....</a></h3></li>
-				</ul>
-			</aside>
+				</article>
+			</div>
 		</div>
+		<aside class="four columns omega offset-by-one" id="sidebar">
+			<img class="aligncenter add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
+			<h2 class="sub-heading">Recent Posts</h2>
+			<ul class='posts'>
+				
+				<li><h3><a href="/2012/05/21/domain-driven-php.html">Domain Driven PHP</a></h3></li>
+				
+				<li><h3><a href="/2012/04/27/is-agile-dead.html">Is Agile Dead?</a></h3></li>
+				
+				<li><h3><a href="/2012/03/27/tdd-with-mock-objects-and-phpunit.html">TDD With Mock Objects And PHPUnit</a></h3></li>
+				
+				<li><h3><a href="/2012/03/10/javascript-masterclass-review.html">JavaScript Masterclass With Thomas Fuchs and Amy Hoy: A Review</a></h3></li>
+				
+				<li><h3><a href="/">The rest....</a></h3></li>
+			</ul>
+		</aside>
 	</div>
 </body>
 </html>

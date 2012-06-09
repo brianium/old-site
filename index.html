@@ -2,50 +2,48 @@
 layout: default
 title: Brian Scaturro
 ---
-<div class="eleven columns alpha">
-	<p class="bigger">
-		Why hello there! I am Brian of clan Scaturro - a proud and noble tribe.
-	</p>
-	<p>
-		I suppose I could be called a programmer. I write programs, usually of the web variety. I spend an inordinate amount of time doing such activities...
-	</p>
-	<p>
-		On the off chance that I am not programming or reading about said gramming, I am likely spending time with my beautiful wife and baby boy in the Grandest of Rapids!
-	</p>
-	<p>
-		I love Jesus.
-	</p>
-	<p>
-		Hang out with me on <a href="https://github.com/brianium" target="_blank">Github</a> or bombard me with @ symbols on <a href="https://twitter.com/#!/scaturr" target="_blank">twitter</a>.
-	</p>
-	<h2 class="sub-heading">The Writings Of A Madman!</h2>
-	<ul class="posts">
-		{% for post in paginator.posts %}
-		<li>
-			<h3>
-			    <a href="{{ post.url }}">{{ post.title }}</a>
-			    <span class="post-date">{{ post.date | date_to_string }}</span>
-			</h3>
-		</li>
-		{% endfor %}
-	</ul>
-	<!-- Pagination links -->
-	<div class="pagination">
-	  {% if paginator.previous_page %}
-	  	{% if paginator.previous_page == 1 %}
-	  	<a href="/" class="button previous">Previous</a>
-	  	{% else %}
-	    <a href="/page{{paginator.previous_page}}" class="previous button">Previous</a>
-	    {% endif %}
-	  {% else %}
-	    <span class="previous button" disabled>Previous</span>
-	  {% endif %}
-	  <span class="page_number ">Page: {{paginator.page}} of {{paginator.total_pages}}</span>
-	  {% if paginator.next_page %}
-	    <a href="/page{{paginator.next_page}}" class="next button">Next</a>
-	  {% else %}
-	    <span class="button next" disabled>Next</span>
-	  {% endif %}
-	</div>
+<p class="bigger">
+	Why hello there! I am Brian of clan Scaturro - a proud and noble tribe.
+</p>
+<p>
+	I suppose I could be called a programmer. I write programs, usually of the web variety. I spend an inordinate amount of time doing such activities...
+</p>
+<p>
+	On the off chance that I am not programming or reading about said gramming, I am likely spending time with my beautiful wife and baby boy in the Grandest of Rapids!
+</p>
+<p>
+	I love Jesus.
+</p>
+<p>
+	Hang out with me on <a href="https://github.com/brianium" target="_blank">Github</a> or bombard me with @ symbols on <a href="https://twitter.com/#!/scaturr" target="_blank">twitter</a>.
+</p>
+<h2 class="sub-heading">The Writings Of A Madman!</h2>
+<ul class="posts">
+	{% for post in paginator.posts %}
+	<li>
+		<h3>
+		    <a href="{{ post.url }}">{{ post.title }}</a>
+		    <span class="post-date">{{ post.date | date_to_string }}</span>
+		</h3>
+	</li>
+	{% endfor %}
+</ul>
+<!-- Pagination links -->
+<div class="pagination">
+  {% if paginator.previous_page %}
+  	{% if paginator.previous_page == 1 %}
+  	<a href="/" class="button previous">Previous</a>
+  	{% else %}
+    <a href="/page{{paginator.previous_page}}" class="previous button">Previous</a>
+    {% endif %}
+  {% else %}
+    <span class="previous button" disabled>Previous</span>
+  {% endif %}
+  <span class="page_number ">Page: {{paginator.page}} of {{paginator.total_pages}}</span>
+  {% if paginator.next_page %}
+    <a href="/page{{paginator.next_page}}" class="next button">Next</a>
+  {% else %}
+    <span class="button next" disabled>Next</span>
+  {% endif %}
 </div>
 

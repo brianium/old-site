@@ -18,18 +18,22 @@
 </head>	
 <body>
 	<div class="container">
-		<header id="branding" class="sixteen columns">
-			<a href="/">
-				<div class="site-heading">Brian Scaturro</div>
-				<div class="site-subheading">Fancy a dance?</div>
-			</a>
-		</header>
-		<div id="main" role="main" class="sixteen columns">
-			<article class="eleven columns alpha">
-				<h1>TDD With Mock Objects And PHPUnit<span class="post-date">27 Mar 2012</span></h1>
-				<h2>The problem</h2>
+		<div class="eleven columns alpha">
+			<header id="branding">
+				<a href="/">
+					<div class="site-heading">Brian Scaturro</div>
+					<div class="site-subheading">Fancy a dance?</div>
+				</a>
+			</header>
+			<div id="main" role="main">
+				<article class="eleven columns alpha">
+					<h1>TDD With Mock Objects And PHPUnit<span class="post-date">27 Mar 2012</span></h1>
+					<h2>The problem</h2>
 <p>
-Test driven development ,or TDD, should be no stranger to many folks out in the code wilds. Writing tests first aids in design as well as quality control. I am always amazed at how my own testing practices evolve. It wasn't until recently that I discovered the beauty (and common sense) of separating integration tests from unit tests. Yes yes, integration tests often test units too, but the main focus of these tests is to test how your units (you guessed it) integrate with other components (the server, database, services, etc...).
+Test driven development ,or TDD, should be no stranger to many folks out in the code wilds. Writing tests first aids in design as well as quality control. I am always amazed at how my own testing practices evolve. 
+</p>
+<p>
+It wasn't until recently that I discovered the beauty (and common sense) of separating integration tests from unit tests. Yes yes, integration tests often test units too, but the main focus of these tests is to test how your units (you guessed it) integrate with other components (the server, database, services, etc...).
 </p>
 <p>
 It can be tricky to isolate unit tests away from integration tests when your units are composed of something that is fundamentally useless without one of those components. Imagine a DB object, or a REST client, or a socket. Your unit tests need to test the units at their core, and not how they integrate with other resources. How do you test a unit that has a dependency on a socket object, without having to worry about opening and closing a socket connection every test?
@@ -207,24 +211,25 @@ Remember the beauty of this is being able to separate unit tests from integratio
 <p>
 Whatever the language, whatever the environment, mock objects are an indispensable tool, if you want to do effective test driven development that won't slow you or your tests down.
 </p>
-			</article>
-			<aside class="five columns omega">
-				<img class="aligncenter add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
-				<h2 class="sub-heading">Recent Posts</h2>
-				<ul class='posts'>
-					
-					<li><h3><a href="/2012/05/21/domain-driven-php.html">Domain Driven PHP</a></h3></li>
-					
-					<li><h3><a href="/2012/04/27/is-agile-dead.html">Is Agile Dead?</a></h3></li>
-					
-					<li><h3><a href="/2012/03/27/tdd-with-mock-objects-and-phpunit.html">TDD With Mock Objects And PHPUnit</a></h3></li>
-					
-					<li><h3><a href="/2012/03/10/javascript-masterclass-review.html">JavaScript Masterclass With Thomas Fuchs and Amy Hoy: A Review</a></h3></li>
-					
-					<li><h3><a href="/">The rest....</a></h3></li>
-				</ul>
-			</aside>
+				</article>
+			</div>
 		</div>
+		<aside class="four columns omega offset-by-one" id="sidebar">
+			<img class="aligncenter add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
+			<h2 class="sub-heading">Recent Posts</h2>
+			<ul class='posts'>
+				
+				<li><h3><a href="/2012/05/21/domain-driven-php.html">Domain Driven PHP</a></h3></li>
+				
+				<li><h3><a href="/2012/04/27/is-agile-dead.html">Is Agile Dead?</a></h3></li>
+				
+				<li><h3><a href="/2012/03/27/tdd-with-mock-objects-and-phpunit.html">TDD With Mock Objects And PHPUnit</a></h3></li>
+				
+				<li><h3><a href="/2012/03/10/javascript-masterclass-review.html">JavaScript Masterclass With Thomas Fuchs and Amy Hoy: A Review</a></h3></li>
+				
+				<li><h3><a href="/">The rest....</a></h3></li>
+			</ul>
+		</aside>
 	</div>
 </body>
 </html>
