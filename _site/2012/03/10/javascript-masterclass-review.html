@@ -86,7 +86,7 @@ Thomas and Amy show you how to drop this nasty habit and organize your scripts i
 </p>
 
 <p>
-Given this structure:<br><img src="/images/sprockets-structure.png" title="sprockets directory structure" width="120" height="69" /><br> You can have a script set up like so:
+Given this structure:<br><img class="bordered" src="/images/sprockets-structure.png" title="sprockets directory structure" width="120" height="69" /><br> You can have a script set up like so:
 </p>
 
 <div class="highlight"><pre><code class="js"><span class="lineno">1</span> <span class="p">(</span><span class="kd">function</span><span class="p">(){</span>
@@ -97,47 +97,56 @@ Given this structure:<br><img src="/images/sprockets-structure.png" title="sproc
 </div>
 
 
-You can then run the <code>sprocketize</code> command like so:
-<pre class="prettyprint">
-sprocketize -I . main.js > main.prod.js
-</pre>
+<p>You can then run the <code>sprocketize</code> command like so:</p>
 
-Voila - your scripts are included into the closure above. No more hassle of dealing with one jumbo script. Thomas and Amy show how this is an invaluable tool, and your JavaScript can and should be treated like any other application code.
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>sprocketize -I . main.js &gt; main.prod.js
+</code></pre>
+</div>
 
-One thing to note: The class seems to assume use of Sprockets version 1. Sprockets 1 is a bit outdated at this point, but it gives the desired functionality above. For some reason, Sprockets 2 dropped the ability to have require directives inside of a closure - you are now forced to include directives at the top of a script. This makes it less useful in my opinion, and after wrestling with Sprockets 2 for a hot second, I decided to drop it for Sprockets 1. So when you install that bad brotha, make sure you save yourself a headache:
-<pre class="prettyprint">
-gem install --remote sprockets -v 1.0.2
-</pre>
 
-<h4>Unit testing</h4>
-I'm no stranger to unit testing, but I'll confess it is absent from my JavaScript more often than it should be. Thomas gives a real solid introduction to unit testing in JavaScript, and you will see things you <strong>should</strong> be used to in your day to day code adventures:
+<p>Voila - your scripts are included into the closure above. No more hassle of dealing with one jumbo script. Thomas and Amy show how this is an invaluable tool, and your JavaScript can and should be treated like any other application code.</p>
 
-<pre class="prettyprint">
-//a style you might pick up from the class
-testSomeUnnamedFactoryFunction:function() {
-    this.assertUndefined($());
+<p>One thing to note: The class seems to assume use of Sprockets version 1. Sprockets 1 is a bit outdated at this point, but it gives the desired functionality above. For some reason, Sprockets 2 dropped the ability to have require directives inside of a closure - you are now forced to include directives at the top of a script. This makes it less useful in my opinion, and after wrestling with Sprockets 2 for a hot second, I decided to drop it for Sprockets 1. So when you install that bad brotha, make sure you save yourself a headache:</p>
 
-    this.assertNull(document.getElementById('doesNotExist'));
+<div class="highlight"><pre><code class="bash"><span class="nv">$ </span>gem install --remote sprockets -v 1.0.2
+</code></pre>
+</div>
 
-    //more asserts....
-}
-</pre>
 
-<h3>How they covered it</h3>
-The class was very interactive. I was able to see Amy or Thomas via video, and they were constantly reading chat and answering questions. They even gave some homework and super fun assignments to tackle - all with feedback. They offered up expert advice, and if you are a beginner you won't be after this class, and if you are in the advanced camp it will definitely confirm your assumptions and even drop a few new goodies your way. It can't hurt to have on your resume that you studied at the feet of the masters either.
+<h3>Unit testing</h3>
+<p>I'm no stranger to unit testing, but I'll confess it is absent from my JavaScript more often than it should be. Thomas gives a real solid introduction to unit testing in JavaScript, and you will see things you <strong>should</strong> be used to in your day to day code adventures:</p>
 
-Plus, you get the tasty ebook <a href="http://javascriptrocks.com/performance/" target="_blank">JavaScript Performance Rocks</a> by these two wizards.
+<div class="highlight"><pre><code class="js"><span class="lineno">1</span> <span class="c1">//a style you might pick up from the class</span>
+<span class="lineno">2</span> <span class="nx">testSomeUnnamedFactoryFunction</span><span class="o">:</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+<span class="lineno">3</span>     <span class="k">this</span><span class="p">.</span><span class="nx">assertUndefined</span><span class="p">(</span><span class="nx">$</span><span class="p">());</span>
+<span class="lineno">4</span> 
+<span class="lineno">5</span>     <span class="k">this</span><span class="p">.</span><span class="nx">assertNull</span><span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;doesNotExist&#39;</span><span class="p">));</span>
+<span class="lineno">6</span> 
+<span class="lineno">7</span>     <span class="c1">//more asserts....</span>
+<span class="lineno">8</span> <span class="p">}</span>
+</code></pre>
+</div>
 
-The class was also a ton of fun:<br>
-<img src="http://www.brianscaturro.com/wp-content/uploads/2012/03/Screenshot_8.png" alt="" title="Screenshot_8" width="355" height="104" class="size-full wp-image-1547" /><br>
 
-<strong>I give this course an 11 out of 3!</strong>
+<h2>How they covered it</h2>
+<p>The class was very interactive. I was able to see Amy or Thomas via video, and they were constantly reading chat and answering questions. They even gave some homework and super fun assignments to tackle - all with feedback. They offered up expert advice, and if you are a beginner you won't be after this class, and if you are in the advanced camp it will definitely confirm your assumptions and even drop a few new goodies your way. It can't hurt to have on your resume that you studied at the feet of the masters either.</p>
+
+<p>Plus, you get the tasty ebook <a href="http://javascriptrocks.com/performance/" target="_blank">JavaScript Performance Rocks</a> by these two wizards.</p>
+
+<p>
+  The class was also a ton of fun:<br>
+  <img src="http://www.brianscaturro.com/wp-content/uploads/2012/03/Screenshot_8.png" alt="" title="Screenshot_8" width="355" height="104" class="size-full wp-image-1547" /><br>
+</p>
+
+<p>
+  <strong>I give this course an 11 out of 3!</strong>
+</p>
 
 				</article>
 			</div>
 		</div>
 		<aside class="four columns omega offset-by-one" id="sidebar">
-			<img class="aligncenter add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
+			<img class="add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
 			<h2 class="sub-heading">Recent Posts</h2>
 			<ul class='posts'>
 				

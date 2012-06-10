@@ -89,6 +89,10 @@ code {
 	overflow-x:scroll;
 }
 
+.bordered {
+	border:1px solid #efefef;
+}
+
 .button[disabled] {
 	background: #eee; /* Old browsers */
 	background: #eee -moz-linear-gradient(top, rgba(255,255,255,.2) 0%, rgba(0,0,0,.2) 100%); /* FF3.6+ */
