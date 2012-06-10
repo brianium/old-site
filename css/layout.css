@@ -160,7 +160,7 @@ code {
 }
 
 #sidebar {
-	margin-top:50px;
+	margin-top:80px;
 }
 
 .site-heading {
@@ -170,7 +170,7 @@ code {
 	font-weight:normal;
 	line-height:1.2em;
 	letter-spacing:1.5px;
-	margin:25px 0 14px 0;
+	margin:55px 0 14px 0;
 	text-shadow:1px 1px #004fa0, 2px 2px #004fa0, 3px 3px #004fa0, 4px 4px #004fa0, 5px 5px #004fa0;
 	text-transform:uppercase;
 }
