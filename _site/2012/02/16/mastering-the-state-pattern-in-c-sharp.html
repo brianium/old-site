@@ -96,154 +96,167 @@
 </div>
 
 
-Here you can see how the <code>Context</code> holds on to a <code>State</code> object. We create a <code>state</code> property and set the default state in the constructor to an instance of <code>ConcreateStateA</code>. Notice that when the <code>Request</code> method is called, the <code>Context</code> passes a reference of itself to the <code>Handle</code> method of the <code>State</code> object. Run this bad boy and you will notice how the <code>State</code> objects take over managing the active state:
-<pre class="prettyprint">
-void Main()
-{
-	var ctxt = new Context();
-	ctxt.Request(); //Hello from ConcreteStateA
-	ctxt.Request(); //Hello from ConcreteStateB
-}
-</pre>
+<p>Here you can see how the <code>Context</code> holds on to a <code>State</code> object. We create a <code>state</code> property and set the default state in the constructor to an instance of <code>ConcreateStateA</code>. Notice that when the <code>Request</code> method is called, the <code>Context</code> passes a reference of itself to the <code>Handle</code> method of the <code>State</code> object. Run this bad boy and you will notice how the <code>State</code> objects take over managing the active state:</p>
 
-<h3>A Real World Example</h3>
-Given a basic understanding of what the state pattern is, it is easy to see how it can be applied to a ton of different scenarios. A little while ago I was charged with managing reward point levels for a customer rewards program. When a customer reaches <em>x</em> amount of total points, they get <em>y</em> level. This problem is just begging to use the state pattern. Let's translate what we learned above into some real world code.
-
-<h4>The State</h4>
-Our state objects will be represented as <code>RewardLevel</code> objects. As a customer accumulates points, they earn new levels or "states" representing their reward levels. So let's translate our state over to a reward level object:
-<pre class="prettyprint">
-namespace RewardLevels
-{
-    //the interface of our "state" objects
-    public interface IRewardLevel
-    {
-        //Participant is the Context
-        Participant Participant { get; set; }
-
-        void AddPoints(int points);
-        void SetPoints(int points);
-    }
-
-    public abstract class RewardLevel : IRewardLevel
-    {
-        public Participant Participant { get; set; }
-
-        protected int minimumPoints;
-        protected int maximumPoints;
-
-        public void AddPoints(int points)
-        {
-            Participant.Points += points;
-            CheckState();
-        }
-
-        public void SetPoints(int points)
-        {
-            Participant.Points = points;
-            CheckState();
-        }
-
-        protected void CheckState()
-        {
-            var p = Participant.Points;
-            if (p >= 0 && p < 26)
-                Participant.RewardLevel = new BronzeLevel(Participant);
-            else if (p > 25 && p < 51)
-                Participant.RewardLevel = new SilverLevel(Participant);
-            else if (p > 50 && p < 101)
-                Participant.RewardLevel = new GoldLevel(Participant);
-            else if (p > 100)
-                Participant.RewardLevel = new PlatinumLevel(Participant);
-        }
-    }
-}
-</pre>
-Notice the <code>RewardLevel</code> class creates the basic operations of our custom state. Pay special attention to the <code>CheckState</code> method. This method is fired after any method that changes the state (i.e. changing the number of points). This guy is one stop shopping for updating the <code>RewardLevel</code> state that belongs to the <code>Participant</code> context. Let's look at the following concrete implementations of the <code>RewardLevel</code> class.
-<pre class="prettyprint">
-namespace RewardLevels
-{
-    public class BronzeLevel : RewardLevel
-    {
-        public BronzeLevel(Participant p)
-        {
-            Participant = p;
-        }
-    }
-
-    public class SilverLevel : RewardLevel
-    {
-        public SilverLevel(Participant p)
-        {
-            Participant = p;
-        }
-    }
-
-    public class GoldLevel : RewardLevel
-    {
-        public GoldLevel(Participant p)
-        {
-            Participant = p;
-        }
-    }
-
-    public class PlatinumLevel : RewardLevel
-    {
-        public PlatinumLevel(Participant p)
-        {
-            Participant = p;
-        }
-    }
-}
-</pre>
-The really beauty of the pattern shines when you implement behavior that is different on a reward level by reward level basis. Maybe you have a method like <code>GetDiscountAmount</code> that returns a higher percent as you get higher in the reward level chain.
-
-<h4>The Context</h4>
-Remember the context is the main object that people are interested in. In this case it is the participant in the rewards program. We are only concerned with what level the participant is, and we only want to interact with that participant.
-<pre class="prettyprint">
-namespace RewardLevels
-{
-    public class Participant
-    {
-        public string Name { get; set; }
-
-        public int Points { get; set; }
-
-        public RewardLevel RewardLevel { get; set; }
-
-        public Participant(string name, int points)
-        {
-            Name = name;
-            Points = points;
-            RewardLevel = new BronzeLevel(this);
-            RewardLevel.SetPoints(points);
-        }
-
-        public void AddPoints(int points)
-        {
-            RewardLevel.AddPoints(points);
-        }
-
-        public void SetPoints(int points)
-        {
-            RewardLevel.SetPoints(points);
-        }
-    }
-}
-</pre>
-Notice how we default our <code>Participant</code> to <code>BronzeLevel</code> in the constructor. We call <code>RewardLevel.SetPoints(points)</code> to update the level to the appropriate level should it be higher than bronze (maybe the points passed in the constructor are coming from a database or being persisted elsewhere). Notice how our <code>AddPoints</code> and <code>SetPoints</code> methods are calling the same methods on the <code>RewardLevel</code> object. Remember that <code>GetDiscount</code> method we mentioned above? Seeing how we only want to interact with our <code>Participant</code> object, we could easily modify our <code>Participant</code> object to include the following method:
-<pre class="prettyprint">
-public double GetDiscount(int points)
-{
-    return RewardLevel.GetDiscount();
-}
-</pre>
-
-<h3>Wrapping It All Up</h3>
-This example could easily be enhanced to provide more real world functionality. I'll attach the code I used to drive this example (complete with tests!). Download it, play with it, criticize it, and have fun!
-
-<div class="tags Yellow">
-<a class="add-bottom" href="http://www.brianscaturro.com/downloads/RewardLevelsTests.zip">Download Demo Source</a>
+<div class="highlight"><pre><code class="csharp"><span class="lineno">1</span> <span class="k">void</span> <span class="nf">Main</span><span class="p">()</span>
+<span class="lineno">2</span> <span class="p">{</span>
+<span class="lineno">3</span>     <span class="n">var</span> <span class="n">ctxt</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Context</span><span class="p">();</span>
+<span class="lineno">4</span>     <span class="n">ctxt</span><span class="p">.</span><span class="n">Request</span><span class="p">();</span> <span class="c1">//Hello from ConcreteStateA</span>
+<span class="lineno">5</span>     <span class="n">ctxt</span><span class="p">.</span><span class="n">Request</span><span class="p">();</span> <span class="c1">//Hello from ConcreteStateB</span>
+<span class="lineno">6</span> <span class="p">}</span>
+</code></pre>
 </div>
+
+
+<h2>A Real World Example</h2>
+<p>Given a basic understanding of what the state pattern is, it is easy to see how it can be applied to a ton of different scenarios. A little while ago I was charged with managing reward point levels for a customer rewards program. When a customer reaches <em>x</em> amount of total points, they get <em>y</em> level. This problem is just begging to use the state pattern. Let's translate what we learned above into some real world code.</p>
+
+<h3>The State</h3>
+<p>Our state objects will be represented as <code>RewardLevel</code> objects. As a customer accumulates points, they earn new levels or "states" representing their reward levels. So let's translate our state over to a reward level object:</p>
+
+<div class="highlight"><pre><code class="csharp"><span class="lineno"> 1</span> <span class="k">namespace</span> <span class="nn">RewardLevels</span>
+<span class="lineno"> 2</span> <span class="p">{</span>
+<span class="lineno"> 3</span>     <span class="c1">//the interface of our &quot;state&quot; objects</span>
+<span class="lineno"> 4</span>     <span class="k">public</span> <span class="k">interface</span> <span class="n">IRewardLevel</span>
+<span class="lineno"> 5</span>     <span class="p">{</span>
+<span class="lineno"> 6</span>         <span class="c1">//Participant is the Context</span>
+<span class="lineno"> 7</span>         <span class="n">Participant</span> <span class="n">Participant</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="lineno"> 8</span> 
+<span class="lineno"> 9</span>         <span class="k">void</span> <span class="nf">AddPoints</span><span class="p">(</span><span class="kt">int</span> <span class="n">points</span><span class="p">);</span>
+<span class="lineno">10</span>         <span class="k">void</span> <span class="nf">SetPoints</span><span class="p">(</span><span class="kt">int</span> <span class="n">points</span><span class="p">);</span>
+<span class="lineno">11</span>     <span class="p">}</span>
+<span class="lineno">12</span> 
+<span class="lineno">13</span>     <span class="k">public</span> <span class="k">abstract</span> <span class="k">class</span> <span class="nc">RewardLevel</span> <span class="p">:</span> <span class="n">IRewardLevel</span>
+<span class="lineno">14</span>     <span class="p">{</span>
+<span class="lineno">15</span>         <span class="k">public</span> <span class="n">Participant</span> <span class="n">Participant</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="lineno">16</span> 
+<span class="lineno">17</span>         <span class="k">protected</span> <span class="kt">int</span> <span class="n">minimumPoints</span><span class="p">;</span>
+<span class="lineno">18</span>         <span class="k">protected</span> <span class="kt">int</span> <span class="n">maximumPoints</span><span class="p">;</span>
+<span class="lineno">19</span> 
+<span class="lineno">20</span>         <span class="k">public</span> <span class="k">void</span> <span class="nf">AddPoints</span><span class="p">(</span><span class="kt">int</span> <span class="n">points</span><span class="p">)</span>
+<span class="lineno">21</span>         <span class="p">{</span>
+<span class="lineno">22</span>             <span class="n">Participant</span><span class="p">.</span><span class="n">Points</span> <span class="p">+=</span> <span class="n">points</span><span class="p">;</span>
+<span class="lineno">23</span>             <span class="n">CheckState</span><span class="p">();</span>
+<span class="lineno">24</span>         <span class="p">}</span>
+<span class="lineno">25</span> 
+<span class="lineno">26</span>         <span class="k">public</span> <span class="k">void</span> <span class="nf">SetPoints</span><span class="p">(</span><span class="kt">int</span> <span class="n">points</span><span class="p">)</span>
+<span class="lineno">27</span>         <span class="p">{</span>
+<span class="lineno">28</span>             <span class="n">Participant</span><span class="p">.</span><span class="n">Points</span> <span class="p">=</span> <span class="n">points</span><span class="p">;</span>
+<span class="lineno">29</span>             <span class="n">CheckState</span><span class="p">();</span>
+<span class="lineno">30</span>         <span class="p">}</span>
+<span class="lineno">31</span> 
+<span class="lineno">32</span>         <span class="k">protected</span> <span class="k">void</span> <span class="nf">CheckState</span><span class="p">()</span>
+<span class="lineno">33</span>         <span class="p">{</span>
+<span class="lineno">34</span>             <span class="n">var</span> <span class="n">p</span> <span class="p">=</span> <span class="n">Participant</span><span class="p">.</span><span class="n">Points</span><span class="p">;</span>
+<span class="lineno">35</span>             <span class="k">if</span> <span class="p">(</span><span class="n">p</span> <span class="p">&gt;=</span> <span class="m">0</span> <span class="p">&amp;&amp;</span> <span class="n">p</span> <span class="p">&lt;</span> <span class="m">26</span><span class="p">)</span>
+<span class="lineno">36</span>                 <span class="n">Participant</span><span class="p">.</span><span class="n">RewardLevel</span> <span class="p">=</span> <span class="k">new</span> <span class="n">BronzeLevel</span><span class="p">(</span><span class="n">Participant</span><span class="p">);</span>
+<span class="lineno">37</span>             <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">p</span> <span class="p">&gt;</span> <span class="m">25</span> <span class="p">&amp;&amp;</span> <span class="n">p</span> <span class="p">&lt;</span> <span class="m">51</span><span class="p">)</span>
+<span class="lineno">38</span>                 <span class="n">Participant</span><span class="p">.</span><span class="n">RewardLevel</span> <span class="p">=</span> <span class="k">new</span> <span class="n">SilverLevel</span><span class="p">(</span><span class="n">Participant</span><span class="p">);</span>
+<span class="lineno">39</span>             <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">p</span> <span class="p">&gt;</span> <span class="m">50</span> <span class="p">&amp;&amp;</span> <span class="n">p</span> <span class="p">&lt;</span> <span class="m">101</span><span class="p">)</span>
+<span class="lineno">40</span>                 <span class="n">Participant</span><span class="p">.</span><span class="n">RewardLevel</span> <span class="p">=</span> <span class="k">new</span> <span class="n">GoldLevel</span><span class="p">(</span><span class="n">Participant</span><span class="p">);</span>
+<span class="lineno">41</span>             <span class="k">else</span> <span class="nf">if</span> <span class="p">(</span><span class="n">p</span> <span class="p">&gt;</span> <span class="m">100</span><span class="p">)</span>
+<span class="lineno">42</span>                 <span class="n">Participant</span><span class="p">.</span><span class="n">RewardLevel</span> <span class="p">=</span> <span class="k">new</span> <span class="n">PlatinumLevel</span><span class="p">(</span><span class="n">Participant</span><span class="p">);</span>
+<span class="lineno">43</span>         <span class="p">}</span>
+<span class="lineno">44</span>     <span class="p">}</span>
+<span class="lineno">45</span> <span class="p">}</span>
+</code></pre>
+</div>
+
+
+<p>Notice the <code>RewardLevel</code> class creates the basic operations of our custom state. Pay special attention to the <code>CheckState</code> method. This method is fired after any method that changes the state (i.e. changing the number of points). This guy is one stop shopping for updating the <code>RewardLevel</code> state that belongs to the <code>Participant</code> context. Let's look at the following concrete implementations of the <code>RewardLevel</code> class.</p>
+
+<div class="highlight"><pre><code class="csharp"><span class="lineno"> 1</span> <span class="k">namespace</span> <span class="nn">RewardLevels</span>
+<span class="lineno"> 2</span> <span class="p">{</span>
+<span class="lineno"> 3</span>     <span class="k">public</span> <span class="k">class</span> <span class="nc">BronzeLevel</span> <span class="p">:</span> <span class="n">RewardLevel</span>
+<span class="lineno"> 4</span>     <span class="p">{</span>
+<span class="lineno"> 5</span>         <span class="k">public</span> <span class="nf">BronzeLevel</span><span class="p">(</span><span class="n">Participant</span> <span class="n">p</span><span class="p">)</span>
+<span class="lineno"> 6</span>         <span class="p">{</span>
+<span class="lineno"> 7</span>             <span class="n">Participant</span> <span class="p">=</span> <span class="n">p</span><span class="p">;</span>
+<span class="lineno"> 8</span>         <span class="p">}</span>
+<span class="lineno"> 9</span>     <span class="p">}</span>
+<span class="lineno">10</span> 
+<span class="lineno">11</span>     <span class="k">public</span> <span class="k">class</span> <span class="nc">SilverLevel</span> <span class="p">:</span> <span class="n">RewardLevel</span>
+<span class="lineno">12</span>     <span class="p">{</span>
+<span class="lineno">13</span>         <span class="k">public</span> <span class="nf">SilverLevel</span><span class="p">(</span><span class="n">Participant</span> <span class="n">p</span><span class="p">)</span>
+<span class="lineno">14</span>         <span class="p">{</span>
+<span class="lineno">15</span>             <span class="n">Participant</span> <span class="p">=</span> <span class="n">p</span><span class="p">;</span>
+<span class="lineno">16</span>         <span class="p">}</span>
+<span class="lineno">17</span>     <span class="p">}</span>
+<span class="lineno">18</span> 
+<span class="lineno">19</span>     <span class="k">public</span> <span class="k">class</span> <span class="nc">GoldLevel</span> <span class="p">:</span> <span class="n">RewardLevel</span>
+<span class="lineno">20</span>     <span class="p">{</span>
+<span class="lineno">21</span>         <span class="k">public</span> <span class="nf">GoldLevel</span><span class="p">(</span><span class="n">Participant</span> <span class="n">p</span><span class="p">)</span>
+<span class="lineno">22</span>         <span class="p">{</span>
+<span class="lineno">23</span>             <span class="n">Participant</span> <span class="p">=</span> <span class="n">p</span><span class="p">;</span>
+<span class="lineno">24</span>         <span class="p">}</span>
+<span class="lineno">25</span>     <span class="p">}</span>
+<span class="lineno">26</span> 
+<span class="lineno">27</span>     <span class="k">public</span> <span class="k">class</span> <span class="nc">PlatinumLevel</span> <span class="p">:</span> <span class="n">RewardLevel</span>
+<span class="lineno">28</span>     <span class="p">{</span>
+<span class="lineno">29</span>         <span class="k">public</span> <span class="nf">PlatinumLevel</span><span class="p">(</span><span class="n">Participant</span> <span class="n">p</span><span class="p">)</span>
+<span class="lineno">30</span>         <span class="p">{</span>
+<span class="lineno">31</span>             <span class="n">Participant</span> <span class="p">=</span> <span class="n">p</span><span class="p">;</span>
+<span class="lineno">32</span>         <span class="p">}</span>
+<span class="lineno">33</span>     <span class="p">}</span>
+<span class="lineno">34</span> <span class="p">}</span>
+</code></pre>
+</div>
+
+
+<p>The real beauty of the pattern shines when you implement behavior that is different on a reward level by reward level basis. Maybe you have a method like <code>GetDiscountAmount</code> that returns a higher percent as you get higher in the reward level chain.</p>
+
+<h3>The Context</h3>
+<p>Remember the context is the main object that people are interested in. In this case it is the participant in the rewards program. We are only concerned with what level the participant is, and we only want to interact with that participant.</p>
+
+<div class="highlight"><pre><code class="csharp"><span class="lineno"> 1</span> <span class="k">namespace</span> <span class="nn">RewardLevels</span>
+<span class="lineno"> 2</span> <span class="p">{</span>
+<span class="lineno"> 3</span>     <span class="k">public</span> <span class="k">class</span> <span class="nc">Participant</span>
+<span class="lineno"> 4</span>     <span class="p">{</span>
+<span class="lineno"> 5</span>         <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="lineno"> 6</span> 
+<span class="lineno"> 7</span>         <span class="k">public</span> <span class="kt">int</span> <span class="n">Points</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="lineno"> 8</span> 
+<span class="lineno"> 9</span>         <span class="k">public</span> <span class="n">RewardLevel</span> <span class="n">RewardLevel</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+<span class="lineno">10</span> 
+<span class="lineno">11</span>         <span class="k">public</span> <span class="nf">Participant</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">,</span> <span class="kt">int</span> <span class="n">points</span><span class="p">)</span>
+<span class="lineno">12</span>         <span class="p">{</span>
+<span class="lineno">13</span>             <span class="n">Name</span> <span class="p">=</span> <span class="n">name</span><span class="p">;</span>
+<span class="lineno">14</span>             <span class="n">Points</span> <span class="p">=</span> <span class="n">points</span><span class="p">;</span>
+<span class="lineno">15</span>             <span class="n">RewardLevel</span> <span class="p">=</span> <span class="k">new</span> <span class="n">BronzeLevel</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+<span class="lineno">16</span>             <span class="n">RewardLevel</span><span class="p">.</span><span class="n">SetPoints</span><span class="p">(</span><span class="n">points</span><span class="p">);</span>
+<span class="lineno">17</span>         <span class="p">}</span>
+<span class="lineno">18</span> 
+<span class="lineno">19</span>         <span class="k">public</span> <span class="k">void</span> <span class="nf">AddPoints</span><span class="p">(</span><span class="kt">int</span> <span class="n">points</span><span class="p">)</span>
+<span class="lineno">20</span>         <span class="p">{</span>
+<span class="lineno">21</span>             <span class="n">RewardLevel</span><span class="p">.</span><span class="n">AddPoints</span><span class="p">(</span><span class="n">points</span><span class="p">);</span>
+<span class="lineno">22</span>         <span class="p">}</span>
+<span class="lineno">23</span> 
+<span class="lineno">24</span>         <span class="k">public</span> <span class="k">void</span> <span class="nf">SetPoints</span><span class="p">(</span><span class="kt">int</span> <span class="n">points</span><span class="p">)</span>
+<span class="lineno">25</span>         <span class="p">{</span>
+<span class="lineno">26</span>             <span class="n">RewardLevel</span><span class="p">.</span><span class="n">SetPoints</span><span class="p">(</span><span class="n">points</span><span class="p">);</span>
+<span class="lineno">27</span>         <span class="p">}</span>
+<span class="lineno">28</span>     <span class="p">}</span>
+<span class="lineno">29</span> <span class="p">}</span>
+</code></pre>
+</div>
+
+
+<p>Notice how we default our <code>Participant</code> to <code>BronzeLevel</code> in the constructor. We call <code>RewardLevel.SetPoints(points)</code> to update the level to the appropriate level should it be higher than bronze (maybe the points passed in the constructor are coming from a database or being persisted elsewhere).</p>
+
+<p>Notice how our <code>AddPoints</code> and <code>SetPoints</code> methods are calling the same methods on the <code>RewardLevel</code> object. Remember that <code>GetDiscount</code> method we mentioned above? Seeing how we only want to interact with our <code>Participant</code> object, we could easily modify our <code>Participant</code> object to include the following method:</p>
+
+<div class="highlight"><pre><code class="csharp"><span class="lineno">1</span> <span class="k">public</span> <span class="kt">double</span> <span class="nf">GetDiscount</span><span class="p">(</span><span class="kt">int</span> <span class="n">points</span><span class="p">)</span>
+<span class="lineno">2</span> <span class="p">{</span>
+<span class="lineno">3</span>     <span class="k">return</span> <span class="n">RewardLevel</span><span class="p">.</span><span class="n">GetDiscount</span><span class="p">();</span>
+<span class="lineno">4</span> <span class="p">}</span>
+</code></pre>
+</div>
+
+
+<h2>Wrapping It All Up</h2>
+<p>This example could easily be enhanced to provide more real world functionality. I'll attach the code I used to drive this example (complete with tests!). Download it, play with it, criticize it, and have fun!</p>
+
+<a class="add-bottom button" href="/downloads/RewardLevelsTests.zip">Download Demo Source</a>
 
 				</article>
 			</div>

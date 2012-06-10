@@ -88,22 +88,24 @@ namespace StatePattern
 }
 {% endhighlight %}
 
-Here you can see how the <code>Context</code> holds on to a <code>State</code> object. We create a <code>state</code> property and set the default state in the constructor to an instance of <code>ConcreateStateA</code>. Notice that when the <code>Request</code> method is called, the <code>Context</code> passes a reference of itself to the <code>Handle</code> method of the <code>State</code> object. Run this bad boy and you will notice how the <code>State</code> objects take over managing the active state:
-<pre class="prettyprint">
+<p>Here you can see how the <code>Context</code> holds on to a <code>State</code> object. We create a <code>state</code> property and set the default state in the constructor to an instance of <code>ConcreateStateA</code>. Notice that when the <code>Request</code> method is called, the <code>Context</code> passes a reference of itself to the <code>Handle</code> method of the <code>State</code> object. Run this bad boy and you will notice how the <code>State</code> objects take over managing the active state:</p>
+
+{% highlight csharp linenos %}
 void Main()
 {
-	var ctxt = new Context();
-	ctxt.Request(); //Hello from ConcreteStateA
-	ctxt.Request(); //Hello from ConcreteStateB
+    var ctxt = new Context();
+    ctxt.Request(); //Hello from ConcreteStateA
+    ctxt.Request(); //Hello from ConcreteStateB
 }
-</pre>
+{% endhighlight %}
 
-<h3>A Real World Example</h3>
-Given a basic understanding of what the state pattern is, it is easy to see how it can be applied to a ton of different scenarios. A little while ago I was charged with managing reward point levels for a customer rewards program. When a customer reaches <em>x</em> amount of total points, they get <em>y</em> level. This problem is just begging to use the state pattern. Let's translate what we learned above into some real world code.
+<h2>A Real World Example</h2>
+<p>Given a basic understanding of what the state pattern is, it is easy to see how it can be applied to a ton of different scenarios. A little while ago I was charged with managing reward point levels for a customer rewards program. When a customer reaches <em>x</em> amount of total points, they get <em>y</em> level. This problem is just begging to use the state pattern. Let's translate what we learned above into some real world code.</p>
 
-<h4>The State</h4>
-Our state objects will be represented as <code>RewardLevel</code> objects. As a customer accumulates points, they earn new levels or "states" representing their reward levels. So let's translate our state over to a reward level object:
-<pre class="prettyprint">
+<h3>The State</h3>
+<p>Our state objects will be represented as <code>RewardLevel</code> objects. As a customer accumulates points, they earn new levels or "states" representing their reward levels. So let's translate our state over to a reward level object:</p>
+
+{% highlight csharp linenos %}
 namespace RewardLevels
 {
     //the interface of our "state" objects
@@ -149,9 +151,11 @@ namespace RewardLevels
         }
     }
 }
-</pre>
-Notice the <code>RewardLevel</code> class creates the basic operations of our custom state. Pay special attention to the <code>CheckState</code> method. This method is fired after any method that changes the state (i.e. changing the number of points). This guy is one stop shopping for updating the <code>RewardLevel</code> state that belongs to the <code>Participant</code> context. Let's look at the following concrete implementations of the <code>RewardLevel</code> class.
-<pre class="prettyprint">
+{% endhighlight %}
+
+<p>Notice the <code>RewardLevel</code> class creates the basic operations of our custom state. Pay special attention to the <code>CheckState</code> method. This method is fired after any method that changes the state (i.e. changing the number of points). This guy is one stop shopping for updating the <code>RewardLevel</code> state that belongs to the <code>Participant</code> context. Let's look at the following concrete implementations of the <code>RewardLevel</code> class.</p>
+
+{% highlight csharp linenos %}
 namespace RewardLevels
 {
     public class BronzeLevel : RewardLevel
@@ -186,12 +190,14 @@ namespace RewardLevels
         }
     }
 }
-</pre>
-The really beauty of the pattern shines when you implement behavior that is different on a reward level by reward level basis. Maybe you have a method like <code>GetDiscountAmount</code> that returns a higher percent as you get higher in the reward level chain.
+{% endhighlight %}
 
-<h4>The Context</h4>
-Remember the context is the main object that people are interested in. In this case it is the participant in the rewards program. We are only concerned with what level the participant is, and we only want to interact with that participant.
-<pre class="prettyprint">
+<p>The real beauty of the pattern shines when you implement behavior that is different on a reward level by reward level basis. Maybe you have a method like <code>GetDiscountAmount</code> that returns a higher percent as you get higher in the reward level chain.</p>
+
+<h3>The Context</h3>
+<p>Remember the context is the main object that people are interested in. In this case it is the participant in the rewards program. We are only concerned with what level the participant is, and we only want to interact with that participant.</p>
+
+{% highlight csharp linenos %}
 namespace RewardLevels
 {
     public class Participant
@@ -221,18 +227,20 @@ namespace RewardLevels
         }
     }
 }
-</pre>
-Notice how we default our <code>Participant</code> to <code>BronzeLevel</code> in the constructor. We call <code>RewardLevel.SetPoints(points)</code> to update the level to the appropriate level should it be higher than bronze (maybe the points passed in the constructor are coming from a database or being persisted elsewhere). Notice how our <code>AddPoints</code> and <code>SetPoints</code> methods are calling the same methods on the <code>RewardLevel</code> object. Remember that <code>GetDiscount</code> method we mentioned above? Seeing how we only want to interact with our <code>Participant</code> object, we could easily modify our <code>Participant</code> object to include the following method:
-<pre class="prettyprint">
+{% endhighlight %}
+
+<p>Notice how we default our <code>Participant</code> to <code>BronzeLevel</code> in the constructor. We call <code>RewardLevel.SetPoints(points)</code> to update the level to the appropriate level should it be higher than bronze (maybe the points passed in the constructor are coming from a database or being persisted elsewhere).</p>
+
+<p>Notice how our <code>AddPoints</code> and <code>SetPoints</code> methods are calling the same methods on the <code>RewardLevel</code> object. Remember that <code>GetDiscount</code> method we mentioned above? Seeing how we only want to interact with our <code>Participant</code> object, we could easily modify our <code>Participant</code> object to include the following method:</p>
+
+{% highlight csharp linenos %}
 public double GetDiscount(int points)
 {
     return RewardLevel.GetDiscount();
 }
-</pre>
+{% endhighlight %}
 
-<h3>Wrapping It All Up</h3>
-This example could easily be enhanced to provide more real world functionality. I'll attach the code I used to drive this example (complete with tests!). Download it, play with it, criticize it, and have fun!
+<h2>Wrapping It All Up</h2>
+<p>This example could easily be enhanced to provide more real world functionality. I'll attach the code I used to drive this example (complete with tests!). Download it, play with it, criticize it, and have fun!</p>
 
-<div class="tags Yellow">
-<a class="add-bottom" href="http://www.brianscaturro.com/downloads/RewardLevelsTests.zip">Download Demo Source</a>
-</div>
+<a class="add-bottom button" href="/downloads/RewardLevelsTests.zip">Download Demo Source</a>
