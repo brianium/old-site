@@ -28,74 +28,94 @@
 			<div id="main" role="main">
 				<article>
 					<h1>Scaling HTML5 Video<span class="post-date">08 Nov 2011</span></h1>
-					While working on a project, I had a need ( probably more of a desire ) to scale the HTML5 video I was working with. How this is done is not so apparent, at least it wasn't for me. Sizing the video via its width and height attributes can prove difficult, because that sucker will want to keep its aspect ratio. It is so easy to forget that the video element is just that - that is an element in the DOM. It has a style property like any other element, and that style property can be manipulated. Via the power of CSS3 transforms, you can scale your HTML5 video up and down to your hearts desire. Be sure to check out the demo ( HTML5 video and CSS3 transform support required ).
-<div class="tags Yellow">
-<a target="_blank" class="add-bottom" href="http://www.brianscaturro.com/demos/video-scale/" title="HTML5 video scaling test">View Demo</a>
+					<p>While working on a project, I had a need ( probably more of a desire ) to scale the HTML5 video I was working with. How this is done is not so apparent, at least it wasn't for me. Sizing the video via its width and height attributes can prove difficult, because that sucker will want to keep its aspect ratio.</p>
+
+<p>It is so easy to forget that the video element is an element in the DOM. It has a style property like any other element, and that style property can be manipulated. Via the power of CSS3 transforms, you can scale your HTML5 video up and down to your hearts content. Be sure to check out the <a href="/demos/video-scale" target="__blank">demo</a> ( HTML5 video and CSS3 transform support required ).</p>
+
+<a target="_blank" class="button" href="/demos/video-scale/" title="HTML5 video scaling test">View Demo</a>
+
+<h2>The Problem With Scaling HTML5 Video</h2>
+<p>We are going to use the classic Big Buck Bunny trailers as our starting point. Here is what we get by default:</p>
+
+<div class="post-image">
+	<img src="/images/default-video.jpg" alt="Default width,height, and aspect ratio" title="Default width,height, and aspect ratio" width="620" height="349" class="bordered" />
 </div>
-<hr />
-<h3>The Problem</h3>
-We are going to use the classic Big Buck Bunny trailers as our starting point. Here is what we get by default:
-[caption id="attachment_983" align="alignnone" width="620" caption="Default width,height, and aspect ratio"]<a href="http://www.brianscaturro.com/wp-content/uploads/2011/11/default.jpg"><img src="http://www.brianscaturro.com/wp-content/uploads/2011/11/default.jpg" alt="Default width,height, and aspect ratio" title="Default width,height, and aspect ratio" width="620" height="349" class="size-full wp-image-983" /></a>[/caption]
 
-A first thought would be to use the width and height attributes to modify the size, but the video will maintain its aspect ratio if we do things this way. Here is what we get if we modify the height attribute only:
+<p>A first thought would be to use the width and height attributes to modify the size, but the video will maintain its aspect ratio if we do things this way. Here is what we get if we modify the height attribute only:</p>
 
-[caption id="attachment_986" align="alignnone" width="355" caption="Height attribute changed"]<a href="http://www.brianscaturro.com/wp-content/uploads/2011/11/heightattr.jpg"><img src="http://www.brianscaturro.com/wp-content/uploads/2011/11/heightattr.jpg" alt="Height attribute changed" title="Height attribute changed" width="355" height="200" class="size-full wp-image-986" /></a>[/caption]
+<div class="post-image">
+	<img src="/images/heightattr.jpg" alt="Height attribute changed" title="Height attribute changed" width="355" height="200" />
+</div>
 
-Re-sizing is very limited with the height and width attributes. We need something else.
+<p>Re-sizing is very limited with the height and width attributes. We need something else.</p>
 
-<h3>Scaling video with CSS3 transforms</h3>
+<h2>Scaling Video With CSS3 Transforms</h2>
 
-We want to be able to scale up or down, and we want to be able to define our own dimensions and aspect ratio. This can be done with CSS3 transforms. We are going to use a little JavaScript function to do this, but it could also be accomplished with some declarations in a style sheet. Specifically, we are are going to be dealing with the scaleY and scaleX functions of CSS3 transform.
+<p>We want to be able to scale up or down, and we want to be able to define our own dimensions and aspect ratio. This can be done with CSS3 transforms.</p>
 
-The solution is pretty simple. We can easily achieve the desired affect with the following formulas:
-<code>
-xScale = targetWidth/videoWidth
-yScale = targetHeight/videoHeight
-</code>
+<p>We are going to use a little JavaScript function to do this, but it could also be accomplished with some declarations in a style sheet. Specifically, we are are going to be dealing with the scaleY and scaleX functions of the CSS3 transforms spec.</p>
 
-Armed with this knowledge of overly complex mathematics, we can wrap this into a handy little JavaScript function to solve all of our woes:
-<pre class="prettyprint">
-function resizeVideo(vidId,width,height) {
-	//check for the standard transform first, then look for vendor specific
-	var vendorTransforms = ['transform', 'WebkitTransform', 'MozTransform','msTransform', 'OTransform'],
-		video = document.getElementById(vidId),
-		vWidth = video.width,
-		vHeight = video.height,
-		xScale = width/vWidth,
-		yScale = height/vHeight,
-		prop = undefined;
-		
-	for ( var i=0; i < vendorTransforms.length; i++ ) {
-		if ( typeof video.style[vendorTransforms[i]] !== 'undefined' ) {
-			prop = vendorTransforms[i];
-		}
-	};
-	
-	if ( prop ) {
-		video.style[prop] = 'scaleX(' + xScale + ') scaleY(' + yScale + ')';
-	}
-}
-</pre>
+<p>The solution is pretty simple. We can easily achieve the desired affect with the following formulas:</p>
 
-The idea here is to check for support of the CSS3 transform property. We first check for support of the W3C standard transform property, and if it isn't supported, then we work our way down the list of vendor specific transform properties. If one is found, then we apply the scaleY and scaleX functions of the transform property. Once the document has loaded, it is easy to change our video size:
-<pre class="prettyprint">
-resizeVideo('vid3',500,500);
-</pre>
+<p>
+	<code>
+	xScale = targetWidth/videoWidth<br>
+	yScale = targetHeight/videoHeight
+	</code>
+</p>
 
-This gives us:
-[caption id="attachment_993" align="alignnone" width="502" caption="500 by 500 video"]<a href="http://www.brianscaturro.com/wp-content/uploads/2011/11/Screenshot_2.jpg"><img src="http://www.brianscaturro.com/wp-content/uploads/2011/11/Screenshot_2.jpg" alt="500 by 500 video" title="500 by 500 video" width="502" height="499" class="size-full wp-image-993" /></a>[/caption]
+<p>Armed with this knowledge of overly complex mathematics, we can wrap this into a handy little JavaScript function to solve all of our woes:</p>
 
-<h3>Conclusion</h3>
-This may not be the ideal solution. It is a rather clunky way of scaling video. It also requires there to be a width and height attribute present on the video - it is a good practice to include these and it should be done, but what if these attributes are omitted? One potential solution is to use the loadedmetadata event of the video element and try to get the videoHeight and videoWidth properties:
-<pre class="prettyprint lang=js">
-video.addEventListener('loadedmetadata',function(){
-    var height = this.videoHeight,
-        width = this.videoWidth;
-    //resize code
-});
-</pre>
+<div class="highlight"><pre><code class="js"><span class="lineno"> 1</span> <span class="kd">function</span> <span class="nx">resizeVideo</span><span class="p">(</span><span class="nx">vidId</span><span class="p">,</span><span class="nx">width</span><span class="p">,</span><span class="nx">height</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno"> 2</span> 	<span class="c1">//check for the standard transform first, then look for vendor specific</span>
+<span class="lineno"> 3</span> 	<span class="kd">var</span> <span class="nx">vendorTransforms</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;transform&#39;</span><span class="p">,</span> <span class="s1">&#39;WebkitTransform&#39;</span><span class="p">,</span> <span class="s1">&#39;MozTransform&#39;</span><span class="p">,</span><span class="s1">&#39;msTransform&#39;</span><span class="p">,</span> <span class="s1">&#39;OTransform&#39;</span><span class="p">],</span>
+<span class="lineno"> 4</span> 		<span class="nx">video</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="nx">vidId</span><span class="p">),</span>
+<span class="lineno"> 5</span> 		<span class="nx">vWidth</span> <span class="o">=</span> <span class="nx">video</span><span class="p">.</span><span class="nx">width</span><span class="p">,</span>
+<span class="lineno"> 6</span> 		<span class="nx">vHeight</span> <span class="o">=</span> <span class="nx">video</span><span class="p">.</span><span class="nx">height</span><span class="p">,</span>
+<span class="lineno"> 7</span> 		<span class="nx">xScale</span> <span class="o">=</span> <span class="nx">width</span><span class="o">/</span><span class="nx">vWidth</span><span class="p">,</span>
+<span class="lineno"> 8</span> 		<span class="nx">yScale</span> <span class="o">=</span> <span class="nx">height</span><span class="o">/</span><span class="nx">vHeight</span><span class="p">,</span>
+<span class="lineno"> 9</span> 		<span class="nx">prop</span> <span class="o">=</span> <span class="kc">undefined</span><span class="p">;</span>
+<span class="lineno">10</span> 		
+<span class="lineno">11</span> 	<span class="k">for</span> <span class="p">(</span> <span class="kd">var</span> <span class="nx">i</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">vendorTransforms</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">)</span> <span class="p">{</span>
+<span class="lineno">12</span> 		<span class="k">if</span> <span class="p">(</span> <span class="k">typeof</span> <span class="nx">video</span><span class="p">.</span><span class="nx">style</span><span class="p">[</span><span class="nx">vendorTransforms</span><span class="p">[</span><span class="nx">i</span><span class="p">]]</span> <span class="o">!==</span> <span class="s1">&#39;undefined&#39;</span> <span class="p">)</span> <span class="p">{</span>
+<span class="lineno">13</span> 			<span class="nx">prop</span> <span class="o">=</span> <span class="nx">vendorTransforms</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+<span class="lineno">14</span> 		<span class="p">}</span>
+<span class="lineno">15</span> 	<span class="p">};</span>
+<span class="lineno">16</span> 	
+<span class="lineno">17</span> 	<span class="k">if</span> <span class="p">(</span> <span class="nx">prop</span> <span class="p">)</span> <span class="p">{</span>
+<span class="lineno">18</span> 		<span class="nx">video</span><span class="p">.</span><span class="nx">style</span><span class="p">[</span><span class="nx">prop</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;scaleX(&#39;</span> <span class="o">+</span> <span class="nx">xScale</span> <span class="o">+</span> <span class="s1">&#39;) scaleY(&#39;</span> <span class="o">+</span> <span class="nx">yScale</span> <span class="o">+</span> <span class="s1">&#39;)&#39;</span><span class="p">;</span>
+<span class="lineno">19</span> 	<span class="p">}</span>
+<span class="lineno">20</span> <span class="p">}</span>
+</code></pre>
+</div>
 
-This is a slightly shaky subject, and I would love to find out more from others who have encountered this problem and solved it.
+
+<p>The idea here is to check for support of the CSS3 transform property. We first check for support of the W3C standard transform property, and if it isn't supported, then we work our way down the list of vendor specific transform properties. If one is found, then we apply the scaleY and scaleX functions of the transform property. Once the document has loaded, it is easy to change our video size:</p>
+
+<div class="highlight"><pre><code class="js"><span class="lineno">1</span> <span class="nx">resizeVideo</span><span class="p">(</span><span class="s1">&#39;vid3&#39;</span><span class="p">,</span><span class="mi">500</span><span class="p">,</span><span class="mi">500</span><span class="p">);</span>
+</code></pre>
+</div>
+
+
+<p>This gives us:</p>
+
+<div class="post-image">
+	<img src="/images/scaled-video.jpg" alt="500 by 500 video" title="500 by 500 video" width="502" height="499" />
+</div>
+
+<h2>Conclusion</h2>
+<p>This may not be the ideal solution. It is a rather clunky way of scaling video. It also requires there to be a width and height attribute present on the video - it is a good practice to include these and it should be done, but what if these attributes are omitted? One potential solution is to use the loadedmetadata event of the video element and try to get the videoHeight and videoWidth properties:</p>
+
+<div class="highlight"><pre><code class="js"><span class="lineno">1</span> <span class="nx">video</span><span class="p">.</span><span class="nx">addEventListener</span><span class="p">(</span><span class="s1">&#39;loadedmetadata&#39;</span><span class="p">,</span><span class="kd">function</span><span class="p">(){</span>
+<span class="lineno">2</span>     <span class="kd">var</span> <span class="nx">height</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">videoHeight</span><span class="p">,</span>
+<span class="lineno">3</span>         <span class="nx">width</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">videoWidth</span><span class="p">;</span>
+<span class="lineno">4</span>     <span class="c1">//resize code</span>
+<span class="lineno">5</span> <span class="p">});</span>
+</code></pre>
+</div>
+
+
+<p>This is a slightly shaky subject, and I would love to find out more from others who have encountered this problem and solved it.</p>
 
 				</article>
 			</div>
