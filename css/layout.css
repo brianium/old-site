@@ -138,6 +138,11 @@ code {
 	opacity:0.5;
 }
 
+.buttons .button {
+	float:left;
+	margin-right:10px;
+}
+
 .page_number {
 	padding:0 40px;
 }

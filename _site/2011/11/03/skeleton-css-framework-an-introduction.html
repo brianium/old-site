@@ -28,129 +28,164 @@
 			<div id="main" role="main">
 				<article>
 					<h1>Skeleton CSS Framework: An Introduction<span class="post-date">03 Nov 2011</span></h1>
-					As I was writing my post on the <a href="http://www.brianscaturro.com/html5-and-the-document-outline" target="_blank">document outline</a>, I quickly coded up a demo site to show off some of those new HTML5 features that would aid the cause. I couldn't very well have a demo site that was completely ugly could I? I decided to do a quick test of the <a href="http://www.getskeleton.com" target="_blank">Skeleton</a> CSS framework. What I found was a wonderfully responsive framework that is wonderfully easy to use.
-<div class="tags Yellow">
-<a class="add-bottom" href="http://www.brianscaturro.com/demos/argyle/" target="_blank">Demo Site</a><a href="http://www.brianscaturro.com/demos/argyle/source.zip" class="add-bottom">Download Demo Source</a>
+					<p>As I was writing my post on the <a href="/html5-and-the-document-outline" target="_blank">document outline</a>, I quickly coded up a demo site to show off some of those new HTML5 features that would aid the cause.</p>
+<p>I couldn't very well have a demo site that was completely ugly could I? I decided to do a quick test of the <a href="http://www.getskeleton.com" target="_blank">Skeleton</a> CSS framework. What I found was a wonderfully responsive framework that is wonderfully easy to use.</p>
+
+<div class="clearfix buttons">
+  <a class="button" href="/demos/argyle/" target="_blank">Demo Site</a>
+  <a href="/demos/argyle/source.zip" class="button">Download Demo Source</a>
 </div>
-<hr />
-<h3>How to use it</h3>
-Head over to <a href="http://www.getskeleton.com" target="_blank">getskeleton.com</a> and download this bad mamma jamma. The bare minimum you need to get off the ground are two files: base.css and skeleton.css. The base.css file includes a lot of helper classes and resets, while the skeleton.css file contains the grid and column styles. The layout.css file is meant to contain your own custom styles, and it has a couple of useful media queries to boot. The <a href="http://www.brianscaturro.com/demos/argyle/" target="_blank">demo site</a> was built utilizing the base.css file and skeleton.css file. To get rockin just include these two files in your document head before your own stylesheet:
-<pre class="prettyprint">
-&lt;link href="/common/stylesheets/skeleton/base.css" rel="stylesheet" media="all" type="text/css" /&gt;
-&lt;link href="/common/stylesheets/skeleton/skeleton.css" rel="stylesheet" media="all" type="text/css" /&gt;
-&lt;link href="style.css" rel="stylesheet" media="all" type="text/css" /&gt;
-</pre>
-Easy weasy right?
-<h3>What it's made of</h3>
-Contrary to a lot of responsive approaches, Skeleton does not use a fluid base - that is it is not in percentages. It adapts the popular 960 grid system, and then focuses on min and max widths via media queries.
-<pre class="prettyprint">
-/* Smaller than standard 960 (devices and browsers) */
-@media only screen and (max-width: 959px) {}
 
-/* Tablet Portrait size to standard 960 (devices and browsers) */
-@media only screen and (min-width: 768px) and (max-width: 959px) {}
+<h2>How To Use Skeleton CSS</h2>
+<p>Head over to <a href="http://www.getskeleton.com" target="_blank">getskeleton.com</a> and download this bad mamma jamma. The bare minimum you need to get off the ground are two files: base.css and skeleton.css.</p>
+<p>The base.css file includes a lot of helper classes and resets, while the skeleton.css file contains the grid and column styles.</p>
 
-/* All Mobile Sizes (devices and browser) */
-@media only screen and (max-width: 767px) {}
+<p>The layout.css file is meant to contain your own custom styles, and it has a couple of useful media queries to boot.</p>
+<p>The <a href="/demos/argyle/" target="_blank">demo site</a> was built utilizing the base.css file and skeleton.css file. To get rockin just include these two files in your document head before your own stylesheet:</p>
 
-/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
-@media only screen and (min-width: 480px) and (max-width: 767px) {}
+<div class="highlight"><pre><code class="html"><span class="lineno">1</span> <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;/common/stylesheets/skeleton/base.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">media=</span><span class="s">&quot;all&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="nt">/&gt;</span>
+<span class="lineno">2</span> <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;/common/stylesheets/skeleton/skeleton.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">media=</span><span class="s">&quot;all&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="nt">/&gt;</span>
+<span class="lineno">3</span> <span class="nt">&lt;link</span> <span class="na">href=</span><span class="s">&quot;style.css&quot;</span> <span class="na">rel=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">media=</span><span class="s">&quot;all&quot;</span> <span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="nt">/&gt;</span>
+</code></pre>
+</div>
 
-/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
-@media only screen and (max-width: 479px) {}
-</pre>
 
-At the core of Skeleton's grid is a sixteen column system. You start out with a class of "container" on your root element, and then make sure whatever columns and column offsets you are using add up to the total 16. At the core of the demo's layout is this:
-<pre class="prettyprint">
-&lt;div class="container clearfix" role="main"&gt;
-	&lt;div class="eleven columns alpha"&gt;
+<p>Easy weasy right?</p>
 
-	&lt;/div&gt;
-	&lt;aside class="five columns omega"&gt;
+<h2>How Skeleton CSS Works</h2>
+<p>Contrary to a lot of responsive approaches, Skeleton does not use a fluid base - that is it is not in percentages. It adapts the popular 960 grid system, and then focuses on min and max widths via media queries.</p>
 
-	&lt;/aside&gt;
-&lt;/div&gt;
-</pre>
-Eleven plus five does in fact equal sixteen....simple right? Alternatively, if you wanted more padding on the left of the aside you could do the following:
-<pre class="prettyprint">
-&lt;div class="container clearfix" role="main"&gt;
-	&lt;div class="eleven columns alpha"&gt;
+<div class="highlight"><pre><code class="css"><span class="lineno"> 1</span> <span class="c">/* Smaller than standard 960 (devices and browsers) */</span>
+<span class="lineno"> 2</span> <span class="k">@media</span> <span class="nt">only</span> <span class="nt">screen</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">max-width</span><span class="o">:</span> <span class="nt">959px</span><span class="o">)</span> <span class="p">{}</span>
+<span class="lineno"> 3</span> 
+<span class="lineno"> 4</span> <span class="c">/* Tablet Portrait size to standard 960 (devices and browsers) */</span>
+<span class="lineno"> 5</span> <span class="k">@media</span> <span class="nt">only</span> <span class="nt">screen</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">min-width</span><span class="o">:</span> <span class="nt">768px</span><span class="o">)</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">max-width</span><span class="o">:</span> <span class="nt">959px</span><span class="o">)</span> <span class="p">{}</span>
+<span class="lineno"> 6</span> 
+<span class="lineno"> 7</span> <span class="c">/* All Mobile Sizes (devices and browser) */</span>
+<span class="lineno"> 8</span> <span class="k">@media</span> <span class="nt">only</span> <span class="nt">screen</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">max-width</span><span class="o">:</span> <span class="nt">767px</span><span class="o">)</span> <span class="p">{}</span>
+<span class="lineno"> 9</span> 
+<span class="lineno">10</span> <span class="c">/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */</span>
+<span class="lineno">11</span> <span class="k">@media</span> <span class="nt">only</span> <span class="nt">screen</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">min-width</span><span class="o">:</span> <span class="nt">480px</span><span class="o">)</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">max-width</span><span class="o">:</span> <span class="nt">767px</span><span class="o">)</span> <span class="p">{}</span>
+<span class="lineno">12</span> 
+<span class="lineno">13</span> <span class="c">/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */</span>
+<span class="lineno">14</span> <span class="k">@media</span> <span class="nt">only</span> <span class="nt">screen</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">max-width</span><span class="o">:</span> <span class="nt">479px</span><span class="o">)</span> <span class="p">{}</span>
+</code></pre>
+</div>
 
-	&lt;/div&gt;
-	&lt;aside class="four columns offset-by-one omega"&gt;
 
-	&lt;/aside&gt;
-&lt;/div&gt;
-</pre>
-Just make sure it all adds up. In case you are wondering, alpha and omega are pretty standard conventions that strip off margin from the first column and last column respectively.
+<p>At the core of Skeleton's grid is a sixteen column system. You start out with a class of "container" on your root element, and then make sure whatever columns and column offsets you are using add up to the total 16. At the core of the demo's layout is this:</p>
 
-<h3>What makes it responsive?</h3>
-Well you already saw the media queries used. Remember the key to the grid is the column class. Lets look at a couple column rules within the media queries:
-<pre class="prettyprint">
-/* #Base 960 Grid
-================================================== */
+<div class="highlight"><pre><code class="html"><span class="lineno">1</span> <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;container clearfix&quot;</span> <span class="na">role=</span><span class="s">&quot;main&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">2</span>   <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;eleven columns alpha&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">3</span> 
+<span class="lineno">4</span>   <span class="nt">&lt;/div&gt;</span>
+<span class="lineno">5</span>   <span class="nt">&lt;aside</span> <span class="na">class=</span><span class="s">&quot;five columns omega&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">6</span> 
+<span class="lineno">7</span>   <span class="nt">&lt;/aside&gt;</span>
+<span class="lineno">8</span> <span class="nt">&lt;/div&gt;</span>
+</code></pre>
+</div>
 
-    .container                                  { position: relative; width: 960px; margin: 0 auto; padding: 0; }
-    .column, .columns                           { float: left; display: inline; margin-left: 10px; margin-right: 10px; }
-    .row                                        { margin-bottom: 20px; }
 
-    /* Nested Column Classes */
-    .column.alpha, .columns.alpha               { margin-left: 0; }
-    .column.omega, .columns.omega               { margin-right: 0; }
+<p>Eleven plus five does in fact equal sixteen....simple right? Alternatively, if you wanted more padding on the left of the aside you could do the following:</p>
 
-    /* Base Grid */
-    .container .one.column                      { width: 40px;  }
-    .container .two.columns                     { width: 100px; }
-    .container .three.columns                   { width: 160px; }
+<div class="highlight"><pre><code class="html"><span class="lineno">1</span> <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;container clearfix&quot;</span> <span class="na">role=</span><span class="s">&quot;main&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">2</span>   <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;eleven columns alpha&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">3</span> 
+<span class="lineno">4</span>   <span class="nt">&lt;/div&gt;</span>
+<span class="lineno">5</span>   <span class="nt">&lt;aside</span> <span class="na">class=</span><span class="s">&quot;four columns offset-by-one omega&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">6</span> 
+<span class="lineno">7</span>   <span class="nt">&lt;/aside&gt;</span>
+<span class="lineno">8</span> <span class="nt">&lt;/div&gt;</span>
+</code></pre>
+</div>
 
-/* #Tablet (Portrait)
-================================================== */
 
-    /* Note: Design for a width of 768px */
+<p>Just make sure it all adds up. In case you are wondering, alpha and omega are pretty standard conventions that strip off margin from the first column and last column respectively.</p>
 
-    @media only screen and (min-width: 768px) and (max-width: 959px) {
-        .container                                  { width: 768px; }
-        .container .column,
-        .container .columns                         { margin-left: 10px; margin-right: 10px;  }
-        .column.alpha, .columns.alpha               { margin-left: 0; margin-right: 10px; }
-        .column.omega, .columns.omega               { margin-right: 0; margin-left: 10px; }
+<h2>What Makes Skeleton CSS Responsive?</h2>
+<p>Well you already saw the media queries used. Remember the key to the grid is the column class. Lets look at a couple column rules within the media queries:</p>
 
-        .container .one.column                      { width: 28px; }
-        .container .two.columns                     { width: 76px; }
-        .container .three.columns                   { width: 124px; }
-</pre>
-And so on.... be sure to take a more in depth look at the source to see how it reacts at even smaller screen sizes.
+<div class="highlight"><pre><code class="css"><span class="lineno"> 1</span> <span class="c">/* #Base 960 Grid</span>
+<span class="lineno"> 2</span> <span class="c">================================================== */</span>
+<span class="lineno"> 3</span> 
+<span class="lineno"> 4</span>     <span class="nc">.container</span>                                  <span class="p">{</span> <span class="k">position</span><span class="o">:</span> <span class="k">relative</span><span class="p">;</span> <span class="k">width</span><span class="o">:</span> <span class="m">960px</span><span class="p">;</span> <span class="k">margin</span><span class="o">:</span> <span class="m">0</span> <span class="k">auto</span><span class="p">;</span> <span class="k">padding</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span> <span class="p">}</span>
+<span class="lineno"> 5</span>     <span class="nc">.column</span><span class="o">,</span> <span class="nc">.columns</span>                           <span class="p">{</span> <span class="k">float</span><span class="o">:</span> <span class="k">left</span><span class="p">;</span> <span class="k">display</span><span class="o">:</span> <span class="k">inline</span><span class="p">;</span> <span class="k">margin-left</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span> <span class="k">margin-right</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span> <span class="p">}</span>
+<span class="lineno"> 6</span>     <span class="nc">.row</span>                                        <span class="p">{</span> <span class="k">margin-bottom</span><span class="o">:</span> <span class="m">20px</span><span class="p">;</span> <span class="p">}</span>
+<span class="lineno"> 7</span> 
+<span class="lineno"> 8</span>     <span class="c">/* Nested Column Classes */</span>
+<span class="lineno"> 9</span>     <span class="nc">.column.alpha</span><span class="o">,</span> <span class="nc">.columns.alpha</span>               <span class="p">{</span> <span class="k">margin-left</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span> <span class="p">}</span>
+<span class="lineno">10</span>     <span class="nc">.column.omega</span><span class="o">,</span> <span class="nc">.columns.omega</span>               <span class="p">{</span> <span class="k">margin-right</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span> <span class="p">}</span>
+<span class="lineno">11</span> 
+<span class="lineno">12</span>     <span class="c">/* Base Grid */</span>
+<span class="lineno">13</span>     <span class="nc">.container</span> <span class="nc">.one.column</span>                      <span class="p">{</span> <span class="k">width</span><span class="o">:</span> <span class="m">40px</span><span class="p">;</span>  <span class="p">}</span>
+<span class="lineno">14</span>     <span class="nc">.container</span> <span class="nc">.two.columns</span>                     <span class="p">{</span> <span class="k">width</span><span class="o">:</span> <span class="m">100px</span><span class="p">;</span> <span class="p">}</span>
+<span class="lineno">15</span>     <span class="nc">.container</span> <span class="nc">.three.columns</span>                   <span class="p">{</span> <span class="k">width</span><span class="o">:</span> <span class="m">160px</span><span class="p">;</span> <span class="p">}</span>
+<span class="lineno">16</span> 
+<span class="lineno">17</span> <span class="c">/* #Tablet (Portrait)</span>
+<span class="lineno">18</span> <span class="c">================================================== */</span>
+<span class="lineno">19</span> 
+<span class="lineno">20</span>     <span class="c">/* Note: Design for a width of 768px */</span>
+<span class="lineno">21</span> 
+<span class="lineno">22</span>     <span class="k">@media</span> <span class="nt">only</span> <span class="nt">screen</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">min-width</span><span class="o">:</span> <span class="nt">768px</span><span class="o">)</span> <span class="nt">and</span> <span class="o">(</span><span class="nt">max-width</span><span class="o">:</span> <span class="nt">959px</span><span class="o">)</span> <span class="p">{</span>
+<span class="lineno">23</span>         <span class="nc">.container</span>                                  <span class="p">{</span> <span class="k">width</span><span class="o">:</span> <span class="m">768px</span><span class="p">;</span> <span class="p">}</span>
+<span class="lineno">24</span>         <span class="nc">.container</span> <span class="nc">.column</span><span class="o">,</span>
+<span class="lineno">25</span>         <span class="nc">.container</span> <span class="nc">.columns</span>                         <span class="p">{</span> <span class="k">margin-left</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span> <span class="k">margin-right</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span>  <span class="p">}</span>
+<span class="lineno">26</span>         <span class="nc">.column.alpha</span><span class="o">,</span> <span class="nc">.columns.alpha</span>               <span class="p">{</span> <span class="k">margin-left</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span> <span class="k">margin-right</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span> <span class="p">}</span>
+<span class="lineno">27</span>         <span class="nc">.column.omega</span><span class="o">,</span> <span class="nc">.columns.omega</span>               <span class="p">{</span> <span class="k">margin-right</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span> <span class="k">margin-left</span><span class="o">:</span> <span class="m">10px</span><span class="p">;</span> <span class="p">}</span>
+<span class="lineno">28</span> 
+<span class="lineno">29</span>         <span class="nc">.container</span> <span class="nc">.one.column</span>                      <span class="p">{</span> <span class="k">width</span><span class="o">:</span> <span class="m">28px</span><span class="p">;</span> <span class="p">}</span>
+<span class="lineno">30</span>         <span class="nc">.container</span> <span class="nc">.two.columns</span>                     <span class="p">{</span> <span class="k">width</span><span class="o">:</span> <span class="m">76px</span><span class="p">;</span> <span class="p">}</span>
+<span class="lineno">31</span>         <span class="nc">.container</span> <span class="nc">.three.columns</span>                   <span class="p">{</span> <span class="k">width</span><span class="o">:</span> <span class="m">124px</span><span class="p">;</span> <span class="p">}</span>
+</code></pre>
+</div>
 
-<h3>What you can do to spice things up a bit more</h3>
-As with any mobile optimized site, you should include the viewport meta in your document:
-<pre class="prettyprint">
-&lt;meta name="viewport" content="width=device-width,initial-scale=1"&gt;
-</pre>
-This of course lets you control the size of the viewport and the zoom properties as well.
 
-One cool feature that is not included in the framework is a smooth resizing ( go ahead and resize the window on the <a href="http://www.brianscaturro.com/demos/argyle/" target="_blank">demo site</a> to see what I mean ). Normally you just see blocks shift abruptly as the screen size adjusts. It is fairly easy to remedy this with CSS3 transitions:
-<pre class="prettyprint">
-.column, .columns {
-  	-moz-transition: all .2s ease-in-out;
-	-webkit-transition: all .2s ease-in-out;
-	-o-transition: all .2s ease-in-out;
-	transition: all .2s ease-in-out;
-}
-</pre>
-<h3>Last thoughts</h3>
-Skeleton provides a slew of other useful classes like <code>.button</code>, <code>.remove-bottom, .add-bottom</code> and <code>.tabs</code>. 
-Usual fare for responsive design is to use a polyfill like <a href="https://github.com/scottjehl/Respond" target="_blank">respond.js</a> to make your older browsers ( I'm lookin at you IE ) behave with media queries. I am not entirely convinced of the necessity of this, as Skeleton creator Dave Gamache puts it
-<blockquote class="superquote">
+<p>And so on.... be sure to take a more in depth look at the source to see how it reacts at even smaller screen sizes.</p>
+
+<h2>Required HTML</h2>
+
+<p>As with any mobile optimized site, you should include the viewport meta in your document:</p>
+
+<div class="highlight"><pre><code class="html"><span class="lineno">1</span> <span class="nt">&lt;meta</span> <span class="na">name=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content=</span><span class="s">&quot;width=device-width,initial-scale=1&quot;</span><span class="nt">&gt;</span>
+</code></pre>
+</div>
+
+
+<p>This of course lets you control the size of the viewport and the zoom properties as well.</p>
+
+<h2>Enhancing The Skeleton Base</h2>
+
+<p>One cool feature that is not included in the framework is a smooth resizing (go ahead and resize the window on the <a href="/demos/argyle/" target="_blank">demo site</a> to see what I mean). Normally you just see blocks shift abruptly as the screen size adjusts. It is fairly easy to remedy this with CSS3 transitions:</p>
+
+<div class="highlight"><pre><code class="css"><span class="lineno">1</span> <span class="nc">.column</span><span class="o">,</span> <span class="nc">.columns</span> <span class="p">{</span>
+<span class="lineno">2</span>     <span class="o">-</span><span class="n">moz</span><span class="o">-</span><span class="n">transition</span><span class="o">:</span> <span class="n">all</span> <span class="m">.2s</span> <span class="n">ease</span><span class="o">-</span><span class="n">in</span><span class="o">-</span><span class="n">out</span><span class="p">;</span>
+<span class="lineno">3</span>   <span class="o">-</span><span class="n">webkit</span><span class="o">-</span><span class="n">transition</span><span class="o">:</span> <span class="n">all</span> <span class="m">.2s</span> <span class="n">ease</span><span class="o">-</span><span class="n">in</span><span class="o">-</span><span class="n">out</span><span class="p">;</span>
+<span class="lineno">4</span>   <span class="o">-</span><span class="err">o</span><span class="o">-</span><span class="n">transition</span><span class="o">:</span> <span class="n">all</span> <span class="m">.2s</span> <span class="n">ease</span><span class="o">-</span><span class="n">in</span><span class="o">-</span><span class="n">out</span><span class="p">;</span>
+<span class="lineno">5</span>   <span class="n">transition</span><span class="o">:</span> <span class="n">all</span> <span class="m">.2s</span> <span class="n">ease</span><span class="o">-</span><span class="n">in</span><span class="o">-</span><span class="n">out</span><span class="p">;</span>
+<span class="lineno">6</span> <span class="p">}</span>
+</code></pre>
+</div>
+
+
+<h2>Last Thoughts</h2>
+<p>Skeleton provides a slew of other useful classes like <code>.button</code>, <code>.remove-bottom, .add-bottom</code> and <code>.tabs</code>.</p>
+
+<p>Usual fare for responsive design is to use a polyfill like <a href="https://github.com/scottjehl/Respond" target="_blank">respond.js</a> to make your older browsers ( I'm lookin at you IE ) behave with media queries. I am not entirely convinced of the necessity of this, as Skeleton creator Dave Gamache puts it</p>
+
+<blockquote>
 <p>
 There is a small hiccup though - older non-CSS3 browsers aren't going to respond to the media-queries and thus will be served the standard 960 grid even if they are resized. In the spirit of graceful degradation though, I'm going to let this be instead of trying to implement a JS solution.
 </p>
 </blockquote>
 
-Other than that, you can test the demo site in IE7+ and all modern browsers, and you should see a pretty nice experience on all fronts.
+<p>Other than that, you can test the demo site in IE7+ and all modern browsers, and you should see a pretty nice experience on all fronts.</p>
 
-Don't forget (Make sure you stretch this bad brotha):
-<div class="tags Yellow">
-<a class="add-bottom" href="http://www.brianscaturro.com/demos/argyle/" target="_blank">View the Demo Site</a><a href="http://www.brianscaturro.com/demos/argyle/source.zip" class="add-bottom">Download Demo Source</a>
+<p>Don't forget (Make sure you stretch this bad brotha):</p>
+
+<div class="buttons">
+  <a class="button" href="/demos/argyle/" target="_blank">View the Demo Site</a>
+  <a href="/demos/argyle/source.zip" class="button">Download Demo Source</a>
 </div>
 
 				</article>
