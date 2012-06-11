@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Validate.js - A tiny JavaScript validation library
+title: Validate.js - A Tiny JavaScript Validation Library
 tags:
 - JavaScript
 - Validation
@@ -21,83 +21,98 @@ meta:
   _yoast_wpseo_redirect: ''
   _thumbnail_id: '1029'
 ---
-I recently had a chance to try out the JavaScript validation library known as Validate.js. It boasts a tiny size (about 1kb gzipped), no dependencies, and a style that will be familiar to CodeIgniter fans. What this tiny tool boasts is definitely a strong point, but it has a few things that irk me. Lets take a look and see whats going on with this little fella.
+<p>I recently had a chance to try out the JavaScript validation library known as Validate.js. It boasts a tiny size (about 1kb gzipped), no dependencies, and a style that will be familiar to CodeIgniter fans. What this tiny tool boasts is definitely a strong point, but it has a few things that irk me. Lets take a look and see whats going on with this little fella.</p>
 
-<div class="tags Yellow">
-<a target="_blank" class="add-bottom" href="http://www.brianscaturro.com/demos/validate">Demo</a>
-</div>
-<hr />
+<a target="_blank" class="button" href="/demos/validate">Demo</a>
 
-<h3>Adding validation rules</h3>
-Adding validation rules is a snap. Validate.js uses the document.forms element from DOM Spec 2 to work its magic. So you will need to use the name attribute on your form (something I myself have not done regularly in a good while). Set your form up like so:
-<pre class="prettyprint">
-&lt;form name="test" method="get"&gt;
+<h2>Adding Validation Rules</h2>
+<p>Adding validation rules is a snap. Validate.js uses the document.forms element from DOM Spec 2 to work its magic. So you will need to use the name attribute on your form (something I myself have not done regularly in a good while). Set your form up like so:</p>
 
-&lt;/form&gt;
-</pre>
+{% highlight html linenos %}
+<form name="test" method="get">
 
-And from there you can create your new form object. The FormValidator object that Validate.js provides takes the name of the form as an argument, an array of object literals that specify the elements to validate, and a validation callback. It is done like so:
+</form>
+{% endhighlight %}
 
-<pre class="prettyprint">
+<p>And from there you can create your new form object. The FormValidator object that Validate.js provides takes the name of the form as an argument, an array of object literals that specify the elements to validate, and a validation callback. It is done like so:</p>
+
+{% highlight js linenos %}
 var validator = new FormValidator('test',[
-	{
-		name:'required',
-		display:'Required',
-		rules:'required'
-	},
-	{
-		name:'email',
-		display:'Email',
-		rules:'required|valid_email'
-	},
-	{
-		name:'pass',
-		display:'Password',
-		rules:'required|matches[passConf]'
-	}
-    ],
-    function(errors,event) {
-        if ( errors.length > 0 ) {
-            //handle errors
-        }
-    });
-      
-</pre>
+  {
+    name:'required',
+    display:'Required',
+    rules:'required'
+  },
+  {
+    name:'email',
+    display:'Email',
+    rules:'required|valid_email'
+  },
+  {
+    name:'pass',
+    display:'Password',
+    rules:'required|matches[passConf]'
+  }],
+  function(errors,event) {
+      if ( errors.length > 0 ) {
+        //handle errors
+      }
+  });
+{% endhighlight %}
 
-Not too difficult to see what is going on here. The <code>name</code> property of the rule object refers to the name field of the form element. The <code>display</code> property is an optional property available if you want to change the label that is included in the message property; it defaults to the <code>name</code> property. The last property is <code>rules</code>, and it is a pipe delimited string of validation rules. The full list of these rules is availabe at the <a href="http://rickharrison.github.com/validate.js/" target="_blank">Validate.js page</a>
+<p>
+  Not too difficult to see what is going on here. The <code>name</code> property of the rule object refers to the name field of the form element.</p>
+<p>
+  The <code>display</code> property is an optional property available if you want to change the label that is included in the message property; it defaults to the <code>name</code> property.
+</p>
+<p>The last property is <code>rules</code>, and it is a pipe delimited string of validation rules.</p>
+<p> 
+  The full list of these rules is availabe at the <a href="http://rickharrison.github.com/validate.js/" target="_blank">Validate.js page</a>
+</p>
 
-Adding a custom validation is pretty simple as well, and this is one of the more useful features in my opinion. To add your own validation, you make use of the only two methods available to the public interface of this library, registerCallback, and setMessage. Just use them like so on the object you created above:
+<p>Adding a custom validation is pretty simple as well, and this is one of the more useful features in my opinion. To add your own validation, you make use of the only two methods available to the public interface of this library, registerCallback, and setMessage. Just use them like so on the object you created above:</p>
 
-<pre class="prettyprint">
+{% highlight js linenos %}
 validator.registerCallback('ham_sandwich',function(value){
-	if ( /ham/g.exec(value) ) {
-		return true;
-	}
-	return false;
+  if ( /ham/g.exec(value) ) {
+    return true;
+  }
+  return false;
 }).setMessage('ham_sandwich','Ham sandwich must always have the word ham in it');
-</pre>
+{% endhighlight %}
 
-It can then be used in your rule array like so:
-<pre class="prettyprint">
+<p>It can then be used in your rule array like so:</p>
+
+{% highlight js linenos %}
 {
     name:'ham',
     display:'Ham sandwich',
     rules:'required|callback_ham_sandwich'
 }
-</pre>
+{% endhighlight %}
 
-Just note that custom rules need to be prefixed with <code>callback_</code> when used in the <code>rules</code> property.
+<p>Just note that custom rules need to be prefixed with <code>callback_</code> when used in the <code>rules</code> property.</p>
 
-<h3>The Pros</h3>
+<h2>The Pros</h2>
 
-What I liked about this tool is its compact size and ease of use. At just over 1KB, it is barely a blip on the radar. This library makes it really easy to quickly setup form validation on the client side. It is ideal for small forms that don't make use of a full framework like jQuery, because it has no dependencies. I am definitely a fan of how easy it is to add custom validations.
+<p>
+  What I liked about this tool is its compact size and ease of use. At just over 1KB, it is barely a blip on the radar.
+<p>
+  This library makes it really easy to quickly setup form validation on the client side. It is ideal for small forms that don't make use of a full framework like jQuery, because it has no dependencies.
+</p>
+<p>I am definitely a fan of how easy it is to add custom validations.</p>
 
-<h3>The Cons</h3>
+<h2>The Cons</h2>
 
-While the pros are nice, the cons are pretty significant. There is actually only one con that I can't get over. Validate.js does nothing to flag your input fields as invalid. No classes and nothing in the returned errors object of the callback. The callback that is fired on submit, gets access to an array of error messages, and this pretty much gives you one way to display them (See the <a href="http://www.brianscaturro.com/demos/validate" target="_blank">demo</a>). 
+<p>While the pros are nice, the cons are pretty significant. There is actually only one con that I can't get over. Validate.js does nothing to flag your input fields as invalid. No classes and nothing in the returned errors object of the callback. The callback that is fired on submit, gets access to an array of error messages, and this pretty much gives you one way to display them (See the <a href="/demos/validate" target="_blank">demo</a>).</p> 
 
-This limitation is enough for me to limit my use of it for anything significant. Hopefully this is addressed in a future version.
+<p>This limitation is enough for me to limit my use of it for anything significant. Hopefully this is addressed in a future version.</p>
 
-<h3>Conclusion</h3>
-This tool is pretty powerful for the size, but I am not so sure I would use it for any big projects. It is perfect for tiny forms (maybe a landing page), and it makes a lot of sense if you aren't relying on larger more robust solutions.
+<h2>Conclusion</h2>
+<p>This tool is pretty powerful for the size, but I am not so sure I would use it for any big projects. It is perfect for tiny forms (maybe a landing page), and it makes a lot of sense if you aren't relying on larger more robust solutions.</p>
+
+<h2>Update</h2>
+<p>
+  As of 05/17/2012, Validate.js has included the the id and name of the form element in the error object. You can now reference your form elements in your error handling callback!
+</p>
 
