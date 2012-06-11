@@ -17,7 +17,7 @@ title: Brian Scaturro
 <p>
 	Hang out with me on <a href="https://github.com/brianium" target="_blank">Github</a> or bombard me with @ symbols on <a href="https://twitter.com/#!/scaturr" target="_blank">twitter</a>.
 </p>
-<h2 class="sub-heading">The Writings Of A Madman!</h2>
+<h2 class="sub-heading" id="writings" name="writings">The Writings Of A Madman!</h2>
 <ul class="posts">
 	{% for post in paginator.posts %}
 	<li>
@@ -32,16 +32,16 @@ title: Brian Scaturro
 <div class="pagination">
   {% if paginator.previous_page %}
   	{% if paginator.previous_page == 1 %}
-  	<a href="/" class="button previous">Previous</a>
+  	<a href="/#writings" class="button previous">Previous</a>
   	{% else %}
-    <a href="/page{{paginator.previous_page}}" class="previous button">Previous</a>
+    <a href="/page{{paginator.previous_page}}#writings" class="previous button">Previous</a>
     {% endif %}
   {% else %}
     <span class="previous button" disabled>Previous</span>
   {% endif %}
   <span class="page_number ">Page: {{paginator.page}} of {{paginator.total_pages}}</span>
   {% if paginator.next_page %}
-    <a href="/page{{paginator.next_page}}" class="next button">Next</a>
+    <a href="/page{{paginator.next_page}}#writings" class="next button">Next</a>
   {% else %}
     <span class="button next" disabled>Next</span>
   {% endif %}
