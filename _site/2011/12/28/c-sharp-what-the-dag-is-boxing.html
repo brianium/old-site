@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>C#: What the dag is boxing?</title>
+	<title>C#: What Is Boxing?</title>
 	<meta name="description" content="I enjoy programming stuff - up to and including things!">
 	<meta name="author" content="Brian Scaturro">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -27,54 +27,59 @@
 			</header>
 			<div id="main" role="main">
 				<article>
-					<h1>C#: What the dag is boxing?<span class="post-date">28 Dec 2011</span></h1>
-					I was recently asked to explain what boxing in C# is. Well I couldn't give an answer on the spot so here I am reporting my findings. It is a pretty simple concept, and one that is probably used a lot without realizing it. According to <a href="http://msdn.microsoft.com/en-us/library/yz2be5wk.aspx" target="_blank">MSDN</a>: "The concept of boxing and unboxing underlies the C# unified view of the type system, in which a value of any type can be treated as an object."
+					<h1>C#: What Is Boxing?<span class="post-date">28 Dec 2011</span></h1>
+					<p>I was recently asked to explain what boxing in C# is. Well I couldn't give an answer on the spot so here I am reporting my findings. It is a pretty simple concept, and one that is probably used a lot without realizing it. According to <a href="http://msdn.microsoft.com/en-us/library/yz2be5wk.aspx" target="_blank">MSDN</a>: "The concept of boxing and unboxing underlies the C# unified view of the type system, in which a value of any type can be treated as an object."</p>
 
-<h4>Boxing is implicit</h4>
-This really looks like assigning a value object to a System.Object. This shows <code>int i</code> being boxed and assigned to an object:
+<h2>Boxing Is Implicit</h2>
+<p>This really looks like assigning a value object to a System.Object. This shows <code>int i</code> being boxed and assigned to an object:</p>
 
-<pre class="prettyprint">
-int i = 123;
-object o = i;
-</pre>
+<div class="highlight"><pre><code class="csharp"><span class="lineno">1</span> <span class="kt">int</span> <span class="n">i</span> <span class="p">=</span> <span class="m">123</span><span class="p">;</span>
+<span class="lineno">2</span> <span class="kt">object</span> <span class="n">o</span> <span class="p">=</span> <span class="n">i</span><span class="p">;</span>
+</code></pre>
+</div>
 
-<h4>Unboxing is explicit</h4>
-To you PHP kiddies out there, this may look familiar to you type casters.
 
-Here we have the <code>object o</code> assigned our value object. We "unbox" our <code>System.Object</code> and assign it to our <code>int</code>
+<h2>Unboxing Is Explicit</h2>
+<p>This is essentially type casting.</p>
 
-<pre class="prettyprint">
-o = 123;
-i = (int)o;
-</pre>
+<p>
+  Here we have the <code>object o</code> assigned our value object. We "unbox" our <code>System.Object</code> and assign it to our <code>int</code>
+</p>
 
-<h4>What is the big deal?</h4>
-This has a lot of applications that can creep up (essentially anytime you may need to treat one value type as another), but to me it seems to have its greatest application in collections of mixed objects.
+<div class="highlight"><pre><code class="csharp"><span class="lineno">1</span> <span class="n">o</span> <span class="p">=</span> <span class="m">123</span><span class="p">;</span>
+<span class="lineno">2</span> <span class="n">i</span> <span class="p">=</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="n">o</span><span class="p">;</span>
+</code></pre>
+</div>
 
-<pre class="prettyprint">
-List&lt;object&gt; mixedList = new List&lt;object&gt;();
-mixedList.Add("String");
-for (int j = 5; j &lt; 10; j++)
-{
-    mixedList.Add(j);
-}
 
-//use C#'s dynamic powers to iterate. we use the keyword 'var' below so that the compiler gets to decided the type
-for (var item in mixedList)
-{
-    Console.WriteLine(item);
-}
-</pre>
+<h2>What Is The Big Deal?</h2>
+<p>This has a lot of application that can creep up (basically anytime you may need to treat one value type as another), but to me it seems to have its greatest application in collections of mixed objects.</p>
 
-This is pretty transparent in a dynamic language like PHP where types are used freely all the time (i.e "5" + 5 = 10). C# enables this same kind of juggling with it's concept of bugging.
+<div class="highlight"><pre><code class="csharp"><span class="lineno"> 1</span> <span class="n">List</span><span class="p">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="kt">object</span><span class="p">&amp;</span><span class="n">gt</span><span class="p">;</span> <span class="n">mixedList</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&amp;</span><span class="n">lt</span><span class="p">;</span><span class="kt">object</span><span class="p">&amp;</span><span class="n">gt</span><span class="p">;();</span>
+<span class="lineno"> 2</span> <span class="n">mixedList</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="s">&quot;String&quot;</span><span class="p">);</span>
+<span class="lineno"> 3</span> <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="p">=</span> <span class="m">5</span><span class="p">;</span> <span class="n">j</span> <span class="p">&amp;</span><span class="n">lt</span><span class="p">;</span> <span class="m">10</span><span class="p">;</span> <span class="n">j</span><span class="p">++)</span>
+<span class="lineno"> 4</span> <span class="p">{</span>
+<span class="lineno"> 5</span>     <span class="n">mixedList</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="n">j</span><span class="p">);</span>
+<span class="lineno"> 6</span> <span class="p">}</span>
+<span class="lineno"> 7</span> 
+<span class="lineno"> 8</span> <span class="c1">//use C#&#39;s dynamic powers to iterate. we use the keyword &#39;var&#39; below so that the compiler gets to decided the type</span>
+<span class="lineno"> 9</span> <span class="k">for</span> <span class="p">(</span><span class="n">var</span> <span class="n">item</span> <span class="k">in</span> <span class="n">mixedList</span><span class="p">)</span>
+<span class="lineno">10</span> <span class="p">{</span>
+<span class="lineno">11</span>     <span class="n">Console</span><span class="p">.</span><span class="n">WriteLine</span><span class="p">(</span><span class="n">item</span><span class="p">);</span>
+<span class="lineno">12</span> <span class="p">}</span>
+</code></pre>
+</div>
 
-One final note:
-Our friends at Microsoft have this little tidbit to say about boxing and its performance implications:
-<blockquote class="superquote">
-In relation to simple assignments, boxing and unboxing are computationally expensive processes. When a value type is boxed, a new object must be allocated and constructed. To a lesser degree, the cast required for unboxing is also expensive computationally.
+
+<p>This is pretty transparent in a dynamic language where types are used freely all the time (i.e "5" + 5 = 10). C# enables this same kind of juggling with it's concept of boxing.</p>
+
+<p>One final note:</p>
+<p>Our friends at Microsoft have this little tidbit to say about boxing and its performance implications:</p>
+<blockquote>
+<p>In relation to simple assignments, boxing and unboxing are computationally expensive processes. When a value type is boxed, a new object must be allocated and constructed. To a lesser degree, the cast required for unboxing is also expensive computationally.</p>
 </blockquote>
 
-Now move forward confidently, knowing you can answer the question: "What is boxing?".
+<p>Now move forward confidently, knowing you can answer the question: "What is boxing?".</p>
 
 				</article>
 			</div>

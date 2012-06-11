@@ -1,6 +1,6 @@
 ---
 layout: post
-title: ! 'C#: What the dag is boxing?'
+title: ! 'C#: What Is Boxing?'
 tags:
 - .NET
 - C#
@@ -22,30 +22,32 @@ meta:
   _thumbnail_id: '1220'
   _wp_old_slug: c-what-the-dag-is-boxing
 ---
-I was recently asked to explain what boxing in C# is. Well I couldn't give an answer on the spot so here I am reporting my findings. It is a pretty simple concept, and one that is probably used a lot without realizing it. According to <a href="http://msdn.microsoft.com/en-us/library/yz2be5wk.aspx" target="_blank">MSDN</a>: "The concept of boxing and unboxing underlies the C# unified view of the type system, in which a value of any type can be treated as an object."
+<p>I was recently asked to explain what boxing in C# is. Well I couldn't give an answer on the spot so here I am reporting my findings. It is a pretty simple concept, and one that is probably used a lot without realizing it. According to <a href="http://msdn.microsoft.com/en-us/library/yz2be5wk.aspx" target="_blank">MSDN</a>: "The concept of boxing and unboxing underlies the C# unified view of the type system, in which a value of any type can be treated as an object."</p>
 
-<h4>Boxing is implicit</h4>
-This really looks like assigning a value object to a System.Object. This shows <code>int i</code> being boxed and assigned to an object:
+<h2>Boxing Is Implicit</h2>
+<p>This really looks like assigning a value object to a System.Object. This shows <code>int i</code> being boxed and assigned to an object:</p>
 
-<pre class="prettyprint">
+{% highlight csharp linenos %}
 int i = 123;
 object o = i;
-</pre>
+{% endhighlight %}
 
-<h4>Unboxing is explicit</h4>
-To you PHP kiddies out there, this may look familiar to you type casters.
+<h2>Unboxing Is Explicit</h2>
+<p>This is essentially type casting.</p>
 
-Here we have the <code>object o</code> assigned our value object. We "unbox" our <code>System.Object</code> and assign it to our <code>int</code>
+<p>
+  Here we have the <code>object o</code> assigned our value object. We "unbox" our <code>System.Object</code> and assign it to our <code>int</code>
+</p>
 
-<pre class="prettyprint">
+{% highlight csharp linenos %}
 o = 123;
 i = (int)o;
-</pre>
+{% endhighlight %}
 
-<h4>What is the big deal?</h4>
-This has a lot of applications that can creep up (essentially anytime you may need to treat one value type as another), but to me it seems to have its greatest application in collections of mixed objects.
+<h2>What Is The Big Deal?</h2>
+<p>This has a lot of application that can creep up (basically anytime you may need to treat one value type as another), but to me it seems to have its greatest application in collections of mixed objects.</p>
 
-<pre class="prettyprint">
+{% highlight csharp linenos %}
 List&lt;object&gt; mixedList = new List&lt;object&gt;();
 mixedList.Add("String");
 for (int j = 5; j &lt; 10; j++)
@@ -58,14 +60,14 @@ for (var item in mixedList)
 {
     Console.WriteLine(item);
 }
-</pre>
+{% endhighlight %}
 
-This is pretty transparent in a dynamic language like PHP where types are used freely all the time (i.e "5" + 5 = 10). C# enables this same kind of juggling with it's concept of bugging.
+<p>This is pretty transparent in a dynamic language where types are used freely all the time (i.e "5" + 5 = 10). C# enables this same kind of juggling with it's concept of boxing.</p>
 
-One final note:
-Our friends at Microsoft have this little tidbit to say about boxing and its performance implications:
-<blockquote class="superquote">
-In relation to simple assignments, boxing and unboxing are computationally expensive processes. When a value type is boxed, a new object must be allocated and constructed. To a lesser degree, the cast required for unboxing is also expensive computationally.
+<p>One final note:</p>
+<p>Our friends at Microsoft have this little tidbit to say about boxing and its performance implications:</p>
+<blockquote>
+<p>In relation to simple assignments, boxing and unboxing are computationally expensive processes. When a value type is boxed, a new object must be allocated and constructed. To a lesser degree, the cast required for unboxing is also expensive computationally.</p>
 </blockquote>
 
-Now move forward confidently, knowing you can answer the question: "What is boxing?".
+<p>Now move forward confidently, knowing you can answer the question: "What is boxing?".</p>
