@@ -74,11 +74,18 @@ p {
 	line-height:1.4em;
 }
 
-ol {
+ol,
+#main ul {
 	font-size:1.5em;
 }
 
-ol li {
+#main ul {
+	list-style:disc;
+	margin-left:25px;
+}
+
+ol li,
+#main ul li {
 	line-height:1.4em;
 }
 
