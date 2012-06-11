@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>My Admiration Of C# Object Initializers</title>
+	<meta name="description" content="I enjoy programming stuff - up to and including things!">
+	<meta name="author" content="Brian Scaturro">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link href='http://fonts.googleapis.com/css?family=Anton' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="/css/base.css">
+	<link rel="stylesheet" href="/css/skeleton.css">
+	<link rel="stylesheet" href="/css/layout.css">
+	<link rel="stylesheet" href="/css/pygments.css">
+	<link rel="shortcut icon" href="/images/favicon.ico">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>	
+<body>
+	<div class="container">
+		<div class="eleven columns alpha">
+			<header id="branding">
+				<a href="/">
+					<div class="site-heading">Brian Scaturro</div>
+					<div class="site-subheading">Fancy a dance?</div>
+				</a>
+			</header>
+			<div id="main" role="main">
+				<article>
+					<h1>My Admiration Of C# Object Initializers<span class="post-date">27 Dec 2011</span></h1>
+					<p>I had to ponder... what are some things I like about C#?</p> 
+
+<p>Well there are some obvious answers like generics, a comprehensive framework class library, delegates, dynamic typing, so on and so on.</p>
+
+<p>One thing that came to mind as I thought about it is something day to day C# coders love but seldom give a second thought to: object initializers. The means for doing this in C# is pretty cool, and me being someone who has his foot in a lot of different environments and languages - I can really appreciate how cool this convention is.</p>
+
+<p>The C# object initializer syntax is most useful when you have a need to create an object and alter it's state after instantiation, usually to affect the outcome of some behavior. The alternative is creating an object that creates it's state based on what is passed to the constructor.</p> 
+
+<p>Let's take a look at a common task, let's say sending email via SMTP, in PHP and then C# using the object initializer syntax.</p>
+
+<h2>Initializing Objects The PHP Way</h2>
+<p>Let's first look at the <a href="http://code.google.com/a/apache-extras.org/p/phpmailer/downloads/list" target="_blank">PHPMailer</a> class. This is a pretty typical scenario in the land of PHP.</p>
+
+<div class="highlight"><pre><code class="php"><span class="lineno"> 1</span> <span class="cp">&lt;?php</span>
+<span class="lineno"> 2</span> <span class="k">require_once</span> <span class="s1">&#39;PHPMailer5/class.phpmailer.php&#39;</span><span class="p">;</span>
+<span class="lineno"> 3</span> 
+<span class="lineno"> 4</span> <span class="nv">$mail</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PHPMailer</span><span class="p">();</span>
+<span class="lineno"> 5</span> <span class="nv">$mail</span><span class="o">-&amp;</span><span class="nx">gt</span><span class="p">;</span><span class="nx">IsSMTP</span><span class="p">();</span> 
+<span class="lineno"> 6</span> <span class="nv">$mail</span><span class="o">-&amp;</span><span class="nx">gt</span><span class="p">;</span><span class="nx">Host</span> <span class="o">=</span> <span class="s1">&#39;smtp.server.com&#39;</span><span class="p">;</span>
+<span class="lineno"> 7</span> <span class="nv">$mail</span><span class="o">-&amp;</span><span class="nx">gt</span><span class="p">;</span><span class="nx">Port</span> <span class="o">=</span> <span class="mi">25</span><span class="p">;</span>
+<span class="lineno"> 8</span> <span class="nv">$mail</span><span class="o">-&amp;</span><span class="nx">gt</span><span class="p">;</span><span class="nx">SMTPAuth</span> <span class="o">=</span> <span class="k">true</span><span class="p">;</span>
+<span class="lineno"> 9</span> <span class="nv">$mail</span><span class="o">-&amp;</span><span class="nx">gt</span><span class="p">;</span><span class="nx">Username</span> <span class="o">=</span> <span class="s1">&#39;user&#39;</span><span class="p">;</span>
+<span class="lineno">10</span> <span class="nv">$mail</span><span class="o">-&amp;</span><span class="nx">gt</span><span class="p">;</span><span class="nx">Password</span> <span class="o">=</span> <span class="s1">&#39;password&#39;</span><span class="p">;</span>
+<span class="lineno">11</span> <span class="nv">$mail</span><span class="o">-&amp;</span><span class="nx">gt</span><span class="p">;</span><span class="nx">SetFrom</span><span class="p">(</span><span class="s1">&#39;brian@brianscaturro.com&#39;</span><span class="p">,</span> <span class="s1">&#39;Brian&#39;</span><span class="p">);</span>
+<span class="lineno">12</span> <span class="nv">$mail</span><span class="o">-&amp;</span><span class="nx">gt</span><span class="p">;</span><span class="nx">AddAddress</span><span class="p">(</span><span class="s1">&#39;bill@email.me&#39;</span><span class="p">,</span> <span class="s1">&#39;Bill&#39;</span><span class="p">);</span>
+<span class="lineno">13</span> <span class="nv">$mail</span><span class="o">-&amp;</span><span class="nx">gt</span><span class="p">;</span><span class="nx">Subject</span> <span class="o">=</span> <span class="s1">&#39;How are you?&#39;</span><span class="p">;</span>
+<span class="lineno">14</span> <span class="nv">$mail</span><span class="o">-&amp;</span><span class="nx">gt</span><span class="p">;</span><span class="nx">Body</span> <span class="o">=</span> <span class="s1">&#39;This e-mail was sent using PHPMailer.&#39;</span><span class="p">;</span>
+<span class="lineno">15</span> <span class="nv">$mail</span><span class="o">-&amp;</span><span class="nx">gt</span><span class="p">;</span><span class="nx">Send</span><span class="p">();</span>
+</code></pre>
+</div>
+
+
+<p>We create our new object, and proceed to set one property after another on the <code>$mail</code> instance of our PHPMailer class. It is functional, and it is pretty straightforward as to what we are doing.</p>
+<p> The downside is there is a lot of redundancy as we have to always operate on the already instantiated <code>$mail</code> object. <code>$mail->this,$mail->that,$mail->something_else</code>.</p>
+
+<h2>Initializing Objects The C# Way</h2>
+
+<p>The .NET framework comes with a lot of handy tools built right in. This set of tools is called the framework class library or FCL. This is a huge bonus for the .NET environment.</p>
+
+<p>In languages like PHP, there are plenty of great tools, but you have to do quite a bit of hunting to find one that suits your needs, store it in the file system, and then <code>require</code> them into your script.</p>
+
+<p>The equivalent (and let's face it, easier) way of including our built-in .NET email classes is to use the <code>using</code> directive at the top of our C# file:</p>
+
+<div class="highlight"><pre><code class="csharp"><span class="lineno">1</span> <span class="k">using</span> <span class="nn">System.Net.Mail</span>
+</code></pre>
+</div>
+
+
+<p>Let's look at simple example of using the .NET <code>MailMessage</code> class with the handy object initializer syntax to send our email over SMTP:</p>
+
+<div class="highlight"><pre><code class="csharp"><span class="lineno"> 1</span> <span class="n">MailMessage</span> <span class="n">email</span> <span class="p">=</span> <span class="k">new</span> <span class="n">MailMessage</span><span class="p">()</span>
+<span class="lineno"> 2</span> <span class="p">{</span>
+<span class="lineno"> 3</span>     <span class="n">Subject</span> <span class="p">=</span> <span class="s">&quot;How are you?&quot;</span><span class="p">,</span>
+<span class="lineno"> 4</span>     <span class="n">Body</span> <span class="p">=</span> <span class="s">&quot;This e-mail was sent using .NET&quot;</span><span class="p">,</span>
+<span class="lineno"> 5</span>     <span class="n">IsBodyHtml</span> <span class="p">=</span> <span class="k">false</span><span class="p">,</span>
+<span class="lineno"> 6</span>     <span class="n">From</span> <span class="p">=</span> <span class="k">new</span> <span class="n">MailAddress</span><span class="p">(</span><span class="s">&quot;brian@brianscaturro.com&quot;</span><span class="p">,</span><span class="s">&quot;Brian&quot;</span><span class="p">)</span>
+<span class="lineno"> 7</span> <span class="p">};</span>
+<span class="lineno"> 8</span> <span class="n">email</span><span class="p">.</span><span class="n">To</span><span class="p">.</span><span class="n">Add</span><span class="p">(</span><span class="k">new</span> <span class="n">MailAddress</span><span class="p">(</span><span class="s">&quot;bill@email.me&quot;</span><span class="p">,</span> <span class="s">&quot;Bill&quot;</span><span class="p">));</span>
+<span class="lineno"> 9</span> 
+<span class="lineno">10</span> <span class="n">SmtpClient</span> <span class="n">server</span> <span class="p">=</span> <span class="k">new</span> <span class="n">SmtpClient</span><span class="p">();</span>
+<span class="lineno">11</span> <span class="n">server</span><span class="p">.</span><span class="n">Send</span><span class="p">(</span><span class="n">email</span><span class="p">);</span>
+</code></pre>
+</div>
+
+
+<p>Server,port, and authentication details are stored in the convenient Web.config file that .NET uses, and are passed to our <code>SmtpClient</code> class transparently. Look at all the redundancy that we removed! You can see that rather than typing <code>email.Subject,email.Body, email.blah</code>, we can do <code>new Class() { //properties }</code>.</p>
+
+<p>This is also a gem for collections in C#:</p>
+
+<div class="highlight"><pre><code class="csharp"><span class="lineno">1</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Cat</span><span class="p">&gt;</span> <span class="n">cats</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="n">Cat</span><span class="p">&gt;;</span>
+<span class="lineno">2</span> <span class="p">{</span> 
+<span class="lineno">3</span>     <span class="k">new</span> <span class="nf">Cat</span><span class="p">(){</span><span class="n">Name</span> <span class="p">=</span> <span class="s">&quot;Whiskers&quot;</span><span class="p">},</span>
+<span class="lineno">4</span>     <span class="k">new</span> <span class="nf">Cat</span><span class="p">(){</span><span class="n">Name</span> <span class="p">=</span> <span class="s">&quot;Boots&quot;</span><span class="p">}</span> 
+<span class="lineno">5</span> <span class="p">}</span>
+</code></pre>
+</div>
+
+
+<p>Very cool stuff.</p>
+
+<p>.NET is an awesome framework, that has a lot of great tools to simplify the work at hand. Object initializers are probably so widely used that the C# community might take them for granted, but when you stack them against some of the alternative ways other languages do things - you can really appreciate this useful convention.</p>
+
+				</article>
+			</div>
+		</div>
+		<aside class="four columns omega offset-by-one" id="sidebar">
+			<img class="add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
+			<h2 class="sub-heading">Recent Posts</h2>
+			<ul class='posts'>
+				
+				<li><h3><a href="/2012/05/21/domain-driven-php.html">Domain Driven PHP</a></h3></li>
+				
+				<li><h3><a href="/2012/04/27/is-agile-dead.html">Is Agile Dead?</a></h3></li>
+				
+				<li><h3><a href="/2012/03/27/tdd-with-mock-objects-and-phpunit.html">TDD With Mock Objects And PHPUnit</a></h3></li>
+				
+				<li><h3><a href="/2012/03/10/javascript-masterclass-review.html">JavaScript Masterclass With Thomas Fuchs and Amy Hoy: A Review</a></h3></li>
+				
+				<li><h3><a href="/">The rest....</a></h3></li>
+			</ul>
+		</aside>
+	</div>
+</body>
+</html>
