@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>ASP.NET Server Controls</title>
+	<meta name="description" content="I enjoy programming stuff - up to and including things!">
+	<meta name="author" content="Brian Scaturro">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link href='http://fonts.googleapis.com/css?family=Anton' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="/css/base.css">
+	<link rel="stylesheet" href="/css/skeleton.css">
+	<link rel="stylesheet" href="/css/layout.css">
+	<link rel="stylesheet" href="/css/pygments.css">
+	<link rel="shortcut icon" href="/images/favicon.ico">
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>	
+<body>
+	<div class="container">
+		<div class="eleven columns alpha">
+			<header id="branding">
+				<a href="/">
+					<div class="site-heading">Brian Scaturro</div>
+					<div class="site-subheading">Fancy a dance?</div>
+				</a>
+			</header>
+			<div id="main" role="main">
+				<article>
+					<h1>ASP.NET Server Controls<span class="post-date">08 Jan 2012</span></h1>
+					<p>Server controls are at the heart of ASP.NET web form applications. Server controls build up the user interface and enable you to gather user input, update certain parts of your application in response to that input, and keep state between web requests. You can also bind data sources to them in order to interact with something like a SQL database.</p>
+
+<h2>An Introduction To Server Controls</h2>
+
+<div class="four columns alpha">
+    <div class="post-image">
+        <img src="http://www.brianscaturro.com/wp-content/uploads/2012/01/server-controls.png" alt="list of asp.net server controls" title="server-controls" width="158" height="600" class="alignleft size-full wp-image-1341" />
+    </div>
+</div>
+<div class="seven columns omega">
+    <p>As you can see there are quite a few server controls to choose from. I am not going to go in to detail about all of these, but they all have some common ground. I am going to focus mainly on the standard controls at this point in the game, and we will use some of the standard controls in today's example.</p>
+
+    <h3>Common Control Properties</h3>
+
+    <h4>runat</h4>
+    <p>This is always set to the value of <code>server</code>. This property makes your control and all of it's properties available to your code-behind and indicates the control should be processed by the server.</p>
+
+<div class="highlight"><pre><code class="html"><span class="lineno">1</span> <span class="nt">&lt;asp:TextBox</span> <span class="na">ID=</span><span class="s">&quot;txtName&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="nt">/&gt;</span>
+</code></pre>
+</div>
+
+</div>
+
+<h4>ID</h4>
+<p>This property uniquely identifies the control and is used to access the control from the code-behind. If we use the same <code>TextBox</code> control used above, we would access it's Text property from our C# file like so:</p>
+<div class="highlight"><pre><code class="csharp"><span class="lineno">1</span> <span class="n">txtName</span><span class="p">.</span><span class="n">Text</span>
+</code></pre>
+</div>
+
+
+<h4>Visible</h4>
+<p>This property is handy for controls that need to be revealed in response to something. This property is not like <code>display:none</code> in CSS. If the <code>Visible</code> property is set to <code>true</code>, the control will never be sent to the browser in the first place. The following panel control will never be sent to the browser unless told to do so in a code-behind:</p>
+
+<div class="highlight"><pre><code class="html"><span class="lineno">1</span> <span class="nt">&lt;asp:Panel</span> <span class="na">ID=</span><span class="s">&quot;pnlMessage&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="na">Visible=</span><span class="s">&quot;false&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">2</span> <span class="nt">&lt;/asp:Panel&gt;</span>
+</code></pre>
+</div>
+
+
+<h4>ViewStateMode</h4>
+<p>This property is a handy property that enables you to control the view state on a control by control basis.</p>
+
+<p>The "View State Engine" is something that controls the state of controls (what text/option/value is selected in a control) across requests (think sticky forms on steroids).</p>
+
+<p>The <code>ViewStateMode</code> property is something that allows you to fine tune this behavior for the sake of performance. For more information on view state in ASP.NET check out this <a href="http://msdn.microsoft.com/en-us/library/ms972976.aspx#viewstate_topic9" title="View State in ASP.NET" target="_blank">page</a> on MSDN.</p>
+
+<h4>AutoPostBack</h4>
+<p>This property makes sense on the controls that actually collect user input. This uses a little client side magic to ensure that when this control has finished gathering input, it is time to submit the form. Completing the input will automatically cause a post back to the server.</p>
+
+<h4>Standard Properties</h4>
+<p>In addition to the <code>runat</code> and <code>ID</code> attributes there are several attributes that map to standard HTML attributes. <code>ToolTip</code> essentially works as an HTML <code>title</code> attribute, <code>CssClass</code> maps to the HTML <code>class</code> attribute, and there are a bunch of inline style properties like <code>BackColor</code> and <code>ForeColor</code>. I would rather see <code>CssClass</code> and a style sheet used to handle styles rather than the built in style properties.</p>
+
+<p>There are more properties available and your best bet to seeing them all in action is to fire up Visual Web Developer and explore what is available.</p>
+
+<h2>Server Controls In Action</h2>
+Let's make a simple application using some server controls and a little C# in our code-behind. We are going to modify our previous example from the last two entries in this series to see what kind of pizza the user prefers.
+
+<h3>Collecting Input With the TextBox Control</h3>
+<p>The first thing we are going to do is add a list to our wrapper to hold our form controls and then add our inputs:</p>
+
+<div class="highlight"><pre><code class="html"><span class="lineno">1</span> <span class="nt">&lt;form</span> <span class="na">id=</span><span class="s">&quot;form1&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">2</span> <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;wrapper&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">3</span>     <span class="nt">&lt;h1&gt;</span>Web Forms Are Gnarly<span class="nt">&lt;/h1&gt;</span>
+<span class="lineno">4</span>     <span class="nt">&lt;dl&gt;</span>
+<span class="lineno">5</span>     <span class="nt">&lt;/dl&gt;</span>
+<span class="lineno">6</span> <span class="nt">&lt;/div&gt;</span>
+<span class="lineno">7</span> <span class="nt">&lt;/form&gt;</span>
+</code></pre>
+</div>
+
+
+<p>Now that we have our list setup, we can start adding controls to it. We need to add inputs and label elements for each one. Let's start with a way to collect text input:</p>
+
+<div class="highlight"><pre><code class="html"><span class="lineno">1</span> <span class="nt">&lt;dl&gt;</span>
+<span class="lineno">2</span>     <span class="nt">&lt;dt&gt;&lt;asp:Label</span> <span class="na">ID=</span><span class="s">&quot;lblName&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="na">Text=</span><span class="s">&quot;What&#39;s your name?&quot;</span> <span class="na">AssociatedControlID=</span><span class="s">&quot;txtName&quot;</span> <span class="nt">/&gt;&lt;/dt&gt;</span>
+<span class="lineno">3</span>     <span class="nt">&lt;dd&gt;&lt;asp:TextBox</span> <span class="na">ID=</span><span class="s">&quot;txtName&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="nt">/&gt;&lt;/dd&gt;</span>
+<span class="lineno">4</span> <span class="nt">&lt;/dl&gt;</span>
+</code></pre>
+</div>
+
+
+<p>You'll notice a couple of things:</p>
+<p>First each of our controls contain the <code>runat</code> property. This is mandatory for server controls.</p>
+
+<p>The <code>Text</code> property on our label specifies what will be read within the label.</p>
+<p>Each control has an <code>ID</code> property so they can be identified in the C# file. Take note of the <code>AssociatedControlID</code> property that exists on the <code>Label</code> control. This essentially functions like the HTML <code>for</code> attribute that exists on HTML <code>label</code> elements. Notice the value of this property is the <code>ID</code> property of the associated control, in this case <code>txtName</code>.</p>
+
+<h4>A Note On Naming Conventions</h4>
+<p>
+    Everyone has their own way of ID'ing controls, but a popular convention is to shorthand the type of control and then follow it with your name for it. Our <code>TextBox</code> control is used to collect a name, so we ID it as <code>txtName</code>
+</p>
+
+<h3>Selecting From a List With List Controls</h3>
+<p>The next control to add to our list is the drop down list. This is your typical <code>select</code> element. All list controls follow a similar pattern of:</p>
+
+<div class="highlight"><pre><code class="html"><span class="lineno">1</span> <span class="nt">&lt;asp:ListType</span> <span class="na">ID=</span><span class="s">&quot;listID&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">2</span>     <span class="nt">&lt;asp:ListItem</span> <span class="na">Value=</span><span class="s">&quot;1&quot;</span><span class="nt">&gt;</span>Label1<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">3</span>     <span class="nt">&lt;asp:ListItem</span> <span class="na">Value=</span><span class="s">&quot;2&quot;</span><span class="nt">&gt;</span>Label2<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">4</span> <span class="nt">&lt;/asp:ListType&gt;</span>
+</code></pre>
+</div>
+
+
+<p>Every list type control takes a set of the common <code>ListItem</code> controls. Let's add several different list types to our form list with their respective labels:</p>
+
+<div class="highlight"><pre><code class="html"><span class="lineno"> 1</span> <span class="nt">&lt;dt&gt;&lt;asp:Label</span> <span class="na">ID=</span><span class="s">&quot;lblSnack&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="na">Text=</span><span class="s">&quot;Favorite pizza:&quot;</span> <span class="na">AssociatedControlID=</span><span class="s">&quot;ddlSnack&quot;</span> <span class="nt">/&gt;&lt;/dt&gt;</span>
+<span class="lineno"> 2</span> <span class="nt">&lt;dd&gt;</span>
+<span class="lineno"> 3</span>     <span class="nt">&lt;asp:DropDownList</span> <span class="na">ID=</span><span class="s">&quot;ddlSnack&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span><span class="nt">&gt;</span>
+<span class="lineno"> 4</span>         <span class="nt">&lt;asp:ListItem&gt;</span>Pepperoni pizza<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno"> 5</span>         <span class="nt">&lt;asp:ListItem&gt;</span>Cheese pizza<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno"> 6</span>         <span class="nt">&lt;asp:ListItem&gt;</span>Meat lovers pizza<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno"> 7</span>     <span class="nt">&lt;/asp:DropDownList&gt;</span>
+<span class="lineno"> 8</span> <span class="nt">&lt;/dd&gt;</span>
+<span class="lineno"> 9</span> <span class="nt">&lt;dt&gt;&lt;asp:Label</span> <span class="na">ID=</span><span class="s">&quot;lblToppings&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="na">Text=</span><span class="s">&quot;Favorite pizza toppings:&quot;</span> <span class="na">AssociatedControlID=</span><span class="s">&quot;lbToppings&quot;</span> <span class="nt">/&gt;&lt;/dt&gt;</span>
+<span class="lineno">10</span> <span class="nt">&lt;dd&gt;</span>
+<span class="lineno">11</span>     <span class="nt">&lt;asp:ListBox</span> <span class="na">SelectionMode=</span><span class="s">&quot;Multiple&quot;</span> <span class="na">ID=</span><span class="s">&quot;lbToppings&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">12</span>         <span class="nt">&lt;asp:ListItem&gt;</span>Pineapple<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">13</span>         <span class="nt">&lt;asp:ListItem&gt;</span>Bacon<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">14</span>         <span class="nt">&lt;asp:ListItem&gt;</span>Ham<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">15</span>         <span class="nt">&lt;asp:ListItem&gt;</span>Pepperoni<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">16</span>     <span class="nt">&lt;/asp:ListBox&gt;</span>
+<span class="lineno">17</span> <span class="nt">&lt;/dd&gt;</span>
+<span class="lineno">18</span> <span class="nt">&lt;dt&gt;&lt;asp:Label</span> <span class="na">ID=</span><span class="s">&quot;lblSeasoning&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="na">Text=</span><span class="s">&quot;Favorite crust seasonings:&quot;</span> <span class="na">AssociatedControlID=</span><span class="s">&quot;cblSeasoning&quot;</span> <span class="nt">/&gt;&lt;/dt&gt;</span>
+<span class="lineno">19</span> <span class="nt">&lt;dd&gt;</span>
+<span class="lineno">20</span>     <span class="nt">&lt;asp:CheckBoxList</span> <span class="na">ID=</span><span class="s">&quot;cblSeasoning&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">21</span>         <span class="nt">&lt;asp:ListItem&gt;</span>Garlic<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">22</span>         <span class="nt">&lt;asp:ListItem&gt;</span>Butter crust<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">23</span>         <span class="nt">&lt;asp:ListItem&gt;</span>Parmesan<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">24</span>         <span class="nt">&lt;asp:ListItem&gt;</span>Crushed pepper<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">25</span>     <span class="nt">&lt;/asp:CheckBoxList&gt;</span>
+<span class="lineno">26</span> <span class="nt">&lt;/dd&gt;</span>
+<span class="lineno">27</span> <span class="nt">&lt;dt&gt;&lt;asp:Label</span> <span class="na">ID=</span><span class="s">&quot;lblPisan&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="na">Text=</span><span class="s">&quot;Who is your favorite pisan?&quot;</span> <span class="na">AssociatedControlID=</span><span class="s">&quot;rblPisan&quot;</span> <span class="nt">/&gt;&lt;/dt&gt;</span>
+<span class="lineno">28</span> <span class="nt">&lt;dd&gt;</span>
+<span class="lineno">29</span>     <span class="nt">&lt;asp:RadioButtonList</span> <span class="na">ID=</span><span class="s">&quot;rblPisan&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">30</span>         <span class="nt">&lt;asp:ListItem</span> <span class="na">Selected=</span><span class="s">&quot;True&quot;</span><span class="nt">&gt;</span>Jets<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">31</span>         <span class="nt">&lt;asp:ListItem&gt;</span>Mancinos<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">32</span>         <span class="nt">&lt;asp:ListItem&gt;</span>Pizza Hut<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">33</span>     <span class="nt">&lt;/asp:RadioButtonList&gt;</span>
+<span class="lineno">34</span> <span class="nt">&lt;/dd&gt;</span>
+</code></pre>
+</div>
+
+
+<p>We use three different list type controls in our form. First we use a <code>DropDownList</code> control which is like a typical <code>select</code> element.</p>
+<p>Second we use a <code>ListBox</code> control, which by default shows multiple options. We set the <code>SelectionMode</code> property to "Multiple" to mimic an HTML <code>select</code> element with its "multiple" attribute set.</p>
+<p>Following our <code>ListBox</code> element we have a group of check box inputs created with the <code>CheckBoxList</code> control.</p>
+<p>To wrap up our set of list elements, we have a <code>RadioButtonList</code> control. This acts as a group of radio inputs. You should notice the <code>Selected</code> property that is set on one of the <code>ListItem</code> controls in the <code>RadioBoxList</code>. This just facilitates making that option the default item (in this case Jets Pizza).</p>
+
+<h3>Wrapping Up With Button Controls</h3>
+<p>Our button controls act as our means of submission. We will close our form list, and add a paragraph with our submission button immediately after:</p>
+
+<div class="highlight"><pre><code class="html"><span class="lineno">1</span> <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">&quot;submit&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">2</span>     <span class="nt">&lt;asp:Button</span> <span class="na">ID=</span><span class="s">&quot;btnSubmit&quot;</span> <span class="na">Text=</span><span class="s">&quot;submit&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="na">OnClick=</span><span class="s">&quot;btnSubmit_Click&quot;</span> <span class="nt">/&gt;</span>
+<span class="lineno">3</span> <span class="nt">&lt;/p&gt;</span>
+</code></pre>
+</div>
+
+
+<p>The important thing to take note of here is the <code>OnClick</code> property. This is an ASP.NET event and it refers to a method in our code-behind file. The <code>OnClick</code> event refers to a form submission caused by clicking this button. This is where we will process all of our form data.</p>
+
+<h3>Grouping Related Items With Container Controls</h3>
+<p>It is nice to have a way of grouping related items. There are several containing controls in ASP.NET, but the most common one you will encounter is the <code>Panel</code> control. We will use one <code>Panel</code> control to group our form controls, and another to contain a message that will appear after the form has been submitted. First wrap all of our form controls in a <code>Panel</code> control:</p>
+
+<div class="highlight"><pre><code class="html"><span class="lineno">1</span> <span class="nt">&lt;asp:Panel</span> <span class="na">ID=</span><span class="s">&quot;pnlForm&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="na">CssClass=</span><span class="s">&quot;text-left&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">2</span>     <span class="nt">&lt;dl&gt;</span>
+<span class="lineno">3</span>         <span class="nt">&lt;dt&gt;&lt;asp:Label</span> <span class="na">ID=</span><span class="s">&quot;lblName&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="na">Text=</span><span class="s">&quot;What&#39;s your name?&quot;</span> <span class="na">AssociatedControlID=</span><span class="s">&quot;txtName&quot;</span> <span class="nt">/&gt;&lt;/dt&gt;</span>
+<span class="lineno">4</span>         <span class="nt">&lt;dd&gt;&lt;asp:TextBox</span> <span class="na">ID=</span><span class="s">&quot;txtName&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="nt">/&gt;&lt;/dd&gt;</span>
+<span class="lineno">5</span>         //......rest of form elements
+<span class="lineno">6</span> <span class="nt">&lt;/asp:Panel&gt;</span>
+</code></pre>
+</div>
+
+
+<p>Immediately following the panel containing our form controls we create a panel to contain our submission message:</p>
+
+<div class="highlight"><pre><code class="html"><span class="lineno"> 1</span> <span class="nt">&lt;asp:Panel</span> <span class="na">ID=</span><span class="s">&quot;pnlMessage&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="na">Visible=</span><span class="s">&quot;false&quot;</span> <span class="na">CssClass=</span><span class="s">&quot;text-left&quot;</span><span class="nt">&gt;</span>
+<span class="lineno"> 2</span>     <span class="nt">&lt;p&gt;</span>Hello <span class="nt">&lt;asp:Literal</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="na">ID=</span><span class="s">&quot;litName&quot;</span> <span class="nt">/&gt;</span>,<span class="nt">&lt;/p&gt;</span>
+<span class="lineno"> 3</span>     <span class="nt">&lt;p&gt;</span>I too enjoy a good <span class="nt">&lt;asp:Literal</span> <span class="na">ID=</span><span class="s">&quot;litSnack&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="nt">/&gt;</span>.<span class="nt">&lt;/p&gt;</span>
+<span class="lineno"> 4</span>     <span class="nt">&lt;p&gt;</span>
+<span class="lineno"> 5</span>         I absolutely can&#39;t enjoy one without the following toppings: <span class="nt">&lt;asp:Literal</span> <span class="na">ID=</span><span class="s">&quot;litToppings&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="nt">/&gt;</span>
+<span class="lineno"> 6</span>     <span class="nt">&lt;/p&gt;</span>
+<span class="lineno"> 7</span>     <span class="nt">&lt;p&gt;</span>
+<span class="lineno"> 8</span>         The crust is best covered in: <span class="nt">&lt;asp:Literal</span> <span class="na">ID=</span><span class="s">&quot;litSeasoning&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="nt">/&gt;</span>
+<span class="lineno"> 9</span>     <span class="nt">&lt;/p&gt;</span>
+<span class="lineno">10</span>     <span class="nt">&lt;p&gt;</span>
+<span class="lineno">11</span>         It is best if you get it from <span class="nt">&lt;asp:Literal</span> <span class="na">ID=</span><span class="s">&quot;litPisan&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="nt">/&gt;</span>.
+<span class="lineno">12</span>     <span class="nt">&lt;/p&gt;</span>
+<span class="lineno">13</span> <span class="nt">&lt;/asp:Panel&gt;</span>
+</code></pre>
+</div>
+
+
+<p>After looking at our panels, there should be a couple of things that stick out. First notice the addition of the <code>CssClass</code> property. We use this to add a class attribute to the panel. <code>Panel</code> controls render as HTML <code>div</code> elements. With the addition of our <code>CssClass</code> property, we essentially end up with the following rendered HTML:</p>
+
+<div class="highlight"><pre><code class="html"><span class="lineno">1</span> <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">&quot;text-left&quot;</span> <span class="na">id=</span><span class="s">&quot;pnlMessage&quot;</span><span class="nt">&gt;</span>
+</code></pre>
+</div>
+
+
+<p>Also notice on our second panel we set the <code>Visible</code> property to <code>false</code>. Remember, this is not like <code>display:none</code> in a style sheet. This prevents the control from ever being sent to the browser until <code>Visible</code> is set to <code>true</code>.</p>
+
+<p>After our panels are added, the form is complete. Here is the completed source of our web form:</p>
+
+<div class="highlight"><pre><code class="html"><span class="lineno"> 1</span> <span class="nt">&lt;form</span> <span class="na">id=</span><span class="s">&quot;form1&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span><span class="nt">&gt;</span>
+<span class="lineno"> 2</span> <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;wrapper&quot;</span><span class="nt">&gt;</span>
+<span class="lineno"> 3</span>     <span class="nt">&lt;h1&gt;</span>Web Forms Are Gnarly!<span class="nt">&lt;/h1&gt;</span>
+<span class="lineno"> 4</span>     <span class="nt">&lt;asp:Panel</span> <span class="na">ID=</span><span class="s">&quot;pnlForm&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="na">CssClass=</span><span class="s">&quot;text-left&quot;</span><span class="nt">&gt;</span>
+<span class="lineno"> 5</span>         <span class="nt">&lt;dl&gt;</span>
+<span class="lineno"> 6</span>             <span class="nt">&lt;dt&gt;&lt;asp:Label</span> <span class="na">ID=</span><span class="s">&quot;lblName&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="na">Text=</span><span class="s">&quot;What&#39;s your name?&quot;</span> <span class="na">AssociatedControlID=</span><span class="s">&quot;txtName&quot;</span> <span class="nt">/&gt;&lt;/dt&gt;</span>
+<span class="lineno"> 7</span>             <span class="nt">&lt;dd&gt;&lt;asp:TextBox</span> <span class="na">ID=</span><span class="s">&quot;txtName&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="nt">/&gt;&lt;/dd&gt;</span>
+<span class="lineno"> 8</span>             <span class="nt">&lt;dt&gt;&lt;asp:Label</span> <span class="na">ID=</span><span class="s">&quot;lblSnack&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="na">Text=</span><span class="s">&quot;Favorite pizza:&quot;</span> <span class="na">AssociatedControlID=</span><span class="s">&quot;ddlSnack&quot;</span> <span class="nt">/&gt;&lt;/dt&gt;</span>
+<span class="lineno"> 9</span>             <span class="nt">&lt;dd&gt;</span>
+<span class="lineno">10</span>                 <span class="nt">&lt;asp:DropDownList</span> <span class="na">ID=</span><span class="s">&quot;ddlSnack&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">11</span>                     <span class="nt">&lt;asp:ListItem&gt;</span>Pepperoni pizza<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">12</span>                     <span class="nt">&lt;asp:ListItem&gt;</span>Cheese pizza<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">13</span>                     <span class="nt">&lt;asp:ListItem&gt;</span>Meat lovers pizza<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">14</span>                 <span class="nt">&lt;/asp:DropDownList&gt;</span>
+<span class="lineno">15</span>             <span class="nt">&lt;/dd&gt;</span>
+<span class="lineno">16</span>             <span class="nt">&lt;dt&gt;&lt;asp:Label</span> <span class="na">ID=</span><span class="s">&quot;lblToppings&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="na">Text=</span><span class="s">&quot;Favorite pizza toppings:&quot;</span> <span class="na">AssociatedControlID=</span><span class="s">&quot;lbToppings&quot;</span> <span class="nt">/&gt;&lt;/dt&gt;</span>
+<span class="lineno">17</span>             <span class="nt">&lt;dd&gt;</span>
+<span class="lineno">18</span>                 <span class="nt">&lt;asp:ListBox</span> <span class="na">SelectionMode=</span><span class="s">&quot;Multiple&quot;</span> <span class="na">ID=</span><span class="s">&quot;lbToppings&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">19</span>                     <span class="nt">&lt;asp:ListItem&gt;</span>Pineapple<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">20</span>                     <span class="nt">&lt;asp:ListItem&gt;</span>Bacon<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">21</span>                     <span class="nt">&lt;asp:ListItem&gt;</span>Ham<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">22</span>                     <span class="nt">&lt;asp:ListItem&gt;</span>Pepperoni<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">23</span>                 <span class="nt">&lt;/asp:ListBox&gt;</span>
+<span class="lineno">24</span>             <span class="nt">&lt;/dd&gt;</span>
+<span class="lineno">25</span>             <span class="nt">&lt;dt&gt;&lt;asp:Label</span> <span class="na">ID=</span><span class="s">&quot;lblSeasoning&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="na">Text=</span><span class="s">&quot;Favorite crust seasonings:&quot;</span> <span class="na">AssociatedControlID=</span><span class="s">&quot;cblSeasoning&quot;</span> <span class="nt">/&gt;&lt;/dt&gt;</span>
+<span class="lineno">26</span>             <span class="nt">&lt;dd&gt;</span>
+<span class="lineno">27</span>                 <span class="nt">&lt;asp:CheckBoxList</span> <span class="na">ID=</span><span class="s">&quot;cblSeasoning&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">28</span>                     <span class="nt">&lt;asp:ListItem&gt;</span>Garlic<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">29</span>                     <span class="nt">&lt;asp:ListItem&gt;</span>Butter crust<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">30</span>                     <span class="nt">&lt;asp:ListItem&gt;</span>Parmesan<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">31</span>                     <span class="nt">&lt;asp:ListItem&gt;</span>Crushed pepper<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">32</span>                 <span class="nt">&lt;/asp:CheckBoxList&gt;</span>
+<span class="lineno">33</span>             <span class="nt">&lt;/dd&gt;</span>
+<span class="lineno">34</span>             <span class="nt">&lt;dt&gt;&lt;asp:Label</span> <span class="na">ID=</span><span class="s">&quot;lblPisan&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="na">Text=</span><span class="s">&quot;Who is your favorite pisan?&quot;</span> <span class="na">AssociatedControlID=</span><span class="s">&quot;rblPisan&quot;</span> <span class="nt">/&gt;&lt;/dt&gt;</span>
+<span class="lineno">35</span>             <span class="nt">&lt;dd&gt;</span>
+<span class="lineno">36</span>                 <span class="nt">&lt;asp:RadioButtonList</span> <span class="na">ID=</span><span class="s">&quot;rblPisan&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">37</span>                     <span class="nt">&lt;asp:ListItem</span> <span class="na">Selected=</span><span class="s">&quot;True&quot;</span><span class="nt">&gt;</span>Jets<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">38</span>                     <span class="nt">&lt;asp:ListItem&gt;</span>Mancinos<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">39</span>                     <span class="nt">&lt;asp:ListItem&gt;</span>Pizza Hut<span class="nt">&lt;/asp:ListItem&gt;</span>
+<span class="lineno">40</span>                 <span class="nt">&lt;/asp:RadioButtonList&gt;</span>
+<span class="lineno">41</span>             <span class="nt">&lt;/dd&gt;</span>
+<span class="lineno">42</span>         <span class="nt">&lt;/dl&gt;</span>
+<span class="lineno">43</span>         <span class="nt">&lt;p</span> <span class="na">class=</span><span class="s">&quot;submit&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">44</span>             <span class="nt">&lt;asp:Button</span> <span class="na">ID=</span><span class="s">&quot;btnSubmit&quot;</span> <span class="na">Text=</span><span class="s">&quot;submit&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="na">OnClick=</span><span class="s">&quot;btnSubmit_Click&quot;</span> <span class="nt">/&gt;</span>
+<span class="lineno">45</span>         <span class="nt">&lt;/p&gt;</span>
+<span class="lineno">46</span>     <span class="nt">&lt;/asp:Panel&gt;</span>
+<span class="lineno">47</span>     <span class="nt">&lt;asp:Panel</span> <span class="na">ID=</span><span class="s">&quot;pnlMessage&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="na">Visible=</span><span class="s">&quot;false&quot;</span> <span class="na">CssClass=</span><span class="s">&quot;text-left&quot;</span><span class="nt">&gt;</span>
+<span class="lineno">48</span>         <span class="nt">&lt;p&gt;</span>Hello <span class="nt">&lt;asp:Literal</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="na">ID=</span><span class="s">&quot;litName&quot;</span> <span class="nt">/&gt;</span>,<span class="nt">&lt;/p&gt;</span>
+<span class="lineno">49</span>         <span class="nt">&lt;p&gt;</span>I too enjoy a good <span class="nt">&lt;asp:Literal</span> <span class="na">ID=</span><span class="s">&quot;litSnack&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="nt">/&gt;</span>.<span class="nt">&lt;/p&gt;</span>
+<span class="lineno">50</span>         <span class="nt">&lt;p&gt;</span>
+<span class="lineno">51</span>             I absolutely can&#39;t enjoy one without the following toppings: <span class="nt">&lt;asp:Literal</span> <span class="na">ID=</span><span class="s">&quot;litToppings&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="nt">/&gt;</span>
+<span class="lineno">52</span>         <span class="nt">&lt;/p&gt;</span>
+<span class="lineno">53</span>         <span class="nt">&lt;p&gt;</span>
+<span class="lineno">54</span>             The crust is best covered in: <span class="nt">&lt;asp:Literal</span> <span class="na">ID=</span><span class="s">&quot;litSeasoning&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="nt">/&gt;</span>
+<span class="lineno">55</span>         <span class="nt">&lt;/p&gt;</span>
+<span class="lineno">56</span>         <span class="nt">&lt;p&gt;</span>
+<span class="lineno">57</span>             It is best if you get it from <span class="nt">&lt;asp:Literal</span> <span class="na">ID=</span><span class="s">&quot;litPisan&quot;</span> <span class="na">runat=</span><span class="s">&quot;server&quot;</span> <span class="nt">/&gt;</span>.
+<span class="lineno">58</span>         <span class="nt">&lt;/p&gt;</span>
+<span class="lineno">59</span>     <span class="nt">&lt;/asp:Panel&gt;</span>
+<span class="lineno">60</span> <span class="nt">&lt;/div&gt;</span>
+<span class="lineno">61</span> <span class="nt">&lt;/form&gt;</span>
+</code></pre>
+</div>
+
+
+<p>And our interface is complete!</p>
+
+<div class="post-image">
+    <img src="/images/gnarly-webforms.png" alt="Completed interface" title="Completed interface" width="581" height="583" />
+</div>
+
+<h2>Using C# To Process The Postback</h2>
+<p>This article is already pushing "tldnr" status, so I am going to post some C# that is used to process the form. The particulars of C# and ASP.NET will be discussed in a later post, but for now see if you can study the code and figure out what is going on (with the exception of the Linq stuff, it shouldn't be to difficult to figure out).</p>
+
+<h3>The C# Code File</h3>
+
+<div class="highlight"><pre><code class="csharp"><span class="lineno"> 1</span> <span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="lineno"> 2</span> <span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+<span class="lineno"> 3</span> <span class="k">using</span> <span class="nn">System.Linq</span><span class="p">;</span>
+<span class="lineno"> 4</span> <span class="k">using</span> <span class="nn">System.Web</span><span class="p">;</span>
+<span class="lineno"> 5</span> <span class="k">using</span> <span class="nn">System.Web.UI</span><span class="p">;</span>
+<span class="lineno"> 6</span> <span class="k">using</span> <span class="nn">System.Web.UI.WebControls</span><span class="p">;</span>
+<span class="lineno"> 7</span> 
+<span class="lineno"> 8</span> <span class="k">public</span> <span class="k">partial</span> <span class="k">class</span> <span class="nc">_Default</span> <span class="p">:</span> <span class="n">System</span><span class="p">.</span><span class="n">Web</span><span class="p">.</span><span class="n">UI</span><span class="p">.</span><span class="n">Page</span>
+<span class="lineno"> 9</span> <span class="p">{</span>
+<span class="lineno">10</span>     <span class="k">protected</span> <span class="k">void</span> <span class="nf">Page_Load</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">EventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="lineno">11</span>     <span class="p">{</span>
+<span class="lineno">12</span>         
+<span class="lineno">13</span>     <span class="p">}</span>
+<span class="lineno">14</span> 
+<span class="lineno">15</span>     <span class="k">protected</span> <span class="k">void</span> <span class="nf">btnSubmit_Click</span><span class="p">(</span><span class="kt">object</span> <span class="n">sender</span><span class="p">,</span> <span class="n">EventArgs</span> <span class="n">e</span><span class="p">)</span>
+<span class="lineno">16</span>     <span class="p">{</span>
+<span class="lineno">17</span>         <span class="n">pnlForm</span><span class="p">.</span><span class="n">Visible</span> <span class="p">=</span> <span class="k">false</span><span class="p">;</span>
+<span class="lineno">18</span>         <span class="n">litName</span><span class="p">.</span><span class="n">Text</span> <span class="p">=</span> <span class="n">txtName</span><span class="p">.</span><span class="n">Text</span><span class="p">;</span>
+<span class="lineno">19</span>         <span class="n">litSnack</span><span class="p">.</span><span class="n">Text</span> <span class="p">=</span> <span class="n">ddlSnack</span><span class="p">.</span><span class="n">SelectedItem</span><span class="p">.</span><span class="n">Value</span><span class="p">;</span>
+<span class="lineno">20</span>         <span class="n">List</span><span class="p">&lt;</span><span class="n">String</span><span class="p">&gt;</span> <span class="n">toppings</span> <span class="p">=</span> <span class="n">lbToppings</span><span class="p">.</span><span class="n">Items</span><span class="p">.</span><span class="n">Cast</span><span class="p">&lt;</span><span class="n">ListItem</span><span class="p">&gt;().</span><span class="n">Where</span><span class="p">(</span><span class="n">s</span> <span class="p">=&gt;</span> <span class="n">s</span><span class="p">.</span><span class="n">Selected</span><span class="p">).</span><span class="n">Select</span><span class="p">(</span><span class="n">s</span> <span class="p">=&gt;</span> <span class="n">s</span><span class="p">.</span><span class="n">Value</span><span class="p">).</span><span class="n">ToList</span><span class="p">();</span>
+<span class="lineno">21</span>         <span class="n">litToppings</span><span class="p">.</span><span class="n">Text</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Join</span><span class="p">(</span><span class="s">&quot;, &quot;</span><span class="p">,</span> <span class="n">toppings</span><span class="p">.</span><span class="n">ToArray</span><span class="p">());</span>
+<span class="lineno">22</span>         <span class="k">if</span> <span class="p">(</span><span class="n">toppings</span><span class="p">.</span><span class="n">Count</span><span class="p">.</span><span class="n">Equals</span><span class="p">(</span><span class="m">0</span><span class="p">))</span>
+<span class="lineno">23</span>         <span class="p">{</span>
+<span class="lineno">24</span>             <span class="n">litToppings</span><span class="p">.</span><span class="n">Text</span> <span class="p">=</span> <span class="s">&quot;Plain is fine for me&quot;</span><span class="p">;</span>
+<span class="lineno">25</span>         <span class="p">}</span>
+<span class="lineno">26</span>         <span class="n">List</span><span class="p">&lt;</span><span class="n">String</span><span class="p">&gt;</span> <span class="n">seasonings</span> <span class="p">=</span> <span class="n">cblSeasoning</span><span class="p">.</span><span class="n">Items</span><span class="p">.</span><span class="n">Cast</span><span class="p">&lt;</span><span class="n">ListItem</span><span class="p">&gt;().</span><span class="n">Where</span><span class="p">(</span><span class="n">c</span> <span class="p">=&gt;</span> <span class="n">c</span><span class="p">.</span><span class="n">Selected</span><span class="p">).</span><span class="n">Select</span><span class="p">(</span><span class="n">c</span> <span class="p">=&gt;</span> <span class="n">c</span><span class="p">.</span><span class="n">Value</span><span class="p">).</span><span class="n">ToList</span><span class="p">();</span>
+<span class="lineno">27</span>         <span class="n">litSeasoning</span><span class="p">.</span><span class="n">Text</span> <span class="p">=</span> <span class="kt">string</span><span class="p">.</span><span class="n">Join</span><span class="p">(</span><span class="s">&quot;, &quot;</span><span class="p">,</span> <span class="n">seasonings</span><span class="p">.</span><span class="n">ToArray</span><span class="p">());</span>
+<span class="lineno">28</span>         <span class="k">if</span> <span class="p">(</span><span class="n">seasonings</span><span class="p">.</span><span class="n">Count</span><span class="p">.</span><span class="n">Equals</span><span class="p">(</span><span class="m">0</span><span class="p">))</span>
+<span class="lineno">29</span>         <span class="p">{</span>
+<span class="lineno">30</span>             <span class="n">litSeasoning</span><span class="p">.</span><span class="n">Text</span> <span class="p">=</span> <span class="s">&quot;nothing&quot;</span><span class="p">;</span>
+<span class="lineno">31</span>         <span class="p">}</span>
+<span class="lineno">32</span>         <span class="n">litPisan</span><span class="p">.</span><span class="n">Text</span> <span class="p">=</span> <span class="n">rblPisan</span><span class="p">.</span><span class="n">SelectedValue</span><span class="p">;</span>
+<span class="lineno">33</span>         <span class="n">pnlMessage</span><span class="p">.</span><span class="n">Visible</span> <span class="p">=</span> <span class="k">true</span><span class="p">;</span>
+<span class="lineno">34</span>     <span class="p">}</span>
+<span class="lineno">35</span> <span class="p">}</span>
+</code></pre>
+</div>
+
+
+<p>See if you can pick out how each control is being accessed in the code above. Pay attention to the use of the <code>Visible</code> property on both <code>pnlForm</code> and <code>pnlMessage</code>. We are essentially hiding one and showing the other on submission.</p>
+
+<p>After filling out the form and submitting it, we get a nicely formatted response back.</p>
+
+<div class="post-image">
+    <img src="/images/gnarly-message.png" alt="Submitted form" title="Submitted form" width="595" height="274" />
+</div>
+
+<p>Not so rough right? I'll look forward to diving a bit further into C# and it's use with ASP.NET web forms.</p>
+
+				</article>
+			</div>
+		</div>
+		<aside class="four columns omega offset-by-one" id="sidebar">
+			<img class="add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
+			<h2 class="sub-heading">Recent Posts</h2>
+			<ul class='posts'>
+				
+				<li><h3><a href="/2012/05/21/domain-driven-php.html">Domain Driven PHP</a></h3></li>
+				
+				<li><h3><a href="/2012/04/27/is-agile-dead.html">Is Agile Dead?</a></h3></li>
+				
+				<li><h3><a href="/2012/03/27/tdd-with-mock-objects-and-phpunit.html">TDD With Mock Objects And PHPUnit</a></h3></li>
+				
+				<li><h3><a href="/2012/03/10/javascript-masterclass-review.html">JavaScript Masterclass With Thomas Fuchs and Amy Hoy: A Review</a></h3></li>
+				
+				<li><h3><a href="/">The rest....</a></h3></li>
+			</ul>
+		</aside>
+	</div>
+</body>
+</html>
