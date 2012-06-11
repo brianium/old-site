@@ -74,18 +74,16 @@ p {
 	line-height:1.4em;
 }
 
-ol,
-#main ul {
+ol, ul {
 	font-size:1.5em;
 }
 
-#main ul {
+ul {
 	list-style:disc;
 	margin-left:25px;
 }
 
-ol li,
-#main ul li {
+li {
 	line-height:1.4em;
 }
 
@@ -211,6 +209,7 @@ article h1 {
 	}
 
 .posts {
+	font-size:1em;
 	list-style:disc;
 	margin-left:20px;
 }
