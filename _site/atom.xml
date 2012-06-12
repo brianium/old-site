@@ -4,7 +4,7 @@
  <title>Brian Scaturro</title>
  <link href="http://brianscaturro.com/atom.xml" rel="self"/>
  <link href="http://brianscaturro.com/"/>
- <updated>2012-06-12T00:44:13-04:00</updated>
+ <updated>2012-06-12T00:50:46-04:00</updated>
  <id>http://brianscaturro.com/</id>
  <author>
    <name>Brian Scaturro</name>
@@ -502,7 +502,7 @@ Given this structure:&lt;br&gt;&lt;img class=&quot;bordered&quot; src=&quot;/ima
 
 &lt;p&gt;
   The class was also a ton of fun:&lt;br&gt;
-  &lt;img src=&quot;http://www.brianscaturro.com/wp-content/uploads/2012/03/Screenshot_8.png&quot; alt=&quot;&quot; title=&quot;Screenshot_8&quot; width=&quot;355&quot; height=&quot;104&quot; class=&quot;size-full wp-image-1547&quot; /&gt;&lt;br&gt;
+  &lt;img src=&quot;/images/twitter-amy.png&quot; alt=&quot;&quot; title=&quot;Screenshot_8&quot; width=&quot;355&quot; height=&quot;104&quot; class=&quot;size-full wp-image-1547&quot; /&gt;&lt;br&gt;
 &lt;/p&gt;
 
 &lt;p&gt;
