@@ -210,6 +210,7 @@ article h1 {
 }
 	article h1 .post-date {
 		color:#ccc;
+		font-size:0.65em;
 		text-shadow:1px 1px #999, 2px 2px #999;
 	}
 
@@ -220,7 +221,7 @@ article h1 {
 }
 	.posts h3 {
 		font-family:Georgia, "Times New Roman", serif;
-		font-size:1.5em;
+		font-size:1.2em;
 		line-height:1.2em;
 		margin-bottom:10px;
 		text-transform:none;
@@ -245,9 +246,10 @@ article h1 {
 		color:#007eff;
 	}
 
-	.post-date {
+	.post-date,
+	.post-meta {
 		color:#666;
-		font-size:.65em;
+		font-size:.75em;
 		padding-left:10px;
 	}
 /* #Page Styles

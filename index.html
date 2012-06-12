@@ -19,7 +19,7 @@ title: Brian Scaturro
 </p>
 <h2 class="sub-heading" id="writings" name="writings">The Writings Of A Madman!</h2>
 <ul class="posts">
-	{% for post in paginator.posts %}
+	{% for post in site.posts %}
 	<li>
 		<h3>
 		    <a href="{{ post.url }}">{{ post.title }}</a>
@@ -28,22 +28,51 @@ title: Brian Scaturro
 	</li>
 	{% endfor %}
 </ul>
+
 <!-- Pagination links -->
-<div class="pagination">
-  {% if paginator.previous_page %}
-  	{% if paginator.previous_page == 1 %}
-  	<a href="/#writings" class="button previous">Previous</a>
-  	{% else %}
-    <a href="/page{{paginator.previous_page}}#writings" class="previous button">Previous</a>
-    {% endif %}
-  {% else %}
-    <span class="previous button" disabled>Previous</span>
-  {% endif %}
-  <span class="page_number ">Page: {{paginator.page}} of {{paginator.total_pages}}</span>
-  {% if paginator.next_page %}
-    <a href="/page{{paginator.next_page}}#writings" class="next button">Next</a>
-  {% else %}
-    <span class="button next" disabled>Next</span>
-  {% endif %}
-</div>
+<h2>Around The Web</h2>
+  <ul class="posts">
+    <li>
+      <h3>
+        <a href="http://net.tutsplus.com/tutorials/javascript-ajax/closures-front-to-back/">Closures: Front to Back</a>
+        <span class="post-meta">Post for Nettuts+</span>
+      </h3>
+    </li>
+    <li>
+      <h3>
+        <a href="http://www.straightupsearch.com/search-marketing/marketing/2011-12-16-oneupweb-the-whys-and-hows-of-responsive-design/">The Whys and Hows of Responsive Design</a>
+        <span class="post-meta">Article for Straight Up Search </span>
+      </h3>
+    </li>
+    <li>
+      <h3>
+        <a href="http://www.creativemeat.com/development/2012-01-10-oneupweb-cross-browser-event-binding-without-jquery/">Cross Browser Event Binding Without jQuery</a>
+        <span class="post-meta">Post for Creative Meat</span>
+      </h3>
+    </li>
+    <li>
+      <h3>
+        <a href="http://www.creativemeat.com/development/2011-11-17-magento-module-development-part-2-adding-scripts-and-styles/">Magento Module Development</a>
+        <span class="post-meta">Post for Creative Meat</span>
+      </h3>
+    </li>
+    <li>
+      <h3>
+        <a href="http://www.creativemeat.com/development/2011-09-23-oneupweb-cakephpthe-containable-behavior/">CakePHP - The Containable Behavior</a>
+        <span class="post-meta">Post for Creative Meat</span>
+      </h3>
+    </li>
+    <li>
+      <h3>
+        <a href="http://www.creativemeat.com/development/2011-06-29-oneupweb-web-scrapingthe-freaker-way/">Web Scraping - The Freaker Way!</a>
+        <span class="post-meta">Post for Creative Meat</span>
+      </h3>
+    </li>
+    <li>
+      <h3>
+        <a href="http://www.creativemeat.com/development/2011-10-11-oneupweb-create-a-simple-product-catalog-with-wordpress-custom-post-types/">Create A Simple Product Catalog With WordPress Custom Post Types</a>
+        <span class="post-meta">Post for Creative Meat</span>
+      </h3>
+    </li>
+  </ul>
 
