@@ -1,38 +1,16 @@
-<!doctype html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<title>{{ page.title }}</title>
-	<meta name="description" content="I enjoy programming stuff - up to and including things!">
-	<meta name="author" content="Brian Scaturro">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<link href='http://fonts.googleapis.com/css?family=Anton' rel='stylesheet' type='text/css'>
-	<link rel="stylesheet" href="/css/base.css">
-	<link rel="stylesheet" href="/css/skeleton.css">
-	<link rel="stylesheet" href="/css/layout.css">
-	<link rel="shortcut icon" href="/images/favicon.ico">
-    <!--[if lt IE 9]>
-      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    {% include tracking.html %}
-</head>	
-<body>
-	<div class="container">
-		<div class="eleven columns alpha">
-			<header id="branding">
-				<a href="/">
-					<hgroup>
-						<h1 class="site-heading">Brian Scaturro</h1>
-						<h2 class="site-subheading">Fancy a dance?</h2>
-					</hgroup>
-				</a>
-			</header>
-			<div id="main" role="main">
-				{{ content }}
-			</div>
-		</div>
-		{% include sidebar.html %}
-		{% include footer.html %}
+{% include head.html %}
+<div class="eleven columns alpha">
+	<header id="branding">
+		<a href="/">
+			<hgroup>
+				<h1 class="site-heading">Brian Scaturro</h1>
+				<h2 class="site-subheading">Fancy a dance?</h2>
+			</hgroup>
+		</a>
+	</header>
+	<div id="main" role="main">
+		{{ content }}
 	</div>
-</body>
-</html>
+</div>
+{% include sidebar.html %}
+{% include footer.html %}

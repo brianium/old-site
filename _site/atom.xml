@@ -4,7 +4,7 @@
  <title>Brian Scaturro</title>
  <link href="http://brianscaturro.com/atom.xml" rel="self"/>
  <link href="http://brianscaturro.com/"/>
- <updated>2012-06-12T01:32:06-04:00</updated>
+ <updated>2012-06-12T02:04:34-04:00</updated>
  <id>http://brianscaturro.com/</id>
  <author>
    <name>Brian Scaturro</name>
@@ -110,7 +110,6 @@
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
 
-&lt;/pre&gt;
 &lt;h3&gt;Services&lt;/h3&gt;
 &lt;p&gt;
 	Infrastructure services coordinate lower level pieces of the application. For this application, this includes the autoloader and console helpers.
@@ -2478,7 +2477,7 @@ Let's make a simple application using some server controls and a little C# in ou
    <link href="http://brianscaturro.com/2011/11/03/skeleton-css-framework-an-introduction.html"/>
    <updated>2011-11-03T00:00:00-04:00</updated>
    <id>http://brianscaturro.com.com/2011/11/03/skeleton-css-framework-an-introduction</id>
-   <content type="html">&lt;p&gt;As I was writing my post on the &lt;a href=&quot;/html5-and-the-document-outline&quot; target=&quot;_blank&quot;&gt;document outline&lt;/a&gt;, I quickly coded up a demo site to show off some of those new HTML5 features that would aid the cause.&lt;/p&gt;
+   <content type="html">&lt;p&gt;As I was writing my post on the &lt;a href=&quot;/2011/11/02/html5-and-the-document-outline.html&quot; target=&quot;_blank&quot;&gt;document outline&lt;/a&gt;, I quickly coded up a demo site to show off some of those new HTML5 features that would aid the cause.&lt;/p&gt;
 &lt;p&gt;I couldn't very well have a demo site that was completely ugly could I? I decided to do a quick test of the &lt;a href=&quot;http://www.getskeleton.com&quot; target=&quot;_blank&quot;&gt;Skeleton&lt;/a&gt; CSS framework. What I found was a wonderfully responsive framework that is wonderfully easy to use.&lt;/p&gt;
 
 &lt;div class=&quot;clearfix buttons&quot;&gt;
