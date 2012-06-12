@@ -2,8 +2,12 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>{{ page.title }}</title>
-	<meta name="description" content="I enjoy programming stuff - up to and including things!">
+	<title>{{ site.main_title }} - {{ page.title }}</title>
+	{% if page.description %}
+	<meta name="description" content="{{page.description}}">
+	{% else %}
+	<meta name="description" content="{{site.description}}">
+	{% endif %}
 	<meta name="author" content="Brian Scaturro">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 	<link href='http://fonts.googleapis.com/css?family=Anton' rel='stylesheet' type='text/css'>

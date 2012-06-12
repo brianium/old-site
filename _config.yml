@@ -1,4 +1,5 @@
 server_port: 4000
 pygments:    true 
 permalink:   date
-paginate:    10
+main_title:  "Brian Scaturro"
+description: "The code writing expeditions and explorations of Brian Anthony Scaturro"
