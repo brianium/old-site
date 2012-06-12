@@ -270,3 +270,7 @@ article h1 {
 .dsq-comment-message p {
 	line-height:1.4em;
 }
+
+.dsq-reply h3 {
+	font-size:0.75em;
+}
