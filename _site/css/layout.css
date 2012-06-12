@@ -1,7 +1,7 @@
 /* #Site Styles
 ================================================== */
 a {
-	text-decoration:none;
+	text-decoration:none !important;
 	-moz-transition: color .2s ease-in-out;
 	-webkit-transition: color .2s ease-in-out;
 	-o-transition: color .2s ease-in-out;
@@ -270,3 +270,30 @@ article h1 {
 .dsq-reply h3 {
 	font-size:0.75em;
 }
+
+
+/* #Media Queries
+================================================== */
+
+	/* Smaller than standard 960 (devices and browsers) */
+	@media only screen and (max-width: 959px) {}
+
+	/* Tablet Portrait size to standard 960 (devices and browsers) */
+	@media only screen and (min-width: 768px) and (max-width: 959px) {}
+
+	/* All Mobile Sizes (devices and browser) */
+	@media only screen and (max-width: 767px) {
+		.site-heading {
+			margin-top:20px;
+		}
+
+		#sidebar {
+			margin-top:15px;
+		}
+	}
+
+	/* Mobile Landscape Size to Tablet Portrait (devices and browsers) */
+	@media only screen and (min-width: 480px) and (max-width: 767px) {}
+
+	/* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
+	@media only screen and (max-width: 479px) {}

@@ -4,7 +4,7 @@
  <title>Brian Scaturro</title>
  <link href="http://brianscaturro.com/atom.xml" rel="self"/>
  <link href="http://brianscaturro.com/"/>
- <updated>2012-06-12T01:18:15-04:00</updated>
+ <updated>2012-06-12T01:32:06-04:00</updated>
  <id>http://brianscaturro.com/</id>
  <author>
    <name>Brian Scaturro</name>
@@ -29,7 +29,7 @@
 &lt;hr /&gt;
 &lt;h2&gt;The Application&lt;/h2&gt;
 &lt;p&gt;
-	The focus of this project was not to make a cutting edge console application that forces people to weep tears of joy. The purpose of making this application was to test drive a simple application that has a domain and infrastructure layers. You can follow the directions on the &lt;a href=&quot;https://github.com/brianium/tdd-ddd-php&quot; target=&quot;_blank&quot;&gt;github page&lt;/a&gt; to get the tests running and test the actual app out.
+	The focus of this project was not to make a cutting edge console application that forces people to weep tears of joy. The purpose of making this application was to test drive a simple application that has domain and infrastructure layers. You can follow the directions on the &lt;a href=&quot;https://github.com/brianium/tdd-ddd-php&quot; target=&quot;_blank&quot;&gt;github page&lt;/a&gt; to get the tests running and test the actual app out.
 &lt;/p&gt;
 &lt;p&gt;
 	The actual application file was pretty easy to make after all the code was tested. At such a high level, it made me pretty giddy to see all my well tested components being glued together to form an application. Let's take a quick look at the pieces that make up this machine.
