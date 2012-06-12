@@ -4,7 +4,7 @@
  <title>Brian Scaturro</title>
  <link href="http://brianscaturro.com/atom.xml" rel="self"/>
  <link href="http://brianscaturro.com/"/>
- <updated>2012-06-12T02:16:52-04:00</updated>
+ <updated>2012-06-12T02:34:45-04:00</updated>
  <id>http://brianscaturro.com/</id>
  <author>
    <name>Brian Scaturro</name>
@@ -2649,7 +2649,7 @@ There is a small hiccup though - older non-CSS3 browsers aren't going to respond
 &lt;p&gt;As I was reading through chapter 4: &lt;a href=&quot;http://diveintohtml5.info/semantics.html&quot;&gt;What Does It All Mean?&lt;/a&gt;, I was intrigued by the material on the document outline - something that is often overlooked. To get started, take a peak:&lt;/p&gt;
 
 &lt;div class=&quot;buttons clearfix&quot;&gt;
-  &lt;a target=&quot;_blank&quot; class=&quot;button&quot; href=&quot;/demos/argyle&quot;&gt;Demo Sit&lt;/a&gt;
+  &lt;a target=&quot;_blank&quot; class=&quot;button&quot; href=&quot;/demos/argyle&quot;&gt;Demo Site&lt;/a&gt;
   &lt;a target=&quot;_blank&quot; class=&quot;button&quot; title=&quot;Document Outline of Demo Site&quot; href=&quot;http://gsnedders.html5.org/outliner/process.py?url=http%3A%2F%2Fwww.brianscaturro.com%2Fdemos%2Fargyle&quot;&gt;Demo Site Outline&lt;/a&gt;
 &lt;/div&gt;
 
