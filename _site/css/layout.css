@@ -86,6 +86,12 @@ code {
 	overflow-x:scroll;
 }
 
+footer {
+	margin-top:20px;
+	border-top:1px solid #efefef;
+	padding:10px 0;
+}
+
 .bordered {
 	border:1px solid #efefef;
 }
@@ -178,6 +184,11 @@ code {
 	margin:25px 0;
 	text-transform:uppercase;
 	text-shadow:none;
+}
+
+#subscribe-link {
+	position:relative;
+	top:1px;
 }
 
 /*= Posts
