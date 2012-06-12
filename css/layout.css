@@ -1,19 +1,3 @@
-/*
-* Skeleton V1.1
-* Copyright 2011, Dave Gamache
-* www.getskeleton.com
-* Free to use under the MIT license.
-* http://www.opensource.org/licenses/mit-license.php
-* 8/17/2011
-*/
-
-/* Table of Content
-==================================================
-	#Site Styles
-	#Page Styles
-	#Media Queries
-	#Font-Face */
-
 /* #Site Styles
 ================================================== */
 a {
@@ -170,7 +154,7 @@ code {
 }
 
 #sidebar {
-	margin-top:80px;
+	margin-top:75px;
 }
 
 .site-heading {
