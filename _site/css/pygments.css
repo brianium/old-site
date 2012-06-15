@@ -10,6 +10,7 @@
 		-webkit-border-radius:3px;
 		border-radius:3px;
 		overflow:auto;
+		-webkit-overflow-scrolling: touch;
 	}
 
 .lineno {color:#999;}

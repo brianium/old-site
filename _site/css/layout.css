@@ -77,18 +77,17 @@ hr {
 
 blockquote p {
 	font-size:1.5em;
-	line-height:1.2em;
+	line-height:1.3em;
 }
 
 code {
 	font-family:'Monaco', 'Courier New', 'DejaVu Sans Mono', 'Bitstream Vera Sans Mono', monospace !important;
 	font-size:0.9em;
-	overflow-x:scroll;
 }
 
 footer {
 	margin-top:20px;
-	border-top:1px solid #efefef;
+	border-top:1px solid #ddd;
 	padding:10px 0;
 }
 
