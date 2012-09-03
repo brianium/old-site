@@ -6,6 +6,11 @@
     <priority>1</priority> 
   </url>
   <url>
+    <loc>http://brianscaturro.com/2012/09/03/algebra-basics-with-scala.html</loc>
+    <lastmod>2012-09-03</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
     <loc>http://brianscaturro.com/2012/06/12/blog-with-jekyll-and-github.html</loc>
     <lastmod>2012-06-12</lastmod>
     <changefreq>monthly</changefreq>
@@ -41,63 +46,8 @@
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>http://brianscaturro.com/2012/01/15/a-new-adventure.html</loc>
-    <lastmod>2012-01-15</lastmod>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>http://brianscaturro.com/2012/01/13/base-pages-master-pages-and-themes.html</loc>
-    <lastmod>2012-01-13</lastmod>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>http://brianscaturro.com/2012/01/10/processing-forms-with-c-sharp.html</loc>
-    <lastmod>2012-01-10</lastmod>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>http://brianscaturro.com/2012/01/08/aspnet-server-controls.html</loc>
-    <lastmod>2012-01-08</lastmod>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>http://brianscaturro.com/2011/12/28/c-sharp-what-the-dag-is-boxing.html</loc>
-    <lastmod>2011-12-28</lastmod>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>http://brianscaturro.com/2011/12/27/c-sharp-object-initializers.html</loc>
-    <lastmod>2011-12-27</lastmod>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>http://brianscaturro.com/2011/12/13/normalize-css-my-new-reset.html</loc>
-    <lastmod>2011-12-13</lastmod>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>http://brianscaturro.com/2011/12/05/mobile-matters.html</loc>
-    <lastmod>2011-12-05</lastmod>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
     <loc>http://brianscaturro.com/2011/11/17/cakephp-unit-testing-models.html</loc>
     <lastmod>2011-11-17</lastmod>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>http://brianscaturro.com/2011/11/14/modeling-data-with-mysql-workbench-and-eer-models.html</loc>
-    <lastmod>2011-11-14</lastmod>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>http://brianscaturro.com/2011/11/11/validate-js-a-tiny-javascript-validation-library.html</loc>
-    <lastmod>2011-11-11</lastmod>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>http://brianscaturro.com/2011/11/08/scaling-html5-video.html</loc>
-    <lastmod>2011-11-08</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
@@ -113,16 +63,6 @@
   <url>
     <loc>http://brianscaturro.com/2011/10/31/javascript-inheritance.html</loc>
     <lastmod>2011-10-31</lastmod>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>http://brianscaturro.com/2011/10/30/delicious-links-widget-for-wordpress.html</loc>
-    <lastmod>2011-10-30</lastmod>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
-    <loc>http://brianscaturro.com/2011/10/29/simple-syntax-highlighter-plugin-for-wordpress.html</loc>
-    <lastmod>2011-10-29</lastmod>
     <changefreq>monthly</changefreq>
   </url>
   <url>
