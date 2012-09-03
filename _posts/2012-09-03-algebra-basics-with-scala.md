@@ -12,7 +12,7 @@ Scala As My Excalibur
 ---------------------
 [Scala](http://www.scala-lang.org/) is a pretty boss language on the JVM, and [ScalaTest](http://www.scalatest.org/) is a pretty boss testing tool for Scala.
 
-To keep things a bit more exciting, I thought it might be fun to run these tests via ScalaTest. I'll be updating this [repo](https://github.com/brianium/scala-algebra) on Github as I progress.
+To keep things a bit more exciting as I revisit the basics, I thought it might be fun to run these tests via ScalaTest. I'll be updating this [repo](https://github.com/brianium/scala-algebra) on Github as I progress.
 
 * * *
 
