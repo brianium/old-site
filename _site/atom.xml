@@ -4,7 +4,7 @@
  <title>Brian Scaturro</title>
  <link href="http://brianscaturro.com/atom.xml" rel="self"/>
  <link href="http://brianscaturro.com/"/>
- <updated>2012-09-03T19:36:43-04:00</updated>
+ <updated>2012-09-05T09:51:45-04:00</updated>
  <id>http://brianscaturro.com/</id>
  <author>
    <name>Brian Scaturro</name>
@@ -25,7 +25,7 @@
 
 &lt;p&gt;&lt;a href='http://www.scala-lang.org/'&gt;Scala&lt;/a&gt; is a pretty boss language on the JVM, and &lt;a href='http://www.scalatest.org/'&gt;ScalaTest&lt;/a&gt; is a pretty boss testing tool for Scala.&lt;/p&gt;
 
-&lt;p&gt;To keep things a bit more exciting, I thought it might be fun to run these tests via ScalaTest. I&amp;#8217;ll be updating this &lt;a href='https://github.com/brianium/scala-algebra'&gt;repo&lt;/a&gt; on Github as I progress.&lt;/p&gt;
+&lt;p&gt;To keep things a bit more exciting as I revisit the basics, I thought it might be fun to run these tests via ScalaTest. I&amp;#8217;ll be updating this &lt;a href='https://github.com/brianium/scala-algebra'&gt;repo&lt;/a&gt; on Github as I progress.&lt;/p&gt;
 &lt;hr /&gt;
 &lt;h2 id='setting_up_the_tests'&gt;Setting Up The Tests&lt;/h2&gt;
 
