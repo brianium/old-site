@@ -74,6 +74,143 @@
 <p>An absolute value is a number&#8217;s distance from 0, ignoring the sign. So the absolute value of -27 is 27, as it is 27 numbers away from 0. The absolute value of 27 is also 27, as it is 27 numbers away from 0.</p>
 
 <p>Let&#8217;s check this rule out in Scala:</p>
+<div class='highlight'><pre><code class='scala'><span class='n'>test</span><span class='o'>(</span><span class='s'>&quot;adding two numbers of different sign&quot;</span><span class='o'>)</span> <span class='o'>{</span>
+    <span class='k'>val</span> <span class='n'>solution</span> <span class='k'>=</span> <span class='o'>(</span><span class='mi'>9</span><span class='o'>)</span> <span class='o'>+</span> <span class='o'>(-</span><span class='mi'>5</span><span class='o'>)</span>
+
+    <span class='k'>val</span> <span class='n'>ruleApplied</span> <span class='k'>=</span> <span class='o'>+(</span><span class='n'>abs</span><span class='o'>(</span><span class='mi'>9</span><span class='o'>)</span> <span class='o'>-</span> <span class='n'>abs</span><span class='o'>(-</span><span class='mi'>5</span><span class='o'>))</span>
+
+    <span class='n'>assert</span><span class='o'>(</span><span class='n'>solution</span> <span class='o'>===</span> <span class='n'>ruleApplied</span><span class='o'>)</span>
+    <span class='n'>assert</span><span class='o'>(</span><span class='n'>solution</span> <span class='o'>===</span> <span class='mi'>4</span><span class='o'>)</span>
+<span class='o'>}</span>
+</code></pre>
+</div>
+<p>Easy weasy. As you can see, <code>abs</code> is used to get the absolute value of a number. What about adding numbers of the same sign?</p>
+
+<p>Our second rule of addition:</p>
+
+<blockquote>
+<p>To add two signed numbers that have like signs, add their absolute values and prefix their common sign.</p>
+</blockquote>
+
+<p>And in Scala:</p>
+<div class='highlight'><pre><code class='scala'><span class='n'>test</span><span class='o'>(</span><span class='s'>&quot;adding two numbers of same sign&quot;</span><span class='o'>)</span> <span class='o'>{</span>
+    <span class='k'>val</span> <span class='n'>solution</span> <span class='k'>=</span> <span class='o'>(-</span><span class='mi'>4</span><span class='o'>)</span> <span class='o'>+</span> <span class='o'>(-</span><span class='mi'>13</span><span class='o'>)</span>
+
+    <span class='k'>val</span> <span class='n'>ruleApplied</span> <span class='k'>=</span> <span class='o'>-(</span><span class='n'>abs</span><span class='o'>(</span><span class='mi'>4</span><span class='o'>)</span> <span class='o'>+</span> <span class='n'>abs</span><span class='o'>(</span><span class='mi'>13</span><span class='o'>))</span>
+
+    <span class='n'>assert</span><span class='o'>(</span><span class='n'>solution</span> <span class='o'>===</span> <span class='n'>ruleApplied</span><span class='o'>)</span>
+    <span class='n'>assert</span><span class='o'>(</span><span class='n'>solution</span> <span class='o'>===</span> <span class='o'>-</span><span class='mi'>17</span><span class='o'>)</span>
+<span class='o'>}</span>
+</code></pre>
+</div>
+<p>The proof is in the passing test!</p>
+<hr />
+<h2 id='testing_subtraction_with_signed_numbers'>Testing Subtraction With Signed Numbers</h2>
+
+<p>This rule is super simple.</p>
+
+<blockquote>
+<p>To subtract a number, add its opposite</p>
+</blockquote>
+
+<p>Let&#8217;s see it in action:</p>
+<div class='highlight'><pre><code class='scala'><span class='n'>test</span><span class='o'>(</span><span class='s'>&quot;(+4) - (-2)&quot;</span><span class='o'>)</span> <span class='o'>{</span>
+    <span class='k'>val</span> <span class='n'>solution</span> <span class='k'>=</span> <span class='o'>(</span><span class='mi'>4</span><span class='o'>)</span> <span class='o'>-</span> <span class='o'>(-</span><span class='mi'>2</span><span class='o'>)</span>
+
+    <span class='k'>val</span> <span class='n'>ruleApplied</span> <span class='k'>=</span> <span class='o'>(</span><span class='mi'>4</span><span class='o'>)</span> <span class='o'>+</span> <span class='o'>(</span><span class='mi'>2</span><span class='o'>)</span>
+
+    <span class='n'>assert</span><span class='o'>(</span><span class='n'>solution</span> <span class='o'>===</span> <span class='n'>ruleApplied</span><span class='o'>)</span>
+    <span class='n'>assert</span><span class='o'>(</span><span class='n'>solution</span> <span class='o'>===</span> <span class='mi'>6</span><span class='o'>)</span>
+<span class='o'>}</span>
+</code></pre>
+</div>
+<p>We can combine signed integers when applying this rule to problems with multiple values:</p>
+<div class='highlight'><pre><code class='scala'><span class='n'>test</span><span class='o'>(</span><span class='s'>&quot;(-7) - (-9) - (+4)&quot;</span><span class='o'>)</span> <span class='o'>{</span>
+    <span class='k'>val</span> <span class='n'>solution</span> <span class='k'>=</span> <span class='o'>(-</span><span class='mi'>7</span><span class='o'>)</span> <span class='o'>-</span> <span class='o'>(-</span><span class='mi'>9</span><span class='o'>)</span> <span class='o'>-</span> <span class='o'>(+</span><span class='mi'>4</span><span class='o'>)</span>
+
+    <span class='k'>val</span> <span class='n'>ruleApplied</span> <span class='k'>=</span> <span class='o'>(-</span><span class='mi'>7</span><span class='o'>)</span> <span class='o'>+</span> <span class='o'>(+</span><span class='mi'>9</span><span class='o'>)</span> <span class='o'>+</span> <span class='o'>(-</span><span class='mi'>4</span><span class='o'>)</span>
+
+    <span class='k'>val</span> <span class='n'>grouped</span> <span class='k'>=</span> <span class='o'>(-</span><span class='mi'>11</span><span class='o'>)</span> <span class='o'>+</span> <span class='o'>(+</span><span class='mi'>9</span><span class='o'>)</span>
+
+    <span class='k'>val</span> <span class='n'>addRuleApplied</span> <span class='k'>=</span> <span class='o'>-(</span><span class='n'>abs</span><span class='o'>(-</span><span class='mi'>11</span><span class='o'>)</span> <span class='o'>-</span> <span class='n'>abs</span><span class='o'>(</span><span class='mi'>9</span><span class='o'>))</span>
+
+    <span class='n'>assert</span><span class='o'>(</span><span class='n'>solution</span> <span class='o'>===</span> <span class='n'>ruleApplied</span><span class='o'>)</span>
+    <span class='n'>assert</span><span class='o'>(</span><span class='n'>solution</span> <span class='o'>===</span> <span class='n'>grouped</span><span class='o'>)</span>
+    <span class='n'>assert</span><span class='o'>(</span><span class='n'>solution</span> <span class='o'>===</span> <span class='n'>addRuleApplied</span><span class='o'>)</span>
+    <span class='n'>assert</span><span class='o'>(</span><span class='n'>solution</span> <span class='o'>===</span> <span class='o'>-</span><span class='mi'>2</span><span class='o'>)</span>
+<span class='o'>}</span>
+</code></pre>
+</div><hr />
+<h2 id='testing_multplication_with_signed_numbers'>Testing Multplication With Signed Numbers</h2>
+
+<p>Multiplication rule one:</p>
+
+<blockquote>
+<p>When multiplying two signed numbers, if the signs are the same, the product will be positive</p>
+</blockquote>
+<div class='highlight'><pre><code class='scala'><span class='n'>test</span><span class='o'>(</span><span class='s'>&quot;multiplication of two numbers of same sign is positive&quot;</span><span class='o'>)</span> <span class='o'>{</span>
+    <span class='k'>val</span> <span class='n'>x</span> <span class='k'>=</span> <span class='o'>-</span><span class='mi'>9</span><span class='o'>;</span> <span class='k'>val</span> <span class='n'>y</span> <span class='k'>=</span> <span class='o'>-</span><span class='mi'>8</span>
+    <span class='k'>val</span> <span class='n'>solution</span> <span class='k'>=</span> <span class='n'>x</span> <span class='o'>*</span> <span class='n'>y</span>
+
+    <span class='n'>assert</span><span class='o'>(</span><span class='n'>solution</span> <span class='o'>&gt;</span> <span class='mi'>0</span><span class='o'>)</span>
+    <span class='n'>assert</span><span class='o'>(</span><span class='n'>solution</span> <span class='o'>===</span> <span class='mi'>72</span><span class='o'>)</span>
+<span class='o'>}</span>
+</code></pre>
+</div>
+<p>And rule two:</p>
+
+<blockquote>
+<p>When multiplying two signed numbers, if the signs of the numbers are different, the product will be negative</p>
+</blockquote>
+<div class='highlight'><pre><code class='scala'><span class='n'>test</span><span class='o'>(</span><span class='s'>&quot;multiplication of two numbers of different sign is negative&quot;</span><span class='o'>)</span> <span class='o'>{</span>
+    <span class='k'>val</span> <span class='n'>x</span> <span class='k'>=</span> <span class='mi'>3</span><span class='o'>;</span> <span class='k'>val</span> <span class='n'>y</span> <span class='k'>=</span> <span class='o'>-</span><span class='mi'>7</span>
+    <span class='k'>val</span> <span class='n'>solution</span> <span class='k'>=</span> <span class='n'>x</span> <span class='o'>*</span> <span class='n'>y</span>
+
+    <span class='n'>assert</span><span class='o'>(</span><span class='n'>solution</span> <span class='o'>&lt;</span> <span class='mi'>0</span><span class='o'>)</span>
+    <span class='n'>assert</span><span class='o'>(</span><span class='n'>solution</span> <span class='o'>===</span> <span class='o'>-</span><span class='mi'>21</span><span class='o'>)</span>
+<span class='o'>}</span>
+</code></pre>
+</div>
+<p>And the third rule:</p>
+
+<blockquote>
+<p>Regardless of the number of factors, the product of more than two numbers is always negative if there are an odd number of negative factors, and positive if there are an even number of negative factors.</p>
+</blockquote>
+<div class='highlight'><pre><code class='scala'><span class='n'>test</span><span class='o'>(</span><span class='s'>&quot;multiplication of three factors with two negative factors is positve&quot;</span><span class='o'>)</span> <span class='o'>{</span>
+    <span class='k'>val</span> <span class='n'>solution</span> <span class='k'>=</span> <span class='o'>(-</span><span class='mi'>3</span><span class='o'>)</span> <span class='o'>*</span> <span class='o'>(+</span><span class='mi'>3</span><span class='o'>)</span> <span class='o'>*</span> <span class='o'>(-</span><span class='mi'>4</span><span class='o'>)</span>
+
+    <span class='n'>assert</span><span class='o'>(</span><span class='n'>solution</span> <span class='o'>&gt;</span> <span class='mi'>0</span><span class='o'>)</span>
+    <span class='n'>assert</span><span class='o'>(</span><span class='n'>solution</span> <span class='o'>===</span> <span class='mi'>36</span><span class='o'>)</span>
+<span class='o'>}</span>
+</code></pre>
+</div>
+<p>And with an odd number of negative factors:</p>
+<div class='highlight'><pre><code class='scala'><span class='n'>test</span><span class='o'>(</span><span class='s'>&quot;multiplication of four factors with three negative factors is negative&quot;</span><span class='o'>)</span> <span class='o'>{</span>
+    <span class='k'>val</span> <span class='n'>solution</span> <span class='k'>=</span> <span class='o'>(-</span><span class='mi'>5</span><span class='o'>)</span> <span class='o'>*</span> <span class='o'>(-</span><span class='mi'>7</span><span class='o'>)</span> <span class='o'>*</span> <span class='o'>(-</span><span class='mi'>1</span><span class='o'>)</span> <span class='o'>*</span> <span class='o'>(</span><span class='mi'>4</span><span class='o'>)</span>
+
+    <span class='n'>assert</span><span class='o'>(</span><span class='n'>solution</span> <span class='o'>&lt;</span> <span class='mi'>0</span><span class='o'>)</span>
+    <span class='n'>assert</span><span class='o'>(</span><span class='n'>solution</span> <span class='o'>===</span> <span class='o'>-</span><span class='mi'>140</span><span class='o'>)</span>
+<span class='o'>}</span>
+</code></pre>
+</div>
+<p>These same rules apply to exponents and division as well. You can see more examples of this on <a href='https://github.com/brianium/scala-algebra/blob/master/src/test/scala/com/brianscaturro/NumberSystemSuite.scala'>Github</a>.</p>
+<hr />
+<h2 id='evaluating_expressions_with_signed_numbers'>Evaluating Expressions With Signed Numbers</h2>
+
+<p>All the rules so far apply to expressions where substitution is necessary. It helps to replace the variables in an expression with the supplied variables in parentheses.</p>
+<div class='highlight'><pre><code class='scala'><span class='n'>test</span><span class='o'>(</span><span class='s'>&quot;abc ^ 2 for a = 1, b = 2, c = -3&quot;</span><span class='o'>)</span> <span class='o'>{</span>
+    <span class='k'>val</span> <span class='n'>a</span> <span class='k'>=</span> <span class='mi'>1</span><span class='o'>;</span> <span class='k'>val</span> <span class='n'>b</span> <span class='k'>=</span> <span class='mi'>2</span><span class='o'>;</span> <span class='k'>val</span> <span class='n'>c</span> <span class='k'>=</span> <span class='o'>-</span><span class='mi'>3</span>
+    <span class='k'>val</span> <span class='n'>solution</span> <span class='k'>=</span> <span class='n'>a</span> <span class='o'>*</span> <span class='n'>b</span> <span class='o'>*</span> <span class='n'>pow</span><span class='o'>(</span><span class='n'>c</span><span class='o'>,</span> <span class='mi'>2</span><span class='o'>)</span>
+
+    <span class='k'>val</span> <span class='n'>replaced</span> <span class='k'>=</span> <span class='o'>(</span><span class='mi'>1</span><span class='o'>)</span> <span class='o'>*</span> <span class='o'>(</span><span class='mi'>2</span><span class='o'>)</span> <span class='o'>*</span> <span class='n'>pow</span><span class='o'>(</span><span class='n'>c</span><span class='o'>,</span> <span class='mi'>2</span><span class='o'>)</span>
+
+    <span class='n'>assert</span><span class='o'>(</span><span class='n'>solution</span> <span class='o'>===</span> <span class='n'>replaced</span><span class='o'>)</span>
+    <span class='n'>assert</span><span class='o'>(</span><span class='n'>solution</span> <span class='o'>===</span> <span class='mi'>18</span><span class='o'>)</span>
+ <span class='o'>}</span>
+</code></pre>
+</div><hr />
+<p>There are some tests left out here, but you can view the whole test suite on Github.</p>
+<a class='button' href='https://github.com/brianium/scala-algebra/blob/master/src/test/scala/com/brianscaturro/NumberSystemSuite.scala' target='_blank'>The Source</a>
 		</article>
 		<div id="disqus_thread"></div>
 		<script type="text/javascript">
