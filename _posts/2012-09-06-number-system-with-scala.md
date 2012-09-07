@@ -188,4 +188,4 @@ test("abc ^ 2 for a = 1, b = 2, c = -3") {
 
 There are some tests left out here, but you can view the whole test suite on Github.
 
-<a href="https://github.com/brianium/scala-algebra/blob/master/src/test/scala/com/brianscaturro/NumberSystemSuite.scala" class="button" target="_blank">The Source</a>
+<a href="https://github.com/brianium/scala-algebra/blob/master/src/test/scala/com/brianscaturro/NumberSystemSuite.scala" target="_blank" class="button">The Source</a>
