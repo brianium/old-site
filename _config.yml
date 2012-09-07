@@ -3,4 +3,3 @@ pygments:    true
 permalink:   date
 main_title:  "Brian Scaturro"
 description: "The code writing expeditions and explorations of Brian Anthony Scaturro"
-markdown: maruku
