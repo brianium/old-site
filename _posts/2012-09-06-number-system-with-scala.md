@@ -109,7 +109,64 @@ test("(-7) - (-9) - (+4)") {
 
 * * *
 
+Testing Multplication With Signed Numbers
+-----------------------------------------
 
+Multiplication rule one:
+
+> When multiplying two signed numbers, if the signs are the same, the product will be positive
+
+{% highlight scala %}
+test("multiplication of two numbers of same sign is positive") {
+    val x = -9; val y = -8
+    val solution = x * y
+
+    assert(solution > 0)
+    assert(solution === 72)
+}
+{% endhighlight %}
+
+And rule two:
+
+> When multiplying two signed numbers, if the signs of the numbers are different, the product will be negative
+
+{% highlight scala %}
+test("multiplication of two numbers of different sign is negative") {
+    val x = 3; val y = -7
+    val solution = x * y
+
+    assert(solution < 0)
+    assert(solution === -21)
+}
+{% endhighlight %}
+
+And the third rule:
+
+> Regardless of the number of factors, the product of more than two numbers is always negative if there are an odd number of negative factors, and positive if there are an even number of negative factors.
+
+{% highlight scala %}
+test("multiplication of three factors with two negative factors is positve") {
+    val solution = (-3) * (+3) * (-4)
+
+    assert(solution > 0)
+    assert(solution === 36)
+}
+{% endhighlight %}
+
+And with an odd number of negative factors:
+
+{% highlight scala %}
+test("multiplication of four factors with three negative factors is negative") {
+    val solution = (-5) * (-7) * (-1) * (4)
+
+    assert(solution < 0)
+    assert(solution === -140)
+}
+{% endhighlight %}
+
+These same rules apply to exponents and division as well. You can see more examples of this on [Github](https://github.com/brianium/scala-algebra/blob/master/src/test/scala/com/brianscaturro/NumberSystemSuite.scala).
+
+* * *
 
 Evaluating Expressions With Signed Numbers
 ------------------------------------------
