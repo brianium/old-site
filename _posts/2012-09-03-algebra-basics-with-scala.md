@@ -20,7 +20,7 @@ Setting Up The Tests
 --------------------
 This project follows a conventional structure for Scala projects and uses [sbt](https://github.com/harrah/xsbt/wiki/) to manage the build process. Just about everything can be found in the src/test/scala/com/brianscaturro directory
 
-### The Test Class ###
+### The test class ###
 
 ScalaTest supports different styles of testing. I chose the more traditional style supported by the `FunSuite` trait:
 
@@ -33,7 +33,7 @@ class BasicsSuite extends FunSuite {
 }
 {% endhighlight %}
 
-As you can see, this first test is intended to cover Algebra basics. It only requires that we import the ScalaTest library, and the scala.math package.
+As you can see, this first test is intended to cover algebra basics. It only requires that we import the ScalaTest library, and the scala.math package.
 
 * * *
 
@@ -56,7 +56,7 @@ ScalaTest provides that nice little intercept method to test for an exception of
 
 Testing Simplification Of Problems
 ----------------------------------
-A routine Algebra drill is the grouping of like terms. I ran these tests by calculating the "long" version and the "short" version. I then asserted that they were equal.
+A routine algebra drill is the grouping of like terms. I ran these tests by calculating the "long" version and the "short" version. I then asserted that they were equal.
 
 {% highlight scala %}
 test("ax ^ 2 + by + b ^ 2 + 3ax ^ 2") {
@@ -71,7 +71,7 @@ test("ax ^ 2 + by + b ^ 2 + 3ax ^ 2") {
 }
 {% endhighlight %}
 
-This test gave me an excuse to showcase scala.math's `pow` function, as well as practice this classic Algebra tactic.
+This test gave me an excuse to showcase scala.math's `pow` function, as well as practice this classic algebra tactic.
 
 * * *
 

@@ -59,7 +59,7 @@
 
 <p>This project follows a conventional structure for Scala projects and uses <a href='https://github.com/harrah/xsbt/wiki/'>sbt</a> to manage the build process. Just about everything can be found in the src/test/scala/com/brianscaturro directory</p>
 
-<h3 id='the_test_class'>The Test Class</h3>
+<h3 id='the_test_class'>The test class</h3>
 
 <p>ScalaTest supports different styles of testing. I chose the more traditional style supported by the <code>FunSuite</code> trait:</p>
 <div class='highlight'><pre><code class='scala'><span class='k'>import</span> <span class='nn'>org.scalatest._</span>
@@ -70,7 +70,7 @@
 <span class='o'>}</span>
 </code></pre>
 </div>
-<p>As you can see, this first test is intended to cover Algebra basics. It only requires that we import the ScalaTest library, and the scala.math package.</p>
+<p>As you can see, this first test is intended to cover algebra basics. It only requires that we import the ScalaTest library, and the scala.math package.</p>
 <hr />
 <h2 id='testing_division_by_zero'>Testing Division By Zero</h2>
 
@@ -87,7 +87,7 @@
 <hr />
 <h2 id='testing_simplification_of_problems'>Testing Simplification Of Problems</h2>
 
-<p>A routine Algebra drill is the grouping of like terms. I ran these tests by calculating the &#8220;long&#8221; version and the &#8220;short&#8221; version. I then asserted that they were equal.</p>
+<p>A routine algebra drill is the grouping of like terms. I ran these tests by calculating the &#8220;long&#8221; version and the &#8220;short&#8221; version. I then asserted that they were equal.</p>
 <div class='highlight'><pre><code class='scala'><span class='n'>test</span><span class='o'>(</span><span class='s'>&quot;ax ^ 2 + by + b ^ 2 + 3ax ^ 2&quot;</span><span class='o'>)</span> <span class='o'>{</span>
     <span class='k'>val</span> <span class='n'>a</span> <span class='k'>=</span> <span class='mi'>4</span><span class='o'>;</span> <span class='k'>val</span> <span class='n'>x</span> <span class='k'>=</span> <span class='mi'>7</span><span class='o'>;</span> <span class='k'>val</span> <span class='n'>b</span> <span class='k'>=</span> <span class='mi'>3</span><span class='o'>;</span> <span class='k'>val</span> <span class='n'>y</span> <span class='k'>=</span> <span class='mi'>5</span>
 
@@ -100,7 +100,7 @@
 <span class='o'>}</span>
 </code></pre>
 </div>
-<p>This test gave me an excuse to showcase scala.math&#8217;s <code>pow</code> function, as well as practice this classic Algebra tactic.</p>
+<p>This test gave me an excuse to showcase scala.math&#8217;s <code>pow</code> function, as well as practice this classic algebra tactic.</p>
 <hr />
 <h2 id='running_the_tests'>Running The Tests</h2>
 
@@ -134,13 +134,13 @@
 	<h2>Recent Posts</h2>
 	<ul class='posts'>
 		
+		<li><h3><a href="/2012/09/06/number-system-with-scala.html">Dipping Into The Number System With Scala and ScalaTest</a></h3></li>
+		
 		<li><h3><a href="/2012/09/03/algebra-basics-with-scala.html">Algebra Basics With Scala and ScalaTest</a></h3></li>
 		
 		<li><h3><a href="/2012/06/12/blog-with-jekyll-and-github.html">Blogging With Jekyll And Github Pages</a></h3></li>
 		
 		<li><h3><a href="/2012/05/21/domain-driven-php.html">Domain Driven PHP</a></h3></li>
-		
-		<li><h3><a href="/2012/04/27/is-agile-dead.html">Is Agile Dead?</a></h3></li>
 		
 		<li><h3><a href="/">The rest....</a></h3></li>
 	</ul>
