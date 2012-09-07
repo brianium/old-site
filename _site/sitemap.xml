@@ -6,11 +6,6 @@
     <priority>1</priority> 
   </url>
   <url>
-    <loc>http://brianscaturro.com/2012/09/06/number-system-with-scala.html</loc>
-    <lastmod>2012-09-06</lastmod>
-    <changefreq>monthly</changefreq>
-  </url>
-  <url>
     <loc>http://brianscaturro.com/2012/09/03/algebra-basics-with-scala.html</loc>
     <lastmod>2012-09-03</lastmod>
     <changefreq>monthly</changefreq>

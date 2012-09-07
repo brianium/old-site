@@ -2,6 +2,7 @@
 layout: post
 description: "Continuing my algebra journey, I analyze some basics of the number system with Scala and ScalaTest."
 title: "Dipping Into The Number System With Scala and ScalaTest"
+published: false
 ---
 
 My math quest continues as I open up the number system as part of my algebra adventure.
