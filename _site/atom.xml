@@ -4,7 +4,7 @@
  <title>Brian Scaturro</title>
  <link href="http://brianscaturro.com/atom.xml" rel="self"/>
  <link href="http://brianscaturro.com/"/>
- <updated>2012-09-06T22:09:38-04:00</updated>
+ <updated>2012-09-06T22:14:16-04:00</updated>
  <id>http://brianscaturro.com/</id>
  <author>
    <name>Brian Scaturro</name>
@@ -113,60 +113,6 @@
 &lt;span class='o'&gt;}&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;&lt;hr /&gt;
-&lt;h2 id='testing_multplication_with_signed_numbers'&gt;Testing Multplication With Signed Numbers&lt;/h2&gt;
-
-&lt;p&gt;Multiplication rule one:&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;When multiplying two signed numbers, if the signs are the same, the product will be positive&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='scala'&gt;&lt;span class='n'&gt;test&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;multiplication of two numbers of same sign is positive&amp;quot;&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;{&lt;/span&gt;
-    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;x&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt;&lt;span class='mi'&gt;9&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt; &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;y&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt;&lt;span class='mi'&gt;8&lt;/span&gt;
-    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='n'&gt;x&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;y&lt;/span&gt;
-
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;&amp;gt;&lt;/span&gt; &lt;span class='mi'&gt;0&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='mi'&gt;72&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-&lt;span class='o'&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;And rule two:&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;When multiplying two signed numbers, if the signs of the numbers are different, the product will be negative&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='scala'&gt;&lt;span class='n'&gt;test&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;multiplication of two numbers of different sign is negative&amp;quot;&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;{&lt;/span&gt;
-    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;x&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt; &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;y&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt;&lt;span class='mi'&gt;7&lt;/span&gt;
-    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='n'&gt;x&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;y&lt;/span&gt;
-
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;&amp;lt;&lt;/span&gt; &lt;span class='mi'&gt;0&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt;&lt;span class='mi'&gt;21&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-&lt;span class='o'&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;And the third rule:&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Regardless of the number of factors, the product of more than two numbers is always negative if there are an odd number of negative factors, and positive if there are an even number of negative factors.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='scala'&gt;&lt;span class='n'&gt;test&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;multiplication of three factors with two negative factors is positve&amp;quot;&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;{&lt;/span&gt;
-    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;(-&lt;/span&gt;&lt;span class='mi'&gt;3&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='o'&gt;(+&lt;/span&gt;&lt;span class='mi'&gt;3&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='o'&gt;(-&lt;/span&gt;&lt;span class='mi'&gt;4&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;&amp;gt;&lt;/span&gt; &lt;span class='mi'&gt;0&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='mi'&gt;36&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-&lt;span class='o'&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;And with an odd number of negative factors:&lt;/p&gt;
-&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='scala'&gt;&lt;span class='n'&gt;test&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;multiplication of four factors with three negative factors is negative&amp;quot;&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;{&lt;/span&gt;
-    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;(-&lt;/span&gt;&lt;span class='mi'&gt;5&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='o'&gt;(-&lt;/span&gt;&lt;span class='mi'&gt;7&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='o'&gt;(-&lt;/span&gt;&lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;4&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;&amp;lt;&lt;/span&gt; &lt;span class='mi'&gt;0&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt;&lt;span class='mi'&gt;140&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-&lt;span class='o'&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;These same rules apply to exponents and division as well. You can see more examples of this on &lt;a href='https://github.com/brianium/scala-algebra/blob/master/src/test/scala/com/brianscaturro/NumberSystemSuite.scala'&gt;Github&lt;/a&gt;.&lt;/p&gt;
-&lt;hr /&gt;
 &lt;h2 id='evaluating_expressions_with_signed_numbers'&gt;Evaluating Expressions With Signed Numbers&lt;/h2&gt;
 
 &lt;p&gt;All the rules so far apply to expressions where substitution is necessary. It helps to replace the variables in an expression with the supplied variables in parentheses.&lt;/p&gt;
