@@ -4,7 +4,7 @@
  <title>Brian Scaturro</title>
  <link href="http://brianscaturro.com/atom.xml" rel="self"/>
  <link href="http://brianscaturro.com/"/>
- <updated>2012-09-06T22:16:35-04:00</updated>
+ <updated>2012-09-06T22:24:26-04:00</updated>
  <id>http://brianscaturro.com/</id>
  <author>
    <name>Brian Scaturro</name>
@@ -45,144 +45,7 @@
 
 &lt;p&gt;An absolute value is a number&amp;#8217;s distance from 0, ignoring the sign. So the absolute value of -27 is 27, as it is 27 numbers away from 0. The absolute value of 27 is also 27, as it is 27 numbers away from 0.&lt;/p&gt;
 
-&lt;p&gt;Let&amp;#8217;s check this rule out in Scala:&lt;/p&gt;
-&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='scala'&gt;&lt;span class='n'&gt;test&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;adding two numbers of different sign&amp;quot;&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;{&lt;/span&gt;
-    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;9&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='o'&gt;(-&lt;/span&gt;&lt;span class='mi'&gt;5&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-
-    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;ruleApplied&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;+(&lt;/span&gt;&lt;span class='n'&gt;abs&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;9&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='n'&gt;abs&lt;/span&gt;&lt;span class='o'&gt;(-&lt;/span&gt;&lt;span class='mi'&gt;5&lt;/span&gt;&lt;span class='o'&gt;))&lt;/span&gt;
-
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='n'&gt;ruleApplied&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='mi'&gt;4&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-&lt;span class='o'&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;Easy weasy. As you can see, &lt;code&gt;abs&lt;/code&gt; is used to get the absolute value of a number. What about adding numbers of the same sign?&lt;/p&gt;
-
-&lt;p&gt;Our second rule of addition:&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;To add two signed numbers that have like signs, add their absolute values and prefix their common sign.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;And in Scala:&lt;/p&gt;
-&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='scala'&gt;&lt;span class='n'&gt;test&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;adding two numbers of same sign&amp;quot;&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;{&lt;/span&gt;
-    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;(-&lt;/span&gt;&lt;span class='mi'&gt;4&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='o'&gt;(-&lt;/span&gt;&lt;span class='mi'&gt;13&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-
-    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;ruleApplied&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;-(&lt;/span&gt;&lt;span class='n'&gt;abs&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;4&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='n'&gt;abs&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;13&lt;/span&gt;&lt;span class='o'&gt;))&lt;/span&gt;
-
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='n'&gt;ruleApplied&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt;&lt;span class='mi'&gt;17&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-&lt;span class='o'&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;The proof is in the passing test!&lt;/p&gt;
-&lt;hr /&gt;
-&lt;h2 id='testing_subtraction_with_signed_numbers'&gt;Testing Subtraction With Signed Numbers&lt;/h2&gt;
-
-&lt;p&gt;This rule is super simple.&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;To subtract a number, add its opposite&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Let&amp;#8217;s see it in action:&lt;/p&gt;
-&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='scala'&gt;&lt;span class='n'&gt;test&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;(+4) - (-2)&amp;quot;&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;{&lt;/span&gt;
-    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;4&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='o'&gt;(-&lt;/span&gt;&lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-
-    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;ruleApplied&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;4&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='n'&gt;ruleApplied&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='mi'&gt;6&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-&lt;span class='o'&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;We can combine signed integers when applying this rule to problems with multiple values:&lt;/p&gt;
-&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='scala'&gt;&lt;span class='n'&gt;test&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;(-7) - (-9) - (+4)&amp;quot;&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;{&lt;/span&gt;
-    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;(-&lt;/span&gt;&lt;span class='mi'&gt;7&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='o'&gt;(-&lt;/span&gt;&lt;span class='mi'&gt;9&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='o'&gt;(+&lt;/span&gt;&lt;span class='mi'&gt;4&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-
-    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;ruleApplied&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;(-&lt;/span&gt;&lt;span class='mi'&gt;7&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='o'&gt;(+&lt;/span&gt;&lt;span class='mi'&gt;9&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='o'&gt;(-&lt;/span&gt;&lt;span class='mi'&gt;4&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-
-    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;grouped&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;(-&lt;/span&gt;&lt;span class='mi'&gt;11&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='o'&gt;(+&lt;/span&gt;&lt;span class='mi'&gt;9&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-
-    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;addRuleApplied&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;-(&lt;/span&gt;&lt;span class='n'&gt;abs&lt;/span&gt;&lt;span class='o'&gt;(-&lt;/span&gt;&lt;span class='mi'&gt;11&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='n'&gt;abs&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;9&lt;/span&gt;&lt;span class='o'&gt;))&lt;/span&gt;
-
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='n'&gt;ruleApplied&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='n'&gt;grouped&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='n'&gt;addRuleApplied&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt;&lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-&lt;span class='o'&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;&lt;hr /&gt;
-&lt;h2 id='testing_multplication_with_signed_numbers'&gt;Testing Multplication With Signed Numbers&lt;/h2&gt;
-
-&lt;p&gt;Multiplication rule one:&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;When multiplying two signed numbers, if the signs are the same, the product will be positive&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='scala'&gt;&lt;span class='n'&gt;test&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;multiplication of two numbers of same sign is positive&amp;quot;&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;{&lt;/span&gt;
-    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;x&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt;&lt;span class='mi'&gt;9&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt; &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;y&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt;&lt;span class='mi'&gt;8&lt;/span&gt;
-    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='n'&gt;x&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;y&lt;/span&gt;
-
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;&amp;gt;&lt;/span&gt; &lt;span class='mi'&gt;0&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='mi'&gt;72&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-&lt;span class='o'&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;And rule two:&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;When multiplying two signed numbers, if the signs of the numbers are different, the product will be negative&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='scala'&gt;&lt;span class='n'&gt;test&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;multiplication of two numbers of different sign is negative&amp;quot;&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;{&lt;/span&gt;
-    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;x&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt; &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;y&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt;&lt;span class='mi'&gt;7&lt;/span&gt;
-    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='n'&gt;x&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;y&lt;/span&gt;
-
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;&amp;lt;&lt;/span&gt; &lt;span class='mi'&gt;0&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt;&lt;span class='mi'&gt;21&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-&lt;span class='o'&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;And the third rule:&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Regardless of the number of factors, the product of more than two numbers is always negative if there are an odd number of negative factors, and positive if there are an even number of negative factors.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='scala'&gt;&lt;span class='n'&gt;test&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;multiplication of three factors with two negative factors is positve&amp;quot;&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;{&lt;/span&gt;
-    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;(-&lt;/span&gt;&lt;span class='mi'&gt;3&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='o'&gt;(+&lt;/span&gt;&lt;span class='mi'&gt;3&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='o'&gt;(-&lt;/span&gt;&lt;span class='mi'&gt;4&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;&amp;gt;&lt;/span&gt; &lt;span class='mi'&gt;0&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='mi'&gt;36&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-&lt;span class='o'&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;And with an odd number of negative factors:&lt;/p&gt;
-&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='scala'&gt;&lt;span class='n'&gt;test&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;multiplication of four factors with three negative factors is negative&amp;quot;&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;{&lt;/span&gt;
-    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;(-&lt;/span&gt;&lt;span class='mi'&gt;5&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='o'&gt;(-&lt;/span&gt;&lt;span class='mi'&gt;7&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='o'&gt;(-&lt;/span&gt;&lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;4&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;&amp;lt;&lt;/span&gt; &lt;span class='mi'&gt;0&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt;&lt;span class='mi'&gt;140&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-&lt;span class='o'&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;
-&lt;p&gt;These same rules apply to exponents and division as well. You can see more examples of this on &lt;a href='https://github.com/brianium/scala-algebra/blob/master/src/test/scala/com/brianscaturro/NumberSystemSuite.scala'&gt;Github&lt;/a&gt;.&lt;/p&gt;
-&lt;hr /&gt;
-&lt;h2 id='evaluating_expressions_with_signed_numbers'&gt;Evaluating Expressions With Signed Numbers&lt;/h2&gt;
-
-&lt;p&gt;All the rules so far apply to expressions where substitution is necessary. It helps to replace the variables in an expression with the supplied variables in parentheses.&lt;/p&gt;
-&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='scala'&gt;&lt;span class='n'&gt;test&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;abc ^ 2 for a = 1, b = 2, c = -3&amp;quot;&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;{&lt;/span&gt;
-    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;a&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt; &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;b&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt; &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;c&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt;&lt;span class='mi'&gt;3&lt;/span&gt;
-    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='n'&gt;a&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;b&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;c&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-
-    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;replaced&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;c&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='n'&gt;replaced&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
-    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='mi'&gt;18&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
- &lt;span class='o'&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;
-&lt;/div&gt;&lt;hr /&gt;
-&lt;p&gt;There are some tests left out here, but you can view the whole test suite on Github.&lt;/p&gt;
-&lt;a class='button' href='https://github.com/brianium/scala-algebra/blob/master/src/test/scala/com/brianscaturro/NumberSystemSuite.scala' target='_blank'&gt;The Source&lt;/a&gt;</content>
+&lt;p&gt;Let&amp;#8217;s check this rule out in Scala:&lt;/p&gt;</content>
  </entry>
  
  <entry>
