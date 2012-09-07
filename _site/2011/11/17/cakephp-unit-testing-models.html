@@ -1,0 +1,307 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Brian Scaturro - CakePHP - Unit Testing Models</title>
+	
+	<meta name="description" content="The code writing expeditions and explorations of Brian Anthony Scaturro">
+	
+	<meta name="author" content="Brian Scaturro">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link href='http://fonts.googleapis.com/css?family=Anton' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="/css/base.css">
+	<link rel="stylesheet" href="/css/skeleton.css">
+	<link rel="stylesheet" href="/css/layout.css">
+	<link rel="stylesheet" href="/css/pygments.css">
+	<link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="alternate" type="application/atom+xml" title="brianscaturro.com feed" href="http://brianscaturro.com/atom.xml" />
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-10808090-11']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+<body>
+	<div class="container">
+
+<div class="eleven columns alpha">
+	<header id="branding">
+		<a href="/">
+			<div class="site-heading">Brian Scaturro</div>
+			<div class="site-subheading">Fancy a dance?</div>
+		</a>
+	</header>
+	<div id="main" role="main">
+		<article>
+			<h1>CakePHP - Unit Testing Models<span class="post-date">17 Nov 2011</span></h1>
+			<p>Testing is critical to any application development process. Seeing that green bar instills confidence to move forward, and gives you a handy tool to ensure any future changes won't break your carefully crafted application.</p>
+
+<p>CakePHP is one of the big kids on the block for rapid development in the PHP community, and it comes with some nice tools for testing your MVC applications. We are going to take a look at testing the M in that acronym. Let's cover setting up fixtures and test cases to automate this process.</p>
+
+<h2>Setup CakePHP for testing</h2>
+<p>CakePHP 1.3 uses the popular PHP testing framework <a target="_blank" href="http://www.simpletest.org/">SimpleTest</a>. CakePHP is compatible with the 1.0.x branch of SimpleTest, and making CakePHP ready for testing is as easy as dropping the simpletest folder into the app/vendor directory. From here out we will be working in the app/tests directories of our CakePHP installation.</p>
+
+<h2>Creating test fixtures</h2>
+<p>Fixtures are a way to get temporary test data into your test cases. They are always a good idea because they isolate your test data from your live data. CakePHP uses fixtures to create test tables, populate those tables, then delete those tables all in the course of running a test. Fixtures are also handy because they spare you the task of creating and deleting data manually.</p>
+
+<p>We are going to be testing a typical user class in CakePHP and we will begin by creating a fixture for the User model. Create our fixture file in app/tests/fixtures and name it user_fixture.php. Creating a fixture is easy:</p>
+
+<div class="highlight"><pre><code class="php"><span class="lineno">1</span> <span class="cp">&lt;?php</span>
+<span class="lineno">2</span> <span class="k">class</span> <span class="nc">UserFixture</span> <span class="k">extends</span> <span class="nx">CakeTestFixture</span> <span class="p">{</span>
+<span class="lineno">3</span>     <span class="k">var</span> <span class="nv">$name</span> <span class="o">=</span> <span class="s1">&#39;User&#39;</span><span class="p">;</span>
+<span class="lineno">4</span> <span class="p">}</span>
+</code></pre>
+</div>
+
+
+<p>Notice the $name property. This should be the same thing you would use for the $name property in the User model we are testing. The next thing we need to do is setup the $fields property. This property is used to mirror the schema for the model.</p>
+
+<div class="highlight"><pre><code class="php"><span class="lineno"> 1</span> <span class="cp">&lt;?php</span>
+<span class="lineno"> 2</span> <span class="k">class</span> <span class="nc">UserFixture</span> <span class="k">extends</span> <span class="nx">CakeTestFixture</span> <span class="p">{</span>
+<span class="lineno"> 3</span>     <span class="k">var</span> <span class="nv">$name</span> <span class="o">=</span> <span class="s1">&#39;User&#39;</span><span class="p">;</span>
+<span class="lineno"> 4</span> 
+<span class="lineno"> 5</span>     <span class="k">var</span> <span class="nv">$fields</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<span class="lineno"> 6</span>         <span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;integer&#39;</span><span class="p">,</span><span class="s1">&#39;key&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;primary&#39;</span><span class="p">),</span>
+<span class="lineno"> 7</span> 	<span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span><span class="s1">&#39;length&#39;</span> <span class="o">=&gt;</span> <span class="mi">100</span><span class="p">,</span> <span class="s1">&#39;null&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">),</span>
+<span class="lineno"> 8</span> 	<span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span><span class="s1">&#39;length&#39;</span> <span class="o">=&gt;</span> <span class="mi">40</span><span class="p">,</span> <span class="s1">&#39;null&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">),</span>
+<span class="lineno"> 9</span> 	<span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;string&#39;</span><span class="p">,</span><span class="s1">&#39;length&#39;</span> <span class="o">=&gt;</span> <span class="mi">255</span><span class="p">,</span> <span class="s1">&#39;null&#39;</span> <span class="o">=&gt;</span> <span class="k">false</span><span class="p">),</span>
+<span class="lineno">10</span> 	<span class="s1">&#39;cdate&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;type&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;timestamp&#39;</span><span class="p">,</span><span class="s1">&#39;null&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span><span class="p">,</span><span class="s1">&#39;default&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span><span class="p">)</span>
+<span class="lineno">11</span>     <span class="p">);</span>
+<span class="lineno">12</span> <span class="p">}</span>
+</code></pre>
+</div>
+
+
+<p>Each key of the $fields property represents a property of the model (or column in the database ). For each property you pass an array with information about the property. The keys available to that array are the following:</p>
+
+<p>
+<strong style="display:block;">type</strong>An internal CakePHP data type. The following map to the equivalent SQL types: string (VARCHAR), text (TEXT), integer (INT), float (FLOAT), datetime (DATETIME), timestamp (TIMESTAMP), time (TIME), date (DATE), binary (BLOB)
+</p>
+
+<p>
+<strong style="display:block;">key</strong>Identifies the field as the primary key and sets it to auto increment.
+</p>
+
+<p>
+<strong style="display:block;">length</strong>The length the field should take.
+</p>
+
+<p>
+<strong style="display:block;">null</strong>True to allow nulls, false to disallow nulls.
+</p>
+
+<p>
+<strong style="display:block;">default</strong>The default value for the field.
+</p>
+
+<p>Our $fields property above uses these fields to mirror the schema that is in our database for the User model. The final step is to populate our fixtures with some data, and this is done with the $records property. Place it right below the $fields property:</p>
+
+<div class="highlight"><pre><code class="php"><span class="lineno">1</span> <span class="cp">&lt;?php</span>
+<span class="lineno">2</span> <span class="k">var</span> <span class="nv">$records</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<span class="lineno">3</span>     <span class="k">array</span><span class="p">(</span><span class="s1">&#39;id&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span><span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bscaturro&#39;</span><span class="p">,</span><span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;scaturrob@gmail.com&#39;</span><span class="p">,</span><span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;a94a8fe5ccb19ba61c4c0873d391e987982fbbd3&#39;</span><span class="p">,</span><span class="s1">&#39;cdate&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;2011-11-16 06:59:22&#39;</span><span class="p">)</span>
+<span class="lineno">4</span> <span class="p">);</span>
+</code></pre>
+</div>
+	
+
+<p>Alternatively you can use the $import property to import live data from the model:</p>
+
+<div class="highlight"><pre><code class="php"><span class="lineno">1</span> <span class="cp">&lt;?php</span>
+<span class="lineno">2</span> <span class="nv">$import</span> <span class="o">=</span> <span class="s1">&#39;User&#39;</span><span class="p">;</span>
+</code></pre>
+</div>
+
+
+<h2>Using CakePHP Test Fixtures</h2>
+<p>Since we are testing our User model, we will create our test in app/tests/cases/models. Call the file user.test.php and set it up like so:</p>
+
+<div class="highlight"><pre><code class="php"><span class="lineno"> 1</span> <span class="cp">&lt;?php</span>
+<span class="lineno"> 2</span> <span class="nx">App</span><span class="o">::</span><span class="na">import</span><span class="p">(</span><span class="s1">&#39;Model&#39;</span><span class="p">,</span><span class="s1">&#39;User&#39;</span><span class="p">);</span>
+<span class="lineno"> 3</span> <span class="k">class</span> <span class="nc">UserTestCase</span> <span class="k">extends</span> <span class="nx">CakeTestCase</span> <span class="p">{</span>
+<span class="lineno"> 4</span> 	
+<span class="lineno"> 5</span> 	<span class="k">var</span> <span class="nv">$fixtures</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;app.user&#39;</span><span class="p">);</span>
+<span class="lineno"> 6</span> 
+<span class="lineno"> 7</span> 	<span class="k">function</span> <span class="nf">startCase</span><span class="p">()</span> <span class="p">{</span>
+<span class="lineno"> 8</span> 		<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">User</span> <span class="o">=</span> <span class="nx">ClassRegistry</span><span class="o">::</span><span class="na">init</span><span class="p">(</span><span class="s1">&#39;User&#39;</span><span class="p">);</span>
+<span class="lineno"> 9</span> 	<span class="p">}</span>
+<span class="lineno">10</span> 
+<span class="lineno">11</span> 	<span class="k">function</span> <span class="nf">endCase</span><span class="p">()</span> <span class="p">{</span>
+<span class="lineno">12</span> 		<span class="nx">ClassRegistry</span><span class="o">::</span><span class="na">flush</span><span class="p">();</span>
+<span class="lineno">13</span> 	<span class="p">}</span>
+<span class="lineno">14</span> <span class="p">}</span>
+</code></pre>
+</div>
+
+
+<p>Note that we are using <code>App::import</code> at the top to include our model.</p>
+<p>The $fixtures property is how we utilize the fixture we created above. The $fixtures property takes an array of fixture names, each one prefixed with one of three values. These three values can be app, plugin, or core. You can probably take a stab at what these mean, but I will clarify just in case.</p>
+<p>The app prefix means our fixture represents an application model, something from our own application like our User model.</p>
+<p>The plugin prefix allows you to specify that it is a fixture for a plugin model and it uses a dot syntax to specify the plugin, something like plugin.myplugin.pizza.</p>
+<p>The core prefix signals it is a fixture for the core files that come with CakePHP.</p>
+
+<p>Our <code>startCase</code> method fires when the test case starts and within it we use the <code>ClassRegistry</code> class to initialize a User model as a property of the test case. The <code>endCase</code> method is used to flush the ClassRegistry of our initialized class at the very end of the test case.</p> 
+
+<p>Something to note, if your User model has relationships, like hasMany, you will need to include fixtures for those as well, even if you are not using them. So if a User model is using the $hasMany property to include Publication models, then you would need to create a <code>PublicationFixture</code> in app/tests/fixtures and the $fixtures property of <code>UserTestCase</code> would have to be updated to look like the following:</p>
+
+<div class="highlight"><pre><code class="php"><span class="lineno">1</span> <span class="cp">&lt;?php</span>
+<span class="lineno">2</span> <span class="k">var</span> <span class="nv">$fixtures</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span><span class="s1">&#39;app.user&#39;</span><span class="p">,</span><span class="s1">&#39;app.publication&#39;</span><span class="p">);</span>
+</code></pre>
+</div>
+
+
+<h2>Writing Test Methods To Test The User model</h2>
+<p>Our <code>UserTestCase</code> class is the spot to place our test methods. We will focus on testing weather or not our model validations are working. So let's look at our class definition for the User model to see what exactly we are testing:</p>
+
+<div class="highlight"><pre><code class="php"><span class="lineno"> 1</span> <span class="cp">&lt;?php</span>
+<span class="lineno"> 2</span> <span class="k">class</span> <span class="nc">User</span> <span class="k">extends</span> <span class="nx">AppModel</span> <span class="p">{</span>
+<span class="lineno"> 3</span> 	<span class="k">var</span> <span class="nv">$name</span> <span class="o">=</span> <span class="s1">&#39;User&#39;</span><span class="p">;</span>
+<span class="lineno"> 4</span> 
+<span class="lineno"> 5</span> 	<span class="k">var</span> <span class="nv">$validate</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<span class="lineno"> 6</span> 		<span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+<span class="lineno"> 7</span> 			<span class="s1">&#39;rule&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;notEmpty&#39;</span><span class="p">,</span>
+<span class="lineno"> 8</span> 			<span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Username must not be empty&#39;</span><span class="p">,</span>
+<span class="lineno"> 9</span> 			<span class="s1">&#39;required&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span>
+<span class="lineno">10</span> 		<span class="p">),</span>
+<span class="lineno">11</span> 		<span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+<span class="lineno">12</span> 			<span class="s1">&#39;rule&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;matchesConf&#39;</span><span class="p">,</span>
+<span class="lineno">13</span> 			<span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s2">&quot;Passwords don&#39;t match&quot;</span><span class="p">,</span>
+<span class="lineno">14</span> 			<span class="s1">&#39;required&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span>
+<span class="lineno">15</span> 		<span class="p">),</span>
+<span class="lineno">16</span> 		<span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+<span class="lineno">17</span> 			<span class="s1">&#39;unique&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+<span class="lineno">18</span> 				<span class="s1">&#39;rule&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;isUnique&#39;</span><span class="p">,</span>
+<span class="lineno">19</span> 				<span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Email is already taken&#39;</span><span class="p">,</span>
+<span class="lineno">20</span> 				<span class="s1">&#39;required&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span>
+<span class="lineno">21</span> 			<span class="p">),</span>
+<span class="lineno">22</span> 			<span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+<span class="lineno">23</span> 				<span class="s1">&#39;rule&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;email&#39;</span><span class="p">,</span>
+<span class="lineno">24</span> 				<span class="s1">&#39;message&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Not a valid email address&#39;</span>
+<span class="lineno">25</span> 			<span class="p">)</span>
+<span class="lineno">26</span> 		<span class="p">)</span>
+<span class="lineno">27</span> 	<span class="p">);</span>
+<span class="lineno">28</span> 
+<span class="lineno">29</span> 	<span class="k">var</span> <span class="nv">$hasMany</span> <span class="o">=</span> <span class="k">array</span><span class="p">(</span>
+<span class="lineno">30</span> 		<span class="s1">&#39;Publication&#39;</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+<span class="lineno">31</span> 			<span class="s1">&#39;foreignKey&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;user_id&#39;</span><span class="p">,</span>
+<span class="lineno">32</span> 			<span class="s1">&#39;dependent&#39;</span> <span class="o">=&gt;</span> <span class="k">true</span>
+<span class="lineno">33</span> 		<span class="p">)</span>
+<span class="lineno">34</span> 	<span class="p">);</span>
+<span class="lineno">35</span> 
+<span class="lineno">36</span> 	<span class="k">function</span> <span class="nf">matchesConf</span><span class="p">(</span><span class="nv">$check</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno">37</span> 		<span class="k">if</span> <span class="p">(</span><span class="o">!</span> <span class="k">empty</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">data</span><span class="p">[</span><span class="s1">&#39;User&#39;</span><span class="p">][</span><span class="s1">&#39;passConf&#39;</span><span class="p">])</span> <span class="p">)</span> <span class="p">{</span>
+<span class="lineno">38</span> 			<span class="k">return</span> <span class="nv">$check</span><span class="p">[</span><span class="s1">&#39;password&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">data</span><span class="p">[</span><span class="s1">&#39;User&#39;</span><span class="p">][</span><span class="s1">&#39;passConf&#39;</span><span class="p">];</span>
+<span class="lineno">39</span> 		<span class="p">}</span>
+<span class="lineno">40</span> 		<span class="k">return</span> <span class="k">false</span><span class="p">;</span>
+<span class="lineno">41</span> 	<span class="p">}</span>
+<span class="lineno">42</span> <span class="p">}</span>
+</code></pre>
+</div>
+
+
+<p>As you can see we have a <code>unique</code> validation rule on the email field in our User model validations. Seeing how Cake does a database look up of this field to see if it is unique or not, we better have some test data to use in the database. Fixtures to the rescue!</p>
+
+<p>The data we created in the $records property of our fixture will be used as our source of data to test against! So we can write our test to see if this validation is truly working. We simply write a test that attempts to create a user with the same email as the user we created in the $records property of <code>UserFixture</code>. We want to verify that validation fails:</p>
+
+<div class="highlight"><pre><code class="php"><span class="lineno"> 1</span> <span class="cp">&lt;?php</span>
+<span class="lineno"> 2</span> <span class="k">function</span> <span class="nf">testUserEmailMustBeUnique</span><span class="p">()</span> <span class="p">{</span>
+<span class="lineno"> 3</span> 	<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">User</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+<span class="lineno"> 4</span> 		<span class="s1">&#39;username&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;bscaturro&#39;</span><span class="p">,</span>
+<span class="lineno"> 5</span> 		<span class="s1">&#39;email&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;scaturrob@gmail.com&#39;</span><span class="p">,</span>
+<span class="lineno"> 6</span> 		<span class="s1">&#39;password&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;pass&#39;</span><span class="p">,</span>
+<span class="lineno"> 7</span> 		<span class="s1">&#39;passConf&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;pass&#39;</span><span class="p">,</span>
+<span class="lineno"> 8</span> 		<span class="s1">&#39;cdate&#39;</span> <span class="o">=&gt;</span> <span class="k">null</span>
+<span class="lineno"> 9</span> 	<span class="p">));</span>
+<span class="lineno">10</span>         <span class="c1">//make sure it doesn&#39;t pass validation!</span>
+<span class="lineno">11</span> 	<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertFalse</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">User</span><span class="o">-&gt;</span><span class="na">validates</span><span class="p">());</span>
+<span class="lineno">12</span> <span class="p">}</span>
+</code></pre>
+</div>
+
+
+<p>The above method of <code>UserTestCase</code> gives a couple of hints about testing conventions. The first thing you should note is that all test methods must begin with the word test. This is how the test runner knows to run the method as a test.</p>
+<p>The last thing we do in a test method is run an assertion. Here we assert that the validation is false. For a complete list of assertions available, check out the <a href="http://www.simpletest.org/en/first_test_tutorial.html" target="_blank">SimpleTest</a> site.</p>
+
+<p>Keep writing those test methods until you are certain all of your validations and model methods are passing. If you really want to go nuts, try writing your tests before you write your actual model code. There is no need to do any cleanup (deleting test records) when you are done. Our fixtures will take care of their own cleanup.</p>
+
+<h2>Running CakePHP Tests</h2>
+<p>All tests are run from the test.php file that exists in the web root. If my application is installed at dev.myapp.com then the test runner is located at dev.myapp.com/test.php. Visit this URL and you are given a list of possible tests to run. We will be running the "Test Cases" from the App heading:</p>
+
+<div class="post-image">
+	<img src="/images/cake-available-tests.jpg" alt="App test cases" title="App test cases" width="292" height="99" class="bordered" />
+</div>
+
+<p>From there you will click the models/User link and see the following beacon of hope!</p>
+<div class="post-image">
+	<img src="/images/cake-tests-passed.jpg" alt="passing tests" title="passing tests" width="522" height="98" class="bordered" />
+</div>
+
+<h2>Conclusion</h2>
+<p>There are a couple of other useful methods like <code>startTest</code> and <code>endTest</code> that are run at the start and end of each test method. They are passed the method being run so you can utilize them like so:</p>
+
+<div class="highlight"><pre><code class="php"><span class="lineno">1</span> <span class="cp">&lt;?php</span>
+<span class="lineno">2</span> <span class="k">function</span> <span class="nf">startTest</span><span class="p">(</span><span class="nv">$method</span><span class="p">)</span> <span class="p">{</span>
+<span class="lineno">3</span>     <span class="k">if</span> <span class="p">(</span> <span class="nv">$method</span> <span class="o">==</span> <span class="s1">&#39;testUserEmailMustBeUnique&#39;</span> <span class="p">)</span> <span class="p">{</span>
+<span class="lineno">4</span>         <span class="c1">//do stuff for this specific test</span>
+<span class="lineno">5</span>     <span class="p">}</span>
+<span class="lineno">6</span> <span class="p">}</span>
+</code></pre>
+</div>
+
+
+<p>Keep experimenting and perfecting your testing process! CakePHP provides some awesome tools for automating testing. Be sure to download the complete files used in this introduction to testing models in CakePHP.</p>
+
+<a class="button" href="/downloads/modeltesting.zip">Download Files</a>
+
+		</article>
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+		    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+		    var disqus_shortname = 'brianscaturro'; // required: replace example with your forum shortname
+
+		    /* * * DON'T EDIT BELOW THIS LINE * * */
+		    (function() {
+		        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+		        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+		    })();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
+<aside class="four columns omega offset-by-one" id="sidebar">
+	<img class="add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
+	<h2>Recent Posts</h2>
+	<ul class='posts'>
+		
+		<li><h3><a href="/2012/09/06/number-system-with-scala.html">Dipping Into The Number System With Scala and ScalaTest</a></h3></li>
+		
+		<li><h3><a href="/2012/09/03/algebra-basics-with-scala.html">Algebra Basics With Scala and ScalaTest</a></h3></li>
+		
+		<li><h3><a href="/2012/06/12/blog-with-jekyll-and-github.html">Blogging With Jekyll And Github Pages</a></h3></li>
+		
+		<li><h3><a href="/2012/05/21/domain-driven-php.html">Domain Driven PHP</a></h3></li>
+		
+		<li><h3><a href="/">The rest....</a></h3></li>
+	</ul>
+</aside>
+		<div class="sixteen columns alpha omega">
+			<footer>
+				&copy; 2012 Brian Scaturro - <a href="http://feeds.feedburner.com/brianscaturro" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a>&nbsp;<a id="subscribe-link" href="http://feeds.feedburner.com/brianscaturro" rel="alternate" type="application/rss+xml">subscribe</a>
+			</footer>
+		</div>
+	</div>
+	<script type="text/javascript" src="/js/site.js"></script>
+</body>
+</html>
