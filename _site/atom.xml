@@ -4,13 +4,205 @@
  <title>Brian Scaturro</title>
  <link href="http://brianscaturro.com/atom.xml" rel="self"/>
  <link href="http://brianscaturro.com/"/>
- <updated>2012-09-07T08:20:52-04:00</updated>
+ <updated>2012-09-17T15:25:05-04:00</updated>
  <id>http://brianscaturro.com/</id>
  <author>
    <name>Brian Scaturro</name>
    <email>scaturrob@gmail.com</email>
  </author>
 
+ 
+ <entry>
+   <title>Monomials and Polynomials With Scala and ScalaTest</title>
+   <link href="http://brianscaturro.com/2012/09/17/monomials-polynomials-with-scala.html"/>
+   <updated>2012-09-17T00:00:00-04:00</updated>
+   <id>http://brianscaturro.com.com/2012/09/17/monomials-polynomials-with-scala</id>
+   <content type="html">&lt;p&gt;Onward and upward in the algebra-verse. It is time for me to review the application of monomials and polynomials using Scala and ScalaTest.&lt;/p&gt;
+
+&lt;p&gt;You can checkout the &lt;a href='https://github.com/brianium/scala-algebra'&gt;repo&lt;/a&gt; on Github.&lt;/p&gt;
+
+&lt;h2 id='monomials_and_polynomials'&gt;Monomials and Polynomials&lt;/h2&gt;
+
+&lt;p&gt;It might be helpful to begin with some definitions. A monomial can be defined as the following:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;A monomial is an algebraic expression consisting of one term&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This would be something like &lt;code&gt;ak&lt;/code&gt; or &lt;code&gt;kmn/2&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;A polynomial can be defined like so:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;A polynomial is an algebraic expression consisting of several terms&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;We can demonstrate this with something like the following: &lt;code&gt;ak + kmn/2 - x ^ 2&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Likewise there are binomials for two-term expressions, and trinomials for three-term expressions.&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id='adding_polynomials'&gt;Adding Polynomials&lt;/h2&gt;
+
+&lt;p&gt;Polynomials can be added by following a couple steps. These steps usually involve removing parentheses, grouping like terms, and simplifying. We can assert this process in ScalaTest like so:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='scala'&gt;&lt;span class='n'&gt;test&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;Add two polynomials: (4x^2 - 3 + 2x) + (5x - 2x^2)&amp;quot;&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;{&lt;/span&gt;
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;x&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt;
+
+    &lt;span class='c1'&gt;//drop parentheses&lt;/span&gt;
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;4&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;x&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;x&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='mi'&gt;5&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;x&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;x&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
+
+    &lt;span class='c1'&gt;//group like terms&lt;/span&gt;
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;grouped&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;4&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;x&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;5&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;x&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt;
+
+    &lt;span class='c1'&gt;//simplify&lt;/span&gt;
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;simplified&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;x&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='mi'&gt;7&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;x&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt;
+
+
+    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='n'&gt;grouped&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
+    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='n'&gt;simplified&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
+&lt;span class='o'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;After simplifying we have the much leaner expression 2x&lt;sup&gt;2&lt;/sup&gt; + 7x - 3&lt;/p&gt;
+&lt;hr /&gt;
+&lt;h2 id='subtracting_polynomials'&gt;Subtracting Polynomials&lt;/h2&gt;
+
+&lt;p&gt;Subtracting polynomials follow similar rules to addition, with one caveat. The subtrahend - that is the expression being subtracted - must be taken as it&amp;#8217;s additive inverse. That means (6a - b + 2) - (2a + 3b - 4) becomes 6a - b + 2 - 2a - 3b + 4. Notice everything in the subtrahend becomes it&amp;#8217;s opposite.&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='scala'&gt;&lt;span class='n'&gt;test&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;(6a - b + 2) - (2a + 3b - 4)&amp;quot;&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;{&lt;/span&gt;
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;a&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt; &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;b&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt;
+
+    &lt;span class='c1'&gt;//drop parentheses and use additive inverse of subtrahend&lt;/span&gt;
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;6&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;a&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='n'&gt;b&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;a&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;b&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='mi'&gt;4&lt;/span&gt;
+
+    &lt;span class='c1'&gt;//group like terms&lt;/span&gt;
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;grouped&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;6&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;a&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;3&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;b&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='mi'&gt;6&lt;/span&gt;
+
+    &lt;span class='c1'&gt;//simplify&lt;/span&gt;
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;simplified&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;4&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;a&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='mi'&gt;4&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;b&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='mi'&gt;6&lt;/span&gt;
+
+    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='n'&gt;grouped&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
+    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;grouped&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='n'&gt;simplified&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
+&lt;span class='o'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;hr /&gt;
+&lt;h2 id='multiplying_polynomials_and_monomials'&gt;Multiplying Polynomials And Monomials&lt;/h2&gt;
+
+&lt;p&gt;There are a couple of different rules to consider when doing multiplication of monomials and polynomials. We will look at several of these.&lt;/p&gt;
+
+&lt;h3 id='monomials_with_exponents'&gt;Monomials with exponents&lt;/h3&gt;
+
+&lt;p&gt;It is pretty easy to multiply monomials with exponents when they have a common base. If you have x&lt;sup&gt;3&lt;/sup&gt; * x&lt;sup&gt;4&lt;/sup&gt; you have (x * x * x) * (x * x * x * x) or xxxxxxx or x&lt;sup&gt;7&lt;/sup&gt;. Hence x&lt;sup&gt;y&lt;/sup&gt; * x&lt;sup&gt;z&lt;/sup&gt; = x&lt;sup&gt;y + z&lt;/sup&gt;&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='scala'&gt;&lt;span class='n'&gt;test&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;a^3 * a^6&amp;quot;&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;{&lt;/span&gt;
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;a&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;7&lt;/span&gt;
+
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;a&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;a&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;6&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
+
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;simplified&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;a&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;9&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
+
+    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='n'&gt;simplified&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
+&lt;span class='o'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h3 id='raising_exponents_to_a_given_power'&gt;Raising exponents to a given power&lt;/h3&gt;
+
+&lt;p&gt;What about when we need to raise a base that already contains an exponent. This is the situation with something like (x&lt;sup&gt;3&lt;/sup&gt;)&lt;sup&gt;3&lt;/sup&gt;. This can be read as x&lt;sup&gt;3&lt;/sup&gt; * x&lt;sup&gt;3&lt;/sup&gt; * x&lt;sup&gt;3&lt;/sup&gt; or xxxxxxxxx or x&lt;sup&gt;9&lt;/sup&gt;. This gives us (x&lt;sup&gt;y&lt;/sup&gt;)&lt;sup&gt;z&lt;/sup&gt; = x&lt;sup&gt;y * z&lt;/sup&gt;.&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='scala'&gt;&lt;span class='n'&gt;test&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;(x^3)^3&amp;quot;&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;{&lt;/span&gt;
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;x&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;5&lt;/span&gt;
+
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;x&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt;&lt;span class='o'&gt;),&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
+
+    &lt;span class='c1'&gt;//to find the power of a power of a base, keep the base and multiply the exponents&lt;/span&gt;
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;simplified&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;x&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
+
+    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='n'&gt;simplified&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
+&lt;span class='o'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h3 id='multiplying_polynomials_by_monomials'&gt;Multiplying polynomials by monomials&lt;/h3&gt;
+
+&lt;p&gt;To multiply a polynomial by a monomial, we just need to distribute the monomial throughout the polynomial. We can demonstrate this in ScalaTest like so:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='scala'&gt;&lt;span class='n'&gt;test&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;(b/3)(9b - 6 + 12a)&amp;quot;&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;{&lt;/span&gt;
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;a&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt; &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;b&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;4&lt;/span&gt;&lt;span class='n'&gt;f&lt;/span&gt;
+
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;b&lt;/span&gt;&lt;span class='o'&gt;/&lt;/span&gt;&lt;span class='mi'&gt;3&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;9&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;b&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='mi'&gt;6&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='mi'&gt;12&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;a&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
+
+    &lt;span class='c1'&gt;//distribute numerator&lt;/span&gt;
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;distributed&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;9&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;b&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='mi'&gt;6&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;b&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='mi'&gt;12&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;a&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;b&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;/&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt;
+
+    &lt;span class='c1'&gt;//divide numerical factors by denominator&lt;/span&gt;
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;divided&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;b&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;b&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='mi'&gt;4&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;a&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;b&lt;/span&gt;
+
+    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='n'&gt;distributed&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
+    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='n'&gt;divided&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
+&lt;span class='o'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Keep an eye on the value for b. It has been converted to a floating point number, because if we had not done this, then 4/3 would have resulted in 1 for our &lt;code&gt;solution&lt;/code&gt; value. This would drastically alter the results of our calculation.&lt;/p&gt;
+
+&lt;h3 id='multiplying_multiple_polynomials'&gt;Multiplying multiple polynomials&lt;/h3&gt;
+
+&lt;p&gt;When multiplying two polynomials, it can be helpful to stack them vertically. Consider the following:&lt;/p&gt;
+
+&lt;p&gt;-2x&lt;sup&gt;2&lt;/sup&gt; + y&lt;sup&gt;2&lt;/sup&gt; + xy&lt;br /&gt;* x - y&lt;/p&gt;
+
+&lt;p&gt;The key is to move left to right, first multiplying each term on top against the term on the bottom left. Then do the same for the term on the bottom right. Then just group like terms and simplify.&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='scala'&gt;&lt;span class='n'&gt;test&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;(-2x^2 + y^2 + xy) * (x - y)&amp;quot;&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;{&lt;/span&gt;
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;x&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;8&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt; &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;y&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;7&lt;/span&gt;
+
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;(-&lt;/span&gt;&lt;span class='mi'&gt;2&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;x&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;y&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='n'&gt;x&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;y&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;x&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='n'&gt;y&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
+
+    &lt;span class='c1'&gt;//multiply each term on the left by x first then multiply each term on the left by -y&lt;/span&gt;
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;multiplied&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt;&lt;span class='mi'&gt;2&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;x&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;y&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;x&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;x&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;y&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;x&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;y&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;y&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='n'&gt;x&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;y&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
+
+    &lt;span class='c1'&gt;//group like terms&lt;/span&gt;
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;grouped&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt;&lt;span class='mi'&gt;2&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;x&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;y&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;x&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;y&lt;/span&gt;
+
+    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='n'&gt;multiplied&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
+    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='n'&gt;grouped&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
+&lt;span class='o'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;hr /&gt;
+&lt;h2 id='dividing_polynomials_and_monomials'&gt;Dividing Polynomials and Monomials&lt;/h2&gt;
+
+&lt;p&gt;It should be no surprise that division follows similar rules to multiplication.&lt;/p&gt;
+
+&lt;h3 id='monomials_with_exponents'&gt;Monomials with exponents&lt;/h3&gt;
+
+&lt;p&gt;Like multiplication, dividing monomials containing exponents is simple if they have a common base. Given a&lt;sup&gt;8&lt;/sup&gt; / a&lt;sup&gt;5&lt;/sup&gt;, we have aaaaaaaa / aaaaa. You will get a 1 for every value in the denominator if the numerator&amp;#8217;s exponent is greater. This effectively cancels all the bases in the denominator, leaving us with what is left in the numerator: aaa. Therefore, a&lt;sup&gt;x&lt;/sup&gt; / a&lt;sup&gt;y&lt;/sup&gt; = a&lt;sup&gt;x - y&lt;/sup&gt;, where x is greater than y.&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='scala'&gt;&lt;span class='n'&gt;test&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;a^8 / a^5&amp;quot;&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;{&lt;/span&gt;
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;a&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt;
+
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;a&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;8&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;/&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;a&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;5&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
+
+    &lt;span class='c1'&gt;//if exponent in numerator is greater than exponent in denominator then a^x / a^y = a^(x - y)&lt;/span&gt;
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;simplified&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;a&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;8&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='mi'&gt;5&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
+
+    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='n'&gt;simplified&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
+&lt;span class='o'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;We follow a slightly different rule if the exponent in the denominator is larger. a&lt;sup&gt;x&lt;/sup&gt; / a&lt;sup&gt;y&lt;/sup&gt; = 1/a&lt;sup&gt;y -x&lt;/sup&gt; where y is greater than x.&lt;/p&gt;
+
+&lt;h3 id='dividing_polynomials_by_monomials'&gt;Dividing polynomials by monomials&lt;/h3&gt;
+
+&lt;p&gt;This knowledge of dividing exponents comes in handy when dividing polynomials by monomials. Hopefully this example in Scala demonstrates why:&lt;/p&gt;
+&lt;div class='highlight'&gt;&lt;pre&gt;&lt;code class='scala'&gt;&lt;span class='n'&gt;test&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='s'&gt;&amp;quot;11m^3k^2 + 33mk^3 - 22mk / 11mk&amp;quot;&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;{&lt;/span&gt;
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;m&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;;&lt;/span&gt; &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;k&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt;
+
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;11&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;m&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;k&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='mi'&gt;33&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;m&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;k&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='mi'&gt;22&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;m&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;k&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;/&lt;/span&gt; &lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='mi'&gt;11&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;m&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;k&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
+
+    &lt;span class='c1'&gt;//divide numerical factors and apply rule for dividing exponents&lt;/span&gt;
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;divided&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;m&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;k&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;m&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;k&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;m&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;k&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
+
+    &lt;span class='k'&gt;val&lt;/span&gt; &lt;span class='n'&gt;simplified&lt;/span&gt; &lt;span class='k'&gt;=&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;m&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;k&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;1&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;+&lt;/span&gt; &lt;span class='mi'&gt;3&lt;/span&gt; &lt;span class='o'&gt;*&lt;/span&gt; &lt;span class='n'&gt;pow&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;k&lt;/span&gt;&lt;span class='o'&gt;,&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt; &lt;span class='o'&gt;-&lt;/span&gt; &lt;span class='mi'&gt;2&lt;/span&gt;
+
+    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='n'&gt;divided&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
+    &lt;span class='n'&gt;assert&lt;/span&gt;&lt;span class='o'&gt;(&lt;/span&gt;&lt;span class='n'&gt;solution&lt;/span&gt; &lt;span class='o'&gt;===&lt;/span&gt; &lt;span class='n'&gt;simplified&lt;/span&gt;&lt;span class='o'&gt;)&lt;/span&gt;
+&lt;span class='o'&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;&lt;hr /&gt;
+&lt;p&gt;As usual, I have left out some tests. Be sure to checkout the whole test suite on Github&lt;/p&gt;
+&lt;a class='button' href='https://github.com/brianium/scala-algebra/blob/master/src/test/scala/com/brianscaturro/MonomialsAndPolynomialsSuite.scala' target='_blank'&gt;The Source&lt;/a&gt;</content>
+ </entry>
  
  <entry>
    <title>Dipping Into The Number System With Scala and ScalaTest</title>
