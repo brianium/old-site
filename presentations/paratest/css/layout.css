@@ -1,0 +1,112 @@
+/* #Font-Face
+================================================== */
+@font-face {
+    font-family: 'BebasNeueRegular';
+    src: url('fonts/BebasNeue-webfont.eot');
+    src: url('fonts/BebasNeue-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/BebasNeue-webfont.woff') format('woff'),
+         url('fonts/BebasNeue-webfont.ttf') format('truetype'),
+         url('fonts/BebasNeue-webfont.svg#BebasNeueRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+/* #Site Styles
+================================================== */
+html {
+	background:#64C93C url(images/noise.png) repeat left top;
+}
+
+body {
+	background:url(images/radial.png) no-repeat 50% 65%;
+	min-height:800px;
+	font-family:'Droid Serif',Georgia,'Times New Roman',serif;
+	padding-top:25px;
+	font-size:18px;
+	line-height:22px;
+}
+
+h1,h2 {
+	text-align:center;
+}
+
+h1 {
+	color:#fff;
+	font-family:"BebasNeueRegular",Impact,Helvetica,Arial,sans-serif;
+	font-size:70px;
+	line-height:86px;
+	margin-bottom:25px;
+	text-shadow:0 -1px #000;
+}
+
+h2 {
+	color:#fff;
+	text-shadow:0 -1px rgba(0,0,0,0.5);
+	margin-bottom: 20px;
+}
+
+	ol h2 {
+		text-align:left;
+	}
+
+li > span {
+	color:#fff;
+}
+
+p {
+	font-size:1.2em;
+	line-height:1.5em !important;
+}
+
+blockquote {
+	border:none;
+}
+
+	blockquote p {
+		color:#453908;
+		font-size:26px;
+		line-height:32px;
+		text-shadow:0px -1px rgba(255, 255, 255, 0.5);
+	}
+
+.columns img {
+	max-width: 100%;
+	height: auto;
+}
+
+.alignleft {
+	text-align:left;
+}
+
+.aligncenter {
+	text-align:center;
+}
+
+#main {
+	text-align:center;
+}
+
+.slide {
+	margin-top:-140px;
+	width:900px;
+}
+
+.center {
+	text-align:center;
+}
+
+.left {
+	text-align:left;
+}
+
+.image {
+	margin-bottom:15px;
+	text-align:center;
+}
+
+	.image img {
+		border: 5px solid white;
+		box-shadow: -5px 5px 5px rgba(0,0,0,0.5);
+		outline:1px solid #ccc;
+	}
