@@ -1,0 +1,994 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"PHP",
+				"PHPUnitTextUI"
+			],
+			[
+				"getAr",
+				"getArgumentUsage"
+			],
+			[
+				"cmd",
+				"cmdArg"
+			],
+			[
+				"getM",
+				"getMaxCmdAndUsageLength"
+			],
+			[
+				"us",
+				"usageMessages"
+			],
+			[
+				"option",
+				"optionKeys"
+			],
+			[
+				"opt",
+				"optionKeys"
+			],
+			[
+				"total",
+				"totalTime"
+			],
+			[
+				"sec",
+				"secondsToTimeString"
+			],
+			[
+				"para",
+				"paraOut"
+			],
+			[
+				"par",
+				"paraTime"
+			],
+			[
+				"php",
+				"phpunitOut"
+			],
+			[
+				"try",
+				"tryLoadTests"
+			],
+			[
+				"load",
+				"loaded"
+			],
+			[
+				"numP",
+				"numProcs"
+			],
+			[
+				"st",
+				"stdOuput"
+			],
+			[
+				"std",
+				"stdTime"
+			],
+			[
+				"file",
+				"fileName"
+			],
+			[
+				"getName",
+				"getNamespace"
+			],
+			[
+				"name",
+				"namespace"
+			],
+			[
+				"src",
+				"srcPath"
+			],
+			[
+				"str_re",
+				"str_replace"
+			],
+			[
+				"call_user",
+				"call_user_func_array"
+			],
+			[
+				"run",
+				"runnerOptions"
+			],
+			[
+				"array_key",
+				"array_keys"
+			],
+			[
+				"err",
+				"errorSuite"
+			],
+			[
+				"tot",
+				"totalTime"
+			],
+			[
+				"suite",
+				"suiteName"
+			],
+			[
+				"sys_get",
+				"sys_get_temp_dir"
+			],
+			[
+				"time",
+				"timeStart"
+			],
+			[
+				"getCla",
+				"getClassFunctions"
+			],
+			[
+				"serial",
+				"serialSuites"
+			],
+			[
+				"ser",
+				"serialSuites"
+			],
+			[
+				"test",
+				"testDir"
+			],
+			[
+				"nam",
+				"namespace"
+			],
+			[
+				"con",
+				"continueOn"
+			],
+			[
+				"is",
+				"isComment"
+			],
+			[
+				"vis",
+				"visibility"
+			],
+			[
+				"visi",
+				"visibilityTokens"
+			],
+			[
+				"vi",
+				"visibility"
+			],
+			[
+				"ab",
+				"abstract"
+			],
+			[
+				"expected",
+				"expectedTotalFailures"
+			],
+			[
+				"exp",
+				"expectedTotalAssertions"
+			],
+			[
+				"simp",
+				"simplexml_load_file"
+			],
+			[
+				"assert",
+				"assertEquals"
+			],
+			[
+				"sr",
+				"srcFile"
+			],
+			[
+				"spl_auto",
+				"spl_autoload_register"
+			],
+			[
+				"words",
+				"wordsPath"
+			],
+			[
+				"file_",
+				"file_get_contents"
+			],
+			[
+				"last",
+				"lastSpace"
+			],
+			[
+				"isSp",
+				"isSpecialKey"
+			],
+			[
+				"sp",
+				"isSpecialKey"
+			],
+			[
+				"handl",
+				"handleTabComplete"
+			],
+			[
+				"k",
+				"KeyMap"
+			],
+			[
+				"auto",
+				"autocomplete"
+			],
+			[
+				"trig",
+				"triggeredAt"
+			],
+			[
+				"inpu",
+				"input"
+			],
+			[
+				"pro",
+				"prototype"
+			],
+			[
+				"hi",
+				"highlighted"
+			],
+			[
+				"onke",
+				"onkeyup"
+			],
+			[
+				"lad",
+				"lastWord"
+			],
+			[
+				"mat",
+				"matchFns"
+			],
+			[
+				"contain",
+				"containerId"
+			],
+			[
+				"in",
+				"inputId"
+			],
+			[
+				"create",
+				"createParagraph"
+			],
+			[
+				"on",
+				"onfinish"
+			],
+			[
+				"ca",
+				"carrotPressed"
+			],
+			[
+				"onk",
+				"onkeydown"
+			],
+			[
+				"key",
+				"keyCode"
+			],
+			[
+				"read",
+				"readyState"
+			],
+			[
+				"post",
+				"postRepo"
+			],
+			[
+				"cooki",
+				"cookieReturnsNull"
+			],
+			[
+				"cook",
+				"cookieReturnsInvalidIdentifier"
+			],
+			[
+				"userRe",
+				"userRepoReturnsUserFixture"
+			],
+			[
+				"spli",
+				"splitAuthCookie"
+			],
+			[
+				"u",
+				"username"
+			],
+			[
+				"Use",
+				"UserAuthenticator"
+			],
+			[
+				"auth",
+				"authenticator"
+			],
+			[
+				"userRep",
+				"userRepoReturnsUserFixture"
+			],
+			[
+				"cookieReturn",
+				"cookieReturnsValidCookie"
+			],
+			[
+				"userRepo",
+				"userRepoReturnsUserFixture"
+			],
+			[
+				"Slim",
+				"SlimAuthenticationService"
+			],
+			[
+				"user",
+				"userAuth"
+			],
+			[
+				"getElemen",
+				"getElementsByClassName"
+			],
+			[
+				"Lott",
+				"LotterTicket"
+			],
+			[
+				"block",
+				"blockquote"
+			],
+			[
+				"Fish",
+				"FishRepository"
+			],
+			[
+				"Entity",
+				"EntityManager"
+			],
+			[
+				"setup",
+				"setUpCatch"
+			],
+			[
+				"cast",
+				"castCount"
+			],
+			[
+				"ran",
+				"randKey"
+			],
+			[
+				"fish",
+				"fishId"
+			],
+			[
+				"do",
+				"dob	Insert do |variable| … end"
+			],
+			[
+				"line",
+				"line-height"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "js/plugins.js",
+			"settings":
+			{
+				"buffer_size": 20629,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "index.html",
+			"settings":
+			{
+				"buffer_size": 6944,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "js/scripts.js",
+			"settings":
+			{
+				"buffer_size": 72,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "css/layout.css",
+			"settings":
+			{
+				"buffer_size": 1886,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "css/sunburst.css",
+			"settings":
+			{
+				"buffer_size": 1977,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+			[
+				"php",
+				"Set Syntax: PHP"
+			],
+			[
+				"bash",
+				"Set Syntax: Shell Script (Bash)"
+			],
+			[
+				"java",
+				"Set Syntax: JavaScript"
+			],
+			[
+				"html",
+				"Set Syntax: HTML"
+			],
+			[
+				"scala",
+				"Set Syntax: Scala"
+			],
+			[
+				"sn",
+				"Snippet: hil"
+			],
+			[
+				"git push ",
+				"Git: Push Current Branch"
+			],
+			[
+				"git commit",
+				"Git: Commit"
+			],
+			[
+				"git add",
+				"Git: Add..."
+			],
+			[
+				"git status",
+				"Git: Status"
+			],
+			[
+				"git push",
+				"Git: Push Current Branch"
+			],
+			[
+				"git com",
+				"Git: Commit"
+			],
+			[
+				"git pus",
+				"Git: Push Current Branch"
+			],
+			[
+				"",
+				"Code Folding: Unfold All"
+			],
+			[
+				"push ",
+				"Git: Push"
+			],
+			[
+				"commit",
+				"Git: Commit"
+			],
+			[
+				"git comit",
+				"Git: Commit"
+			],
+			[
+				"git co",
+				"Git: Quick Commit"
+			],
+			[
+				"git",
+				"Git: Add..."
+			],
+			[
+				"add",
+				"Git: Add..."
+			],
+			[
+				"git custom",
+				"Git: Custom Command"
+			],
+			[
+				"git statu",
+				"Git: Status"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			],
+			[
+				"hil",
+				"Snippet: hil"
+			],
+			[
+				"Snippet: ",
+				"Snippet: #!/usr/bin/env"
+			],
+			[
+				"ru",
+				"Set Syntax: Ruby"
+			],
+			[
+				"ruby",
+				"Set Syntax: Ruby"
+			],
+			[
+				"xml",
+				"Set Syntax: XML"
+			],
+			[
+				"Php",
+				"Set Syntax: PHP"
+			],
+			[
+				"haml",
+				"Set Syntax: Ruby Haml"
+			]
+		],
+		"width": 575.0
+	},
+	"console":
+	{
+		"height": 139.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/brian/Documents/conference-research.txt",
+		"/home/brian/Projects/parallel-phpunit/it/ParaTest/Parser/ParserTest/GetClassTest.php",
+		"/home/brian/Projects/parallel-phpunit/src/ParaTest/Runners/PHPUnit/Options.php",
+		"/home/brian/Projects/parallel-phpunit/bin/test",
+		"/home/brian/Projects/parallel-phpunit/src/ParaTest/Runners/PHPUnit/SuiteLoader.php",
+		"/home/brian/Projects/parallel-phpunit/src/ParaTest/Parser/ParsedFunction.php",
+		"/home/brian/Projects/parallel-phpunit/src/ParaTest/Runners/PHPUnit/ExecutableTest.php",
+		"/home/brian/Projects/parallel-phpunit/src/ParaTest/Runners/PHPUnit/TestMethod.php",
+		"/home/brian/Projects/parallel-phpunit/src/ParaTest/Runners/PHPUnit/Suite.php",
+		"/home/brian/Projects/parallel-phpunit/src/ParaTest/Runners/PHPUnit/Runner.php",
+		"/home/brian/Projects/parallel-phpunit/test/ParaTest/UI/Text/PHPUnitTextUITest.php",
+		"/home/brian/Projects/parallel-phpunit/bin/autoload.php",
+		"/home/brian/Projects/parallel-phpunit/test/bootstrap.php",
+		"/home/brian/Projects/parallel-phpunit/test/fixtures/tests/LongRunningTest.php",
+		"/home/brian/Projects/parallel-phpunit/README.md",
+		"/home/brian/Projects/parallel-phpunit/src/ParaTest/Parser/Parser.php",
+		"/home/brian/Projects/parallel-phpunit/test/fixtures/output/usage.txt",
+		"/home/brian/Projects/parallel-phpunit/functional/PerformanceTest.php",
+		"/home/brian/Projects/parallel-phpunit/bin/paratest",
+		"/home/brian/Projects/parallel-phpunit/ui/UsageTest.php",
+		"/home/brian/Projects/parallel-phpunit/src/ParaTest/Parser/ParsedClass.php",
+		"/home/brian/Projects/parallel-phpunit/test/fixtures/tests/level1/AnotherUnitTestInSubLevelTest.php",
+		"/home/brian/Projects/parallel-phpunit/test/fixtures/tests/UnitTestWithErrorTest.php",
+		"/home/brian/Projects/parallel-phpunit/test/fixtures/tests/level1/level2/UnitTestInSubSubLevelTest.php",
+		"/home/brian/Projects/parallel-phpunit/test/fixtures/tests/UnitTestWithMethodAnnotationsTest.php",
+		"/home/brian/Projects/parallel-phpunit/test/fixtures/tests/UnitTestWithClassAnnotationTest.php",
+		"/home/brian/Documents/mattia",
+		"/home/brian/Projects/parallel-phpunit/test/ParaTest/Runners/PHPUnit/ResultPrinterTest.php",
+		"/home/brian/Projects/parallel-phpunit/src/ParaTest/Runners/PHPUnit/log.txt",
+		"/home/brian/Projects/parallel-phpunit/it/ParaTest/Parser/ParserTest.php",
+		"/home/brian/Projects/parallel-phpunit/composer.json",
+		"/home/brian/Projects/parallel-phpunit/it/ParaTest/Runners/PHPUnit/SuiteLoaderTest.php",
+		"/home/brian/Projects/parallel-phpunit/src/ParaTest/LogReaders/JUnitXmlLogReader.php",
+		"/home/brian/Projects/parallel-phpunit/test/ParaTest/Runners/PHPUnit/RunnerTest.php",
+		"/home/brian/Projects/parallel-phpunit/it/ParaTest/Runners/PHPUnit/RunnerTest.php",
+		"/home/brian/Projects/parallel-phpunit/test/fixtures/tests/level1/level2/AnotherUnitTestInSubSubLevelTest.php",
+		"/home/brian/Projects/parallel-phpunit/test/fixtures/tests/level1/UnitTestInSubLevelTest.php",
+		"/home/brian/Projects/parallel-phpunit/src/ParaTest/Runners/PHPUnit/ResultPrinter.php",
+		"/home/brian/Projects/parallel-phpunit/test/fixtures/results/empty.xml",
+		"/home/brian/Projects/parallel-phpunit/it/ParaTest/LogReaders/JUnitXmlLogReaderTest/BaseJUnitXmlLogReaderTestBase.php",
+		"/home/brian/Projects/parallel-phpunit/it/ParaTest/LogReaders/JUnitXmlLogReaderTest/EmptyXmlTest.php",
+		"/home/brian/Projects/parallel-phpunit/composer.json.bak",
+		"/home/brian/Projects/parallel-phpunit/bin/paratest.php",
+		"/home/brian/Projects/parallel-phpunit/test/ParaTest/Runners/PHPUnit/SuiteLoaderTest.php",
+		"/home/brian/Projects/parallel-phpunit/test/ParaTest/Runners/PHPUnit/SuiteTest.php",
+		"/home/brian/Projects/parallel-phpunit/it/ParaTest/Runners/PHPUnit/ResultPrinterTest.php",
+		"/home/brian/Projects/parallel-phpunit/test/fixtures/results/single-werror.xml",
+		"/home/brian/Projects/parallel-phpunit/test/fixtures/results/mixed-results.xml",
+		"/home/brian/Projects/parallel-phpunit/test/fixtures/tests/UnitTestWithOtherErrorTest.php",
+		"/home/brian/Projects/parallel-phpunit/it/ParaTest/LogReaders/JUnitXmlLogReaderTest/MixedResultsTest.php",
+		"/home/brian/Projects/parallel-phpunit/it/ParaTest/LogReaders/JUnitXmlLogReaderTest/SingleResultWithErrorTest.php",
+		"/home/brian/Projects/parallel-phpunit/it/ParaTest/LogReaders/JUnitXmlLogReaderTest/SingleResultWithFailureTest.php",
+		"/home/brian/Projects/parallel-phpunit/it/ParaTest/Runners/PHPUnit/SuiteTest.php",
+		"/home/brian/Projects/parallel-phpunit/it/ParaTest/Runners/PHPUnit/RunnerTest",
+		"/home/brian/Projects/parallel-phpunit/test/ParaTest/Runners/PHPUnitRunnerTest.php",
+		"/home/brian/Projects/parallel-phpunit/src/ParaTest/Runners/PHPUnitRunner.php",
+		"/home/brian/Projects/parallel-phpunit/test/ParaTest/Parser/GetClassAnnotatedWithTest.php",
+		"/home/brian/Projects/parallel-phpunit/test/ParaTest/Parser/ParsedObjectTest.php",
+		"/home/brian/Projects/parallel-phpunit/test/TestBase.php",
+		"/home/brian/Projects/parallel-phpunit/src/ParaTest/Parser/ParsedObject.php",
+		"/home/brian/Projects/parallel-phpunit/test/ParaTest/Parser/ParserTest.php",
+		"/home/brian/Projects/parallel-phpunit/src/ParaTest/Tokenizer.php",
+		"/home/brian/Projects/parallel-phpunit/test/ParaTest/TokenizerTest.php",
+		"/home/brian/Projects/parallel-phpunit/test/fixtures/tests/level1/level2/NotATest.txt",
+		"/home/brian/Projects/parallel-phpunit/test/ParaTest/LogReaders/JUnitXmlLogReaderTest/BaseJUnitXmlLogReaderTestBase.php",
+		"/home/brian/Projects/parallel-phpunit/test/ParaTest/LogReaders/JUnitXmlLogReaderTest/MixedResultsTest.php",
+		"/home/brian/Projects/parallel-phpunit/test/ParaTest/LogReaders/JUnitXmlLogReaderTest/SingleResultWithFailureTest.php",
+		"/home/brian/Projects/parallel-phpunit/test/ParaTest/LogReaders/JUnitXmlLogReaderTest/SingleResultWithErrorTest.php",
+		"/home/brian/Projects/parallel-phpunit/test/fixtures/results/single-wfailure.xml",
+		"/home/brian/Projects/parallel-phpunit/test/ParaTest/LogReaders/JUnitXmlReporterTest/MixedResultsTest.php",
+		"/home/brian/Projects/parallel-phpunit/test/ParaTest/LogReaders/JUnitXmlReporterTest.php",
+		"/home/brian/Projects/parallel-phpunit/test/ParaTest/Reporters/JUnitXmlReporterTest.php",
+		"/home/brian/Projects/parallel-phpunit/src/Tokenizer.php",
+		"/home/brian/Projects/vanilla-autocomplete/README.md",
+		"/home/brian/Projects/vanilla-autocomplete/tests/src/test/scala/com/brianscaturro/Autocompleter/IndexSpec.scala",
+		"/home/brian/Documents/art-logic-challenge/Brian_Scaturro_Questionnaire.txt",
+		"/home/brian/Projects/vanilla-autocomplete/words/response.php",
+		"/home/brian/Projects/vanilla-autocomplete/words/index.php",
+		"/home/brian/Projects/vanilla-autocomplete/routing.php",
+		"/home/brian/Projects/vanilla-autocomplete/tests/build.sbt",
+		"/home/brian/Projects/vanilla-autocomplete/.gitignore",
+		"/home/brian/Projects/vanilla-autocomplete/tests/project/Build.scala",
+		"/home/brian/Downloads/AL/Part1b/AlpcServer.py",
+		"/home/brian/Downloads/AL/Part1b/Completer.py",
+		"/home/brian/Projects/vanilla-autocomplete/server/response.php",
+		"/home/brian/Projects/vanilla-autocomplete/server/index.php",
+		"/home/brian/Projects/vanilla-autocomplete/server/Server.php",
+		"/home/brian/Projects/vanilla-autocomplete/server/server.php",
+		"/home/brian/bin/monoinstall.sh",
+		"/home/brian/Projects/php-classic-blog/src/Presentation/Views/register.phtml",
+		"/home/brian/Projects/php-classic-blog/src/Domain/Entities/Comment.php",
+		"/home/brian/Projects/php-classic-blog/src/Domain/Commenter.php",
+		"/home/brian/Projects/php-classic-blog/src/Domain/Entities/Post.php",
+		"/home/brian/Projects/php-classic-blog/src/Test/Unit/Presentation/Services/SlimAuthenticationServiceTest.php",
+		"/home/brian/Projects/php-classic-blog/README.md",
+		"/home/brian/Projects/php-classic-blog/src/Infrastructure/Persistence/Doctrine/doctrine.cfg.json",
+		"/home/brian/Projects/php-classic-blog/src/Infrastructure/Persistence/Doctrine/PostRepository.php",
+		"/home/brian/Projects/php-classic-blog/src/Domain/Repositories/PostRepository.php",
+		"/home/brian/Projects/php-classic-blog/src/Test/Integration/Infrastructure/Persistence/Doctrine/PostRepositoryTest.php",
+		"/home/brian/Projects/php-classic-blog/src/Presentation/Views/layout-admin.phtml",
+		"/home/brian/Projects/php-classic-blog/src/Presentation/Views/layout.phtml",
+		"/home/brian/Projects/php-classic-blog/src/Presentation/Views/add_post.phtml",
+		"/home/brian/Projects/php-classic-blog/src/Presentation/Services/SlimAuthenticationService.php",
+		"/home/brian/Projects/php-classic-blog/src/Presentation/Views/user_posts.phtml",
+		"/home/brian/Projects/php-classic-blog/src/Presentation/Views/single_post.phtml",
+		"/home/brian/Projects/php-classic-blog/src/Presentation/App/init.php",
+		"/home/brian/Projects/php-classic-blog/src/Presentation/App/admin.php",
+		"/home/brian/Projects/php-classic-blog/src/Presentation/App/auth.php",
+		"/home/brian/Projects/php-classic-blog/src/Presentation/App/posts.php",
+		"/home/brian/Projects/php-classic-blog/src/Presentation/Views/users.phtml",
+		"/home/brian/Projects/php-classic-blog/src/Presentation/index.php",
+		"/home/brian/Projects/php-classic-blog/src/Presentation/Views/index.phtml",
+		"/home/brian/Projects/php-classic-blog/src/Test/Unit/Domain/CommentSanitizerTest.php",
+		"/home/brian/Projects/php-classic-blog/src/Domain/CommentSanitizer.php",
+		"/home/brian/Projects/php-classic-blog/src/Test/Unit/Domain/Entities/UserTest.php",
+		"/home/brian/Projects/php-classic-blog/src/Test/Unit/Domain/Entities/PostTest.php",
+		"/home/brian/Projects/php-classic-blog/src/Presentation/Views/macros/controls.phtml",
+		"/home/brian/Projects/php-classic-blog/src/Presentation/Models/Input/InputModel.php",
+		"/home/brian/Projects/php-classic-blog/src/Presentation/Models/Input/Post.php",
+		"/home/brian/Projects/php-classic-blog/src/Presentation/Models/Input/Login.php",
+		"/home/brian/Projects/php-classic-blog/src/Domain/Entities/User.php",
+		"/home/brian/Projects/php-classic-blog/src/Presentation/Assets/css/superblorg.css",
+		"/home/brian/Projects/php-classic-blog/src/Presentation/Views/login.phtml",
+		"/home/brian/Projects/php-classic-blog/src/Presentation/Views/notfound.phtml",
+		"/home/brian/Projects/php-classic-blog/src/Presentation/Models/Input/Comment.php",
+		"/home/brian/Projects/php-classic-blog/src/Test/Unit/Domain/Entities/CommentTest.php",
+		"/home/brian/Projects/php-classic-blog/composer.json",
+		"/home/brian/Projects/php-classic-blog/src/Infrastructure/Persistence/Doctrine/proxies/__CG__DomainEntitiesComment.php"
+	],
+	"find":
+	{
+		"height": 40.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"getTime",
+			"addExecutable",
+			"addSuite",
+			"}\n",
+			"this->functions",
+			"maxProcs",
+			")\n",
+			"memory",
+			"processes",
+			"runner",
+			"routing.php",
+			"this.isSpecialKey",
+			"isDeleting",
+			"images/",
+			"sep",
+			"terms",
+			"algebra",
+			"liquid",
+			"&gt;",
+			"&lt;",
+			"&gt;",
+			"&lt;",
+			"&gt;",
+			"&lt;",
+			"&",
+			"&gt;",
+			"&lt;",
+			"&gt;",
+			"&lt;",
+			"&gt;",
+			"&lt;",
+			"button",
+			"Domain\\Values\\Pond"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"addTest",
+			"addExecutable",
+			"processes",
+			"running",
+			"loader",
+			"isSpecialKey",
+			"{{root}}/images/",
+			"Liquid",
+			">",
+			"<",
+			">",
+			"<",
+			">",
+			"<",
+			">",
+			"<",
+			">",
+			"<",
+			">",
+			"<",
+			""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": false
+	},
+	"groups":
+	[
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "js/plugins.js",
+					"settings":
+					{
+						"buffer_size": 20629,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								14806,
+								14806
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "index.html",
+					"settings":
+					{
+						"buffer_size": 6944,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6716,
+								6716
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 28.0,
+						"translation.y": 3696.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "js/scripts.js",
+					"settings":
+					{
+						"buffer_size": 72,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								72,
+								72
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "css/layout.css",
+					"settings":
+					{
+						"buffer_size": 1886,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1568,
+								1568
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1650.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "css/sunburst.css",
+					"settings":
+					{
+						"buffer_size": 1977,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1977,
+								1977
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 122.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 33.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 67.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"suiteloader",
+				"it/ParaTest/Runners/PHPUnit/SuiteLoaderTest.php"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"",
+				"/home/brian/Projects/paratest-selenium/paratest-selenium.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 419.0,
+	"status_bar_visible": true
+}

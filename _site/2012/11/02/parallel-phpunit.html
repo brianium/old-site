@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Brian Scaturro - Parallel PHPUnit - Running Tests Concurrently With ParaTest</title>
+	
+	<meta name="description" content="Parallel testing in PHPUnit can be accomplished.">
+	
+	<meta name="author" content="Brian Scaturro">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	<link href='http://fonts.googleapis.com/css?family=Anton' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" href="/css/base.css">
+	<link rel="stylesheet" href="/css/skeleton.css">
+	<link rel="stylesheet" href="/css/layout.css">
+	<link rel="stylesheet" href="/css/pygments.css">
+	<link rel="shortcut icon" href="/images/favicon.ico">
+        <link rel="alternate" type="application/atom+xml" title="brianscaturro.com feed" href="http://brianscaturro.com/atom.xml" />
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-10808090-11']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</head>
+<body>
+	<div class="container">
+
+<div class="eleven columns alpha">
+	<header id="branding">
+		<a href="/">
+			<div class="site-heading">Brian Scaturro</div>
+			<div class="site-subheading">Fancy a dance?</div>
+		</a>
+	</header>
+	<div id="main" role="main">
+		<article>
+			<h1>Parallel PHPUnit - Running Tests Concurrently With ParaTest<span class="post-date">02 Nov 2012</span></h1>
+			<p>PHP is not really a language known for concurrency. It&#8217;s threadless nature has lead it, and many of it&#8217;s tools to take a very top to bottom approach. It&#8217;s always consecutive, and rarely concurrent. PHPUnit is no exception.</p>
+
+<p>PHPUnit is still the big kid on the block when it comes to testing in PHP. One of it&#8217;s biggest shortcomings is it&#8217;s inability to test in parallel. This can be a huge bottleneck for long running tests. This often means tests in the functional realm (i.e Selenium).</p>
+
+<p>This is not a new problem, and some clever solutions have been put out there. <a href='https://github.com/brianium/paratest' target='__blank'>ParaTest</a> is a tool built to address some of the shortcomings present in existing tools.</p>
+
+<h2 id='the_solution_to_the_problem'>The Solution To The Problem</h2>
+
+<p>PHP does not support threads. However, PHP does allow us to open new processes. This is what concurrent testing hinges on. We can run a testing tool like PHPUnit in several processes.</p>
+
+<p>An example might look like this:</p>
+<div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span>
+<span class='sd'>/**</span>
+<span class='sd'> * $runningTests - currently open processes</span>
+<span class='sd'> * $loadedTests - an array of test paths</span>
+<span class='sd'> */</span>
+<span class='k'>while</span><span class='p'>(</span><span class='nb'>sizeof</span><span class='p'>(</span><span class='nv'>$runningTests</span><span class='p'>)</span> <span class='o'>||</span> <span class='nb'>sizeof</span><span class='p'>(</span><span class='nv'>$loadedTests</span><span class='p'>))</span> <span class='p'>{</span>
+    <span class='k'>while</span><span class='p'>(</span><span class='nb'>sizeof</span><span class='p'>(</span><span class='nv'>$loadedTests</span><span class='p'>)</span> <span class='o'>&amp;&amp;</span> <span class='nb'>sizeof</span><span class='p'>(</span><span class='nv'>$runningTests</span><span class='p'>)</span> <span class='o'>&lt;</span> <span class='nv'>$maxProcs</span><span class='p'>)</span>
+        <span class='nv'>$runningTests</span><span class='p'>[]</span> <span class='o'>=</span> <span class='nb'>proc_open</span><span class='p'>(</span><span class='s2'>&quot;phpunit &quot;</span> <span class='o'>.</span> <span class='nb'>array_shift</span><span class='p'>(</span><span class='nv'>$loadedTests</span><span class='p'>),</span> <span class='nv'>$descriptorspec</span><span class='p'>,</span> <span class='nv'>$pipes</span><span class='p'>);</span>
+    <span class='c1'>//remove any processes that have finished ....</span>
+<span class='p'>}</span>
+<span class='cp'>?&gt;</span><span class='x' />
+</code></pre>
+</div>
+<blockquote>
+<p>proc_open is the work horse of concurrent testing with PHPUnit.</p>
+</blockquote>
+<hr />
+<h2 id='the_current_tools'>The Current Tools</h2>
+
+<p>There aren&#8217;t many solutions for testing in parallel with PHPUnit. You might find a <a href='https://github.com/testingbot/phpunit-parallel/blob/master/parallel.php' target='__blank'>script</a> that runs suites (or entire files) in parallel. Other <a href='https://github.com/jlipps/paraunit' target='__blank'>tools</a> excel at functional testing - that is running each test method in its own process.</p>
+
+<p>These tools follow a process along the lines of:</p>
+
+<ol>
+<li>Grep for test methods or load a directory of files containing test suites.</li>
+
+<li>Open a process for each test method or suite.</li>
+
+<li>Parse output from STDOUT pipe, or get output from a temporary log file.</li>
+</ol>
+
+<p>This method can cover many cases, but it does have some significant shortfalls.</p>
+
+<h3 id='suites_vs_test_methods'>Suites VS. Test Methods</h3>
+
+<p>If you only load entire files, you aren&#8217;t very useful in a functional testing scenario where each test method has a potential to run for a while. Being able to run functional tests concurrently is a huge gain, and often the fuel that drives the flame for concurrent testing.</p>
+
+<p>If you only load test methods, then you do a good job at functional testing, but you lose the ability to test scenarios where parallel suites might be appropriate - maybe in a unit or integration test context.</p>
+
+<p>It would be nice if both were supported.</p>
+
+<h3 id='pattern_matching_doesnt_quite_cut_it'>Pattern Matching Doesn&#8217;t Quite Cut It</h3>
+
+<p>This problem affects the functional camp. The idea is to grab a bunch of files and search for their test methods. This might look like grabbing all function names in a file by doing something like this:</p>
+<div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span>
+<span class='nb'>preg_match_all</span><span class='p'>(</span><span class='s2'>&quot;/function (test[^\(]+)\(/&quot;</span><span class='p'>,</span> <span class='nv'>$file_str</span><span class='p'>,</span> <span class='nv'>$matches</span><span class='p'>,</span> <span class='nx'>PREG_PATTERN_ORDER</span><span class='p'>);</span>
+<span class='cp'>?&gt;</span><span class='x' />
+</code></pre>
+</div>
+<p>This approach can be speedy, but there are some significant drawbacks. For starters it removes the possibility of testing methods that use annotations instead of the &#8220;test&#8221; prefix. The following would be skipped under the above approach:</p>
+<div class='highlight'><pre><code class='php'><span class='cp'>&lt;?php</span>
+<span class='sd'>/**</span>
+<span class='sd'> * @test</span>
+<span class='sd'> */</span>
+<span class='k'>public</span> <span class='k'>function</span> <span class='nf'>twoTodosCheckedShowsCorrectClearButtonText</span><span class='p'>()</span>
+<span class='p'>{</span>
+    <span class='nv'>$this</span><span class='o'>-&gt;</span><span class='na'>todos</span><span class='o'>-&gt;</span><span class='na'>addTodos</span><span class='p'>(</span><span class='k'>array</span><span class='p'>(</span><span class='s1'>&#39;one&#39;</span><span class='p'>,</span> <span class='s1'>&#39;two&#39;</span><span class='p'>));</span>
+    <span class='nv'>$this</span><span class='o'>-&gt;</span><span class='na'>todos</span><span class='o'>-&gt;</span><span class='na'>getToggleAll</span><span class='p'>()</span><span class='o'>-&gt;</span><span class='na'>click</span><span class='p'>();</span>
+    <span class='nv'>$this</span><span class='o'>-&gt;</span><span class='na'>assertEquals</span><span class='p'>(</span><span class='s1'>&#39;Clear 2 completed items&#39;</span><span class='p'>,</span> <span class='nv'>$this</span><span class='o'>-&gt;</span><span class='na'>todos</span><span class='o'>-&gt;</span><span class='na'>getClearButton</span><span class='p'>()</span><span class='o'>-&gt;</span><span class='na'>text</span><span class='p'>());</span>
+<span class='p'>}</span>
+<span class='cp'>?&gt;</span><span class='x' />
+</code></pre>
+</div>
+<p>Pattern matching the contents of a file also omits the possibility of utilizing inheritance. Consider the following scenario:</p>
+<div class='highlight'><pre><code class='php'><span class='lineno'> 1</span> <span class='cp'>&lt;?php</span>
+<span class='lineno'> 2</span> <span class='k'>abstract</span> <span class='k'>class</span> <span class='nc'>TodoTest</span> <span class='k'>extends</span> <span class='nx'>PHPUnit_Extensions_Selenium2TestCase</span>
+<span class='lineno'> 3</span> <span class='p'>{</span>
+<span class='lineno'> 4</span>     <span class='k'>protected</span> <span class='nv'>$browser</span> <span class='o'>=</span> <span class='k'>null</span><span class='p'>;</span>
+<span class='lineno'> 5</span> 
+<span class='lineno'> 6</span>     <span class='k'>public</span> <span class='k'>function</span> <span class='nf'>setUp</span><span class='p'>()</span>
+<span class='lineno'> 7</span>     <span class='p'>{</span>
+<span class='lineno'> 8</span>         <span class='c1'>//configure browser</span>
+<span class='lineno'> 9</span>     <span class='p'>}</span>
+<span class='lineno'>10</span> 
+<span class='lineno'>11</span>     <span class='k'>public</span> <span class='k'>function</span> <span class='nf'>testTypingIntoFieldAndHittingEnterAddsTodo</span><span class='p'>()</span>
+<span class='lineno'>12</span>     <span class='p'>{</span>
+<span class='lineno'>13</span>         <span class='c1'>//...</span>
+<span class='lineno'>14</span>     <span class='p'>}</span>
+<span class='lineno'>15</span> <span class='p'>}</span>
+<span class='lineno'>16</span> 
+<span class='lineno'>17</span> <span class='k'>class</span> <span class='nc'>ChromeTodoTest</span> <span class='k'>extends</span> <span class='nx'>TodoTest</span>
+<span class='lineno'>18</span> <span class='p'>{</span>
+<span class='lineno'>19</span>     <span class='k'>protected</span> <span class='nv'>$browser</span> <span class='o'>=</span> <span class='s1'>&#39;chrome&#39;</span><span class='p'>;</span>
+<span class='lineno'>20</span> 
+<span class='lineno'>21</span>     <span class='c1'>//experimental Chrome tests ...</span>
+<span class='lineno'>22</span> <span class='p'>}</span>
+<span class='lineno'>23</span> 
+<span class='lineno'>24</span> <span class='k'>class</span> <span class='nc'>FirefoxTodoTest</span> <span class='k'>extends</span> <span class='nx'>TodoTest</span>
+<span class='lineno'>25</span> <span class='p'>{</span>
+<span class='lineno'>26</span>     <span class='k'>protected</span> <span class='nv'>$browser</span> <span class='o'>=</span> <span class='s1'>&#39;firefox&#39;</span><span class='p'>;</span>
+<span class='lineno'>27</span> 
+<span class='lineno'>28</span>     <span class='c1'>//experimental Firefox tests ...</span>
+<span class='lineno'>29</span> <span class='p'>}</span>
+<span class='lineno'>30</span> <span class='cp'>?&gt;</span><span class='x' />
+</code></pre>
+</div>
+<p>The contents of a file alone don&#8217;t give enough information.</p>
+
+<blockquote>
+<p>A good parallel testing tool for PHPUnit should support annotations and inheritance. Neither pattern matching test methods nor loading entire directories is flexible enough.</p>
+</blockquote>
+<hr />
+<h2 id='paratest_to_the_rescue'>ParaTest To The Rescue</h2>
+
+<p>ParaTest seeks to address the above problems. ParaTest introduces support for annotated tests, inheritance, and the ability to test both suites and test methods in parallel.</p>
+
+<p>A big design goal of ParaTest was to follow a structured architecture so enhancements can easily be added (i.e support for @group), and changes are painless (like <a href='https://github.com/brianium/paratest/pull/6' target='__blank'>changing the rules for loading a suite or file</a>).</p>
+
+<p>ParaTest differs from the rest of the camp in that it uses Reflection to do its magic. This is how it is able to easily support annotations and inheritance.</p>
+
+<p>For a refresher on the problems of parallel testing with PHPUnit, and an overview of how ParaTest stacks up against <a href='https://github.com/jlipps/paraunit' target='__blank'>paraunit</a> check out these <a href='http://brianscaturro.com/presentations/paratest/' target='__blank'>slides</a>.</p>
+
+<blockquote>
+<p>ParaTest allows you to run annotated test methods, inherited methods, and suites in parallel.</p>
+</blockquote>
+<hr />
+<h2 id='installing_and_using_paratest'>Installing And Using ParaTest</h2>
+
+<p>ParaTest is available as a composer package. To include it in your project update your composer.json file:</p>
+
+<p>Then run <code>composer install</code>.</p>
+
+<p>This will install the latest version of ParaTest and all of its dependencies (i.e PHPUnit). The binary can be found in <code>vendor/bin/paratest</code> or in the case of Windows <code>vendor\bin\paratest.bat</code>.</p>
+
+<p>An example usage might be:</p>
+<div class='highlight'><pre><code class='bash'>vendor/bin/paratest --path /path/to/tests --functional
+</code></pre>
+</div>
+<p>Usage at the command line:</p>
+<div class='highlight'><pre><code class='bash'>Usage: paratest <span class='o'>[</span>switches<span class='o'>]</span>
+
+  --processes &lt;number&gt;     The number of phpunit processes to run.
+  --path &lt;file|directory&gt;  The path to a directory or file containing tests.
+  --phpunit &lt;path&gt;         The phpunit binary to execute.
+  --bootstrap &lt;file&gt;       A bootstrap file to be used by phpunit.
+  --functional             Run methods instead of suites in separate processes.
+  -h|--help                Print usage information.
+  --group ...              Only runs tests from the specified group<span class='o'>(</span>s<span class='o'>)</span>.
+</code></pre>
+</div>
+<p>For more information head over to the <a href='https://github.com/brianium/paratest' target='__blank'>repo</a>. There is an example of using ParaTest with PHPUnit and Selenium Web Driver on <a href='https://github.com/brianium/paratest-selenium' target='__blank'>github</a> as well.</p>
+
+<h2 id='paratest_vs_phpunit'>ParaTest VS. PHPUnit</h2>
+
+<p>ParaTest was up to 2.25 times faster than PHPUnit when testing with Selenium Web Driver on my machine:</p>
+
+<p><img alt='PHPUnit running Selenium Web Driver Tests at 1:37' src='https://raw.github.com/brianium/paratest-selenium/master/phpunit-results.jpg' /></p>
+
+<p><img alt='ParaTest running same tests at 0:43' src='https://raw.github.com/brianium/paratest-selenium/master/paratest-results.jpg' /></p>
+
+<blockquote>
+<p>Parallel wins over serial any day.</p>
+</blockquote>
+<hr />
+<h2 id='the_future_of_paratest'>The Future Of ParaTest</h2>
+
+<p>One of the objectives of ParaTest is to be a parallel wrapper over multiple tools. Next on the radar is support for Behat. It would be awesome to see people forking <a href='https://github.com/brianium/paratest' target='__blank'>ParaTest</a> and making it a valuable tool for parallel testing in PHP.</p>
+		</article>
+		<div id="disqus_thread"></div>
+		<script type="text/javascript">
+		    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+		    var disqus_shortname = 'brianscaturro'; // required: replace example with your forum shortname
+
+		    /* * * DON'T EDIT BELOW THIS LINE * * */
+		    (function() {
+		        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+		        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+		        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+		    })();
+		</script>
+		<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+		<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+	</div>
+</div>
+<aside class="four columns omega offset-by-one" id="sidebar">
+	<img class="add-bottom photo" src="/images/steed.jpg" alt="some of my best thinking occurs on unicorns">
+	<h2>Recent Posts</h2>
+	<ul class='posts'>
+		
+		<li><h3><a href="/2012/11/02/parallel-phpunit.html">Parallel PHPUnit - Running Tests Concurrently With ParaTest</a></h3></li>
+		
+		<li><h3><a href="/2012/09/17/monomials-polynomials-with-scala.html">Monomials and Polynomials With Scala and ScalaTest</a></h3></li>
+		
+		<li><h3><a href="/2012/09/06/number-system-with-scala.html">Dipping Into The Number System With Scala and ScalaTest</a></h3></li>
+		
+		<li><h3><a href="/2012/09/03/algebra-basics-with-scala.html">Algebra Basics With Scala and ScalaTest</a></h3></li>
+		
+		<li><h3><a href="/">The rest....</a></h3></li>
+	</ul>
+</aside>
+		<div class="sixteen columns alpha omega">
+			<footer>
+				&copy; 2012 Brian Scaturro - <a href="http://feeds.feedburner.com/brianscaturro" rel="alternate" type="application/rss+xml"><img src="http://www.feedburner.com/fb/images/pub/feed-icon16x16.png" alt="" style="vertical-align:middle;border:0"/></a>&nbsp;<a id="subscribe-link" href="http://feeds.feedburner.com/brianscaturro" rel="alternate" type="application/rss+xml">subscribe</a>
+			</footer>
+		</div>
+	</div>
+	<script type="text/javascript" src="/js/site.js"></script>
+</body>
+</html>

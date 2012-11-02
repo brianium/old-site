@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>ParaTest Rulez</title>
+    <link rel="stylesheet" href="css/base.css" type="text/css">
+    <link rel="stylesheet" href="css/layout.css" type="text/css">
+    <link rel="stylesheet" href="css/sunburst.css" type="text/css">
+</head>
+<body>
+    
+    <div id="presentation">
+        
+        <div class="slide">
+            <hgroup>
+                <h1>ParaTest - Testing In Parallel With PHPUnit</h1>
+                <h2>Brian Scaturro</h2>
+                <blockquote>
+                    <p class="center">
+                        @scaturr<br>
+                        http://github.com/brianium/
+                    </p>
+                </blockquote>
+            </hgroup>
+        </div>
+
+        <div class="slide">
+            <h1>The Problem:</h1>
+            <h2>Testing can be slooooooow.</h2>
+            <div class="image">
+                <img src="images/slow.gif" alt="sloooooow">
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>But Why?!?!?</h1>
+            <ol>
+                <li><h2>No multithreading.</h2>
+                    <p>
+                        A significant blow to PHP's multitasking abilities. As a result, things are executed
+                        from top to bottom in a single thread. It should then come as no surprise that......
+                    </p>
+                </li>
+                <li><h2>PHPUnit runs tests serially.</h2>
+                    <p>
+                        PHPUnit runs every test consecutively. Long running tests can be a huge bottleneck in this scenario.
+                    </p>
+                </li>
+                <li><h2>Long running tests?</h2>
+                    <p>
+                        Think functional tests. Automating user interface tests can be quite time consuming.
+                    </p>
+                </li>
+            </ol>
+        </div>
+
+        <div class="slide">
+            <h1>The Solution: Concurrent Over Consecutive</h1>
+            <p>
+                Given PHP's threadless nature, one solution comes to mind.<br>
+<pre class="prettyprint">
+proc_open ("phpunit", ... , ...);
+</pre>
+            </p>
+            <p>
+                We don't have threads, but we can open new processes.
+            </p>
+        </div>
+
+        <div class="slide">
+            <h1>Current Contenders</h1>
+            <p>
+                There are a couple of solutions out there that follow this method. The typical procedure is to
+                do something along the lines of:
+            </p>
+            <ol>
+                <li>
+                    <p>Grep for test methods or load a directory of files containing test suites.</p>
+                </li>
+                <li>
+                    <p>Open a process for each test method or suite.</p>
+                </li>
+                <li>
+                    <p>Parse output from STDOUT pipe, or get output from a temporary log file.</p>
+                </li>
+            </ol>
+            <p>
+                This method can get the job done, but it suffers from a few significant limitations.
+            </p>
+        </div>
+
+        <div class="slide">
+            <h1>paraunit</h1>
+            <blockquote>
+                <p class="center">
+                    https://github.com/jlipps/paraunit
+                </p>
+            </blockquote>
+            <h2 class="left">Pros</h2>
+            <p>
+                paraunit gets points for speed. Results are read from each processes' STDOUT, which cuts down
+                on overhead involved with creating temp files. Great for functional tests.
+            </p>
+            <h2 class="left">Cons</h2>
+            <p>
+                Test methods are searched by pattern in source files like so:<br>
+<pre class="prettyprint">
+preg_match_all("/function (test[^\(]+)\(/", $file_str, $matches, PREG_PATTERN_ORDER);
+</pre>
+            </p>
+            <p>
+                This method creates several problems.
+            </p>
+        </div>
+
+        <div class="slide">
+            <h1>No support for annotated methods</h1>
+            <p>
+<pre class="prettyprint">
+/**
+ * @test
+ */
+public function twoTodosCheckedShowsCorrectClearButtonText()
+{
+    $this->todos->addTodos(array('one', 'two'));
+    $this->todos->getToggleAll()->click();
+    $this->assertEquals('Clear 2 completed items', $this->todos->getClearButton()->text());
+}
+</pre>
+            </p>
+        </div>
+
+        <div class="slide">
+            <h1>No support for inheritance</h1>
+            <p>
+<pre class="prettyprint">
+abstract class TodoTest extends PHPUnit_Extensions_Selenium2TestCase
+{
+    protected $browser = null;
+
+    public function setUp()
+    {
+        //configure browser
+    }
+
+    public function testTypingIntoFieldAndHittingEnterAddsTodo()
+    {
+        //...
+    }
+}
+
+class ChromeTodoTest extends TodoTest
+{
+    protected $browser = 'chrome';
+}
+
+class FirefoxTodoTest extends TodoTest
+{
+    protected $browser = 'firefox';
+}
+</pre>
+            </p>
+        </div>
+
+        <div class="slide">
+            <h1>And...</h1>
+            <h2>Can only run methods in parallel.</h2>
+            <p>
+                This is perfect for functional tests, but it rules out the ability to run test suites
+                in parallel.
+            </p>
+            <h2>Trickier to add annotation support.</h2>
+            <p>
+                Parsing a file for annotations to add support for them later can be cumbersome.
+            </p>
+        </div>
+
+        <div class="slide">
+            <h1>ParaTest At Bat</h1>
+            <blockquote>
+                <p class="center">
+                    http://github.com/brianium/paratest
+                </p>
+            </blockquote>
+            <h2 class="left">Pros</h2>
+            <p>
+                ParaTest addresses the cons mentioned previously. Support for @test methods, inheritance, and the running of both suites and methods. Methods
+                are searched for via reflection so adding support for other annotations is a snap.
+            </p>
+            <h2 class="left">Cons</h2>
+            <p>
+                ParaTest aggregates results from the standard JUnit xml format. Reflection and file I/O come at a price,
+                and speed does take a minor hit as a result.
+            </p>
+        </div>
+
+        <div class="slide">
+            <h1>A tad slower</h1>
+            <p>
+                The following are the result of paraunit and ParaTest running the same functional test:
+            </p>
+            <h2>paraunit</h2>
+            <div class="image">
+                <img src="images/paraunit.jpg" alt="">
+            </div>
+            <h2>ParaTest</h2>
+            <div class="image">
+                <img src="images/paratest.jpg" alt="">
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>Using Paratest</h1>
+            <div class="image">
+                <img src="images/usage.jpg" alt="">
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>The Example</h1>
+            <blockquote>
+                <p class="center">
+                    http://github.com/brianium/paratest-selenium
+                </p>
+            </blockquote>
+            <h2 class="center">
+                Testing The Backbone.js Todo App
+            </h2>
+        </div>
+
+        <div class="slide">
+            <h1>ParaTest</h1>
+            <div class="image">
+                <img src="images/example-paratest.jpg" alt="">
+            </div>
+        </div>
+
+        <div class="slide">
+            <h1>paraunit</h1>
+            <div class="image">
+                <img src="images/example-paraunit.jpg" alt="">
+            </div>
+            <p>
+                At first glance, this appears to have run much faster than before.
+                Notice that only 13 tests were run. This is a result of @test methods
+                not being run.
+            </p>
+        </div>
+
+        <div class="slide">
+            <h1>PHPUnit</h1>
+            <div class="image">
+                <img src="images/example-phpunit.jpg" alt="">
+            </div>
+            <p>
+                A clear loser in this scenario. Both parallel implementations outperform vanilla
+                PHPUnit.
+            </p>
+        </div>
+
+        <div class="slide">
+            <h1>Conclusion</h1>
+            <div class="image">
+                <img src="images/allthetests.jpg" alt="">
+            </div>
+        </div>
+
+    </div>
+
+
+    <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+    <script src="js/plugins.js"></script>
+    <script src="js/scripts.js"></script>
+</body>
+</html>
