@@ -4,7 +4,7 @@
  <title>Brian Scaturro</title>
  <link href="http://brianscaturro.com/atom.xml" rel="self"/>
  <link href="http://brianscaturro.com/"/>
- <updated>2012-11-02T11:56:47-04:00</updated>
+ <updated>2012-11-02T12:04:27-04:00</updated>
  <id>http://brianscaturro.com/</id>
  <author>
    <name>Brian Scaturro</name>
@@ -168,7 +168,7 @@
   --group ...              Only runs tests from the specified group&lt;span class='o'&gt;(&lt;/span&gt;s&lt;span class='o'&gt;)&lt;/span&gt;.
 &lt;/code&gt;&lt;/pre&gt;
 &lt;/div&gt;
-&lt;p&gt;For more information head over to the &lt;a href='https://github.com/brianium/paratest' target='__blank'&gt;repo&lt;/a&gt;. There is an example of using ParaTest with PHPUnit and Selenium Web Driver on &lt;a href='https://github.com/brianium/paratest-selenium' target='__blank'&gt;github&lt;/a&gt; as well.&lt;/p&gt;
+&lt;p&gt;For more information head over to the &lt;a href='https://github.com/brianium/paratest' target='__blank'&gt;repo&lt;/a&gt;. There is an example of using ParaTest with PHPUnit and Selenium Web Driver on &lt;a href='https://github.com/brianium/paratest-selenium' target='__blank'&gt;Github&lt;/a&gt; as well.&lt;/p&gt;
 
 &lt;h2 id='paratest_vs_phpunit'&gt;ParaTest VS. PHPUnit&lt;/h2&gt;
 

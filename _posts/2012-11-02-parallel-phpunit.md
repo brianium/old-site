@@ -180,7 +180,7 @@ Usage: paratest [switches]
   --group ...              Only runs tests from the specified group(s).
 {% endhighlight %}
 
-For more information head over to the <a href="https://github.com/brianium/paratest" target="__blank">repo</a>. There is an example of using ParaTest with PHPUnit and Selenium Web Driver on <a href="https://github.com/brianium/paratest-selenium" target="__blank">github</a> as well.
+For more information head over to the <a href="https://github.com/brianium/paratest" target="__blank">repo</a>. There is an example of using ParaTest with PHPUnit and Selenium Web Driver on <a href="https://github.com/brianium/paratest-selenium" target="__blank">Github</a> as well.
 
 ParaTest VS. PHPUnit
 --------------------
